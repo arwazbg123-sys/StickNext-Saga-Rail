@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chat Komunitas - Kebebasan | StickNext Saga Rail</title>
+  <link rel="stylesheet" href="CSS.css">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div id="loader" class="loader"><div class="spinner"></div><p>Memuat ruang kebebasan...</p></div>
+  <header>
+    <div class="header-left">
+      <h1>Kebebasan Chat</h1>
+      <p>Obrolan online komunitas, tulis, kirim, lihat semua.</p>
+    </div>
+    <div class="hamburger" id="hamburger-btn"><span></span><span></span><span></span></div>
+    <nav class="main-nav">
+      <ul>
+        <li><a href="beranda.html">Beranda</a></li>
+        <li><a href="galeri.html">Galeri</a></li>
+        <li><a href="anggota.html">Anggota</a></li>
+        <li><a href="tentang.html">Tentang</a></li>
+        <li><a href="kontak.html">Kontak</a></li>
+        <li><a href="disclaimer.html">Disclaimer</a></li>
+        <li><a href="HTML audio.html">Audio</a></li>\n        <li><a href="kebebasan.html">Kebebasan</a></li>
+        <li><a href="kebebasan.html" class="active-link">Kebebasan</a></li>
+      </ul>
+      <div id="clock"></div>
+    </nav>
+    <div class="sidebar" id="sidebar" aria-hidden="true" aria-label="menu seluler">
+      <span class="close-sidebar" id="close-sidebar">×</span>
+      <ul>
+        <li><a href="beranda.html">Beranda</a></li>
+        <li><a href="galeri.html">Galeri</a></li>
+        <li><a href="anggota.html">Anggota</a></li>
+        <li><a href="tentang.html">Tentang</a></li>
+        <li><a href="kontak.html">Kontak</a></li>
+        <li><a href="disclaimer.html">Disclaimer</a></li>
+        <li><a href="HTML audio.html">Audio</a></li>\n        <li><a href="kebebasan.html">Kebebasan</a></li>
+        <li><a href="kebebasan.html">Kebebasan</a></li>
+      </ul>
+      <div id="clock-mobile" class="clock-mobile"></div>
+    </div>
+  </header>
+  <main>
+    <section id="chat-room" data-aos="fade-up" data-aos-duration="800">
+      <h2>Ruang Obrolan Komunitas</h2>
+      <div class="chat-container">
+        <div class="chat-meta">
+          <div>
+            <label for="username">Nama (alias):</label>
+            <input id="username" type="text" placeholder="Masukkan nama kamu" maxlength="20" aria-label="Nama pengguna">
+          </div>
+          <div>
+            <button id="clear-btn" type="button">Bersihkan Chat</button>
+          </div>
+        </div>
+        <div id="messages" class="messages" aria-live="polite"></div>
+        <div class="chat-form">
+          <input id="message" type="text" placeholder="Ketik pesan kamu di sini..." maxlength="250" aria-label="Pesan chat">
+          <button id="send-btn" type="button">Kirim</button>
+        </div>
+      </div>
+    </section>
+  </main>
+  <footer><p>© 2026 StickNext Saga Rail • Ruang Kebebasan Komunitas</p></footer>
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>AOS.init({duration:800,once:true,easing:'ease-out'});</script>
+
+  <script>
+  function updateClock() {
+    const now = new Date();
+    document.getElementById('clock').innerText = now.toLocaleTimeString('id-ID', { hour12: false, timeZone: 'Asia/Jakarta' });
+  }
+  setInterval(updateClock, 1000); updateClock();
+  </script>
+
+  <script>
+  const chatKey = 'sticknext-chat-messages';
+  const channel = ('BroadcastChannel' in window) ? new BroadcastChannel('sticknext-chat') : null;
+  const messagesEl = document.getElementById('messages');
+  const usernameEl = document.getElementById('username');
+  const messageEl = document.getElementById('message');
+  const sendBtn = document.getElementById('send-btn');
+  const clearBtn = document.getElementById('clear-btn');
+
+  function escapeHtml(text) {
+    return text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#039;');
+  }
+
+  function getStore() {
+    try { return JSON.parse(localStorage.getItem(chatKey) || '[]'); } catch (e) { return []; }
+  }
+
+  function saveStore(data) {
+    localStorage.setItem(chatKey, JSON.stringify(data));
+  }
+
+  function showMessages() {
+    const data = getStore();
+    messagesEl.innerHTML = data.map((item) => {
+      return `<div class="chat-message"><span class="chat-user">${escapeHtml(item.name)}:</span> ${escapeHtml(item.text)} <small>${item.time}</small></div>`;
+    }).join('');
+    messagesEl.scrollTop = messagesEl.scrollHeight;
+  }
+
+  function submitChat() {
+    const name = (usernameEl.value || 'Anonim').trim().slice(0, 20);
+    const text = messageEl.value.trim();
+    if (!text) return;
+    const time = new Date().toLocaleTimeString('id-ID', { hour12: false });
+    const entry = { name, text, time };
+    const data = getStore(); data.push(entry);
+    if (data.length > 150) data.shift();
+    saveStore(data);
+    showMessages();
+    messageEl.value = '';
+    messageEl.focus();
+    if (channel) channel.postMessage({ type: 'update' });
+  }
+
+  sendBtn.addEventListener('click', submitChat);
+  messageEl.addEventListener('keydown', (e) => { if (e.key === 'Enter') submitChat(); });
+
+  clearBtn.addEventListener('click', () => {
+    if (!confirm('Hapus semua chat untuk semua pengguna?')) return;
+    localStorage.removeItem(chatKey); showMessages();
+    if (channel) channel.postMessage({ type: 'clear' });
+  });
+
+  window.addEventListener('storage', (e) => {
+    if (e.key === chatKey) showMessages();
+  });
+
+  if (channel) {
+    channel.onmessage = (event) => {
+      if (event.data && (event.data.type === 'update' || event.data.type === 'clear')) showMessages();
+    };
+  }
+
+  showMessages();
+  </script>
+
+  <script>
+    const hamburger = document.getElementById('hamburger-btn');
+    const sidebar = document.getElementById('sidebar');
+    const closeSide = document.getElementById('close-sidebar');
+    hamburger.addEventListener('click', () => sidebar.classList.toggle('active'));
+    closeSide.addEventListener('click', () => sidebar.classList.remove('active'));
+    document.addEventListener('click', (e) => { if (!sidebar.contains(e.target) && !hamburger.contains(e.target)) sidebar.classList.remove('active'); });
+    window.addEventListener('load', () => {
+      const loader = document.getElementById('loader'); loader.style.opacity='0'; setTimeout(() => loader.style.display='none', 800);
+    });
+  </script>
+</body>
+</html>
