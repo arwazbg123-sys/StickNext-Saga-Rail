@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tentang - StickNext Saga Rail</title>
+  <link rel="stylesheet" href="CSS.css">
+
+  <!-- Google Fonts: Orbitron -->
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <!-- Loading Screen -->
+  <div id="loader" class="loader">
+    <div class="spinner"></div>
+    <p>Melaju ke multiverse...</p>
+  </div>
+
+  <!-- Header -->
+  <header>
+    <div class="header-left">
+      <h1>Tentang StickNext Saga Rail</h1>
+      <p>Sejarah, visi, dan identitas komunitas</p>
+    </div>
+
+    <!-- Tombol hamburger (HP) -->
+    <div class="hamburger" id="hamburger-btn">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+
+    <!-- Nav normal (PC) -->
+    <nav class="main-nav">
+      <ul>
+        <li><a href="Beranda.html">Beranda</a></li>
+        <li><a href="galeri.html">Galeri</a></li>
+        <li><a href="anggota.html">Anggota</a></li>
+        <li><a href="tentang.html">Tentang</a></li>
+        <li><a href="kontak.html">Kontak</a></li>
+        <li><a href="disclaimer.html">Disclaimer</a></li>
+        <li><a href="HTML audio.html">Audio</a></li>
+      </ul>
+      <div id="clock"></div>
+    </nav>
+
+    <!-- Sidebar (HP) -->
+    <div class="sidebar" id="sidebar">
+      <span class="close-sidebar" id="close-sidebar">&times;</span>
+      <ul>
+        <li><a href="Beranda.html">Beranda</a></li>
+        <li><a href="galeri.html">Galeri</a></li>
+        <li><a href="anggota.html">Anggota</a></li>
+        <li><a href="tentang.html">Tentang</a></li>
+        <li><a href="kontak.html">Kontak</a></li>
+        <li><a href="disclaimer.html">Disclaimer</a></li>
+        <li><a href="HTML audio.html">Audio</a></li>
+      </ul>
+      <div id="clock-mobile" class="clock-mobile"></div>
+    </div>
+  </header>
+
+  <!-- Konten Tentang -->
+  <main>
+    <section id="tentang">
+      <h2>Sejarah Komunitas</h2>
+      <p>
+        Rel adalah takdir → setiap jalur adalah perjalanan menuju dimensi baru.<br>
+        Kereta adalah naga api → simbol kekuatan, disiplin, dan keberanian.<br>
+        Kosmik adalah panggung → semesta jadi arena, dari Mars hingga nebula, dari delay tiga galaksi hingga singularitas.
+      </p>
+
+      <h2>Visi & Misi</h2>
+      <p>
+        Menciptakan karya visual, musik, dan narasi yang mengangkat kereta api Indonesia ke level kosmik.<br>
+        Menyatukan railfans, kreator, dan komunitas dalam satu saga monumental.<br>
+        Menjadi wadah ekspresi absurd yang tetap aman, inklusif, dan penuh energi.
+      </p>
+
+      <h2>Identitas</h2>
+      <p>
+        StickNext Rail Saga adalah gerakan kreatif kosmik yang lahir dari semangat railfans Indonesia. Kami bukan sekadar komunitas, kami adalah franchise semesta yang menggabungkan kereta api dengan imajinasi absurd, monumental, dan futuristik.
+      </p>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2026 StickNext Saga Rail • Dibuat oleh Screet</p>
+  </footer>
+
+  <!-- Clock JS -->
+  <script>
+    function updateClock() {
+      const now = new Date();
+      const time = now.toLocaleTimeString('id-ID', { 
+        hour12: false, 
+        timeZone: 'Asia/Jakarta' 
+      });
+      document.getElementById('clock').innerText = time;
+      const clockMobile = document.getElementById('clock-mobile');
+      if (clockMobile) clockMobile.innerText = time;
+    }
+    setInterval(updateClock, 1000);
+    updateClock();
+  </script>
+
+  <!-- Loading Screen JS -->
+  <script>
+    window.addEventListener('load', () => {
+      const loader = document.getElementById('loader');
+      loader.style.opacity = '0';
+      setTimeout(() => {
+        loader.style.display = 'none';
+      }, 800);
+    });
+  </script>
+
+  <!-- Script Hamburger + Sidebar -->
+  <script>
+    const hamburger = document.getElementById('hamburger-btn');
+    const sidebar = document.getElementById('sidebar');
+    const closeBtn = document.getElementById('close-sidebar');
+
+    if (hamburger && sidebar && closeBtn) {
+      hamburger.addEventListener('click', () => {
+        sidebar.classList.toggle('active');
+      });
+
+      closeBtn.addEventListener('click', () => {
+        sidebar.classList.remove('active');
+      });
+
+      document.addEventListener('click', (e) => {
+        if (!sidebar.contains(e.target) && !hamburger.contains(e.target)) {
+          sidebar.classList.remove('active');
+        }
+      });
+    }
+  </script>
+</body>
+</html>

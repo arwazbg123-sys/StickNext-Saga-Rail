@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Audio Lounge - StickNext Saga Rail</title>
+
+  <!-- CSS khusus halaman Audio -->
+  <link rel="stylesheet" href="audio.css">
+
+  <!-- Google Fonts: Orbitron -->
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+
+  <!-- AOS Library -->
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+</head>
+<body>
+  <!-- Background Kosmik -->
+  <div class="stars"></div>
+  <div class="comet"></div>
+
+  <!-- Loading Screen Baru - Planet Berputar + Nebula Pulse + Komet Jatuh + Teks Neon -->
+  <div id="loader" class="audio-loader">
+    <div class="nebula-pulse"></div>
+    <div class="planet"></div>
+    <div class="komet-container">
+      <div class="komet"></div>
+      <div class="komet" style="animation-delay: 1.2s; left: 30%;"></div>
+      <div class="komet" style="animation-delay: 2.5s; left: 70%;"></div>
+    </div>
+    <div class="loader-text">Memasuki Audio Multiverse...</div>
+  </div>
+
+  <!-- Header -->
+  <header>
+    <div class="header-left">
+      <h1>Audio Lounge StickNext</h1>
+      <p>Tempat refreshing, santai, dan menikmati musik buatan sendiri</p>
+    </div>
+  </header>
+
+  <!-- Konten Utama -->
+  <main>
+    <section id="audio-room" data-aos="fade-up" data-aos-duration="800">
+      <h2>Playlist Refreshing</h2>
+      <p>Dengarkan musik kosmik untuk liburan jiwa.</p>
+
+      <div class="track" data-aos="zoom-in" data-aos-delay="200">
+        <p>Magenta Vixa</p>
+        <audio controls controlsList="nodownload">
+          <source src="Magenta Vixa (audio).mp3" type="audio/mpeg">
+          Browser kamu tidak mendukung audio.
+        </audio>
+      </div>
+
+      <div class="track" data-aos="zoom-in" data-aos-delay="400">
+        <p>Nevery Nature Stickman</p>
+        <audio controls controlsList="nodownload">
+          <source src="Nevery Nature Stickman (audio).mp3" type="audio/mpeg">
+          Browser kamu tidak mendukung audio.
+        </audio>
+      </div>
+
+      <div class="track" data-aos="zoom-in" data-aos-delay="600">
+        <p>Saddnes In Soul</p>
+        <audio controls controlsList="nodownload">
+          <source src="Saddnes In soul (audio).mp3" type="audio/mpeg">
+          Browser kamu tidak mendukung audio.
+        </audio>
+      </div>
+
+      <div class="track" data-aos="zoom-in" data-aos-delay="600">
+        <p>dark yourself</p>
+        <audio controls controlsList="nodownload">
+          <source src="dark yourself (audio).mp3" type="audio/mpeg">
+          Browser kamu tidak mendukung audio.
+        </audio>
+      </div>
+
+      <div class="track" data-aos="zoom-in" data-aos-delay="600">
+        <p>the skies bowlow</p>
+        <audio controls controlsList="nodownload">
+          <source src="the skies bowlow (audio).mp3" type="audio/mpeg">
+          Browser kamu tidak mendukung audio.
+        </audio>
+      </div>
+
+      <div class="track" data-aos="zoom-in" data-aos-delay="600">
+        <p>dancenove</p>
+        <audio controls controlsList="nodownload">
+          <source src="dancenove (audio).mp3" type="audio/mpeg">
+          Browser kamu tidak mendukung audio.
+        </audio>
+      </div>
+
+      <div class="track" data-aos="zoom-in" data-aos-delay="600">
+        <p>dunia gelap chaos</p>
+        <audio controls controlsList="nodownload">
+          <source src="Dunia gelap chaos (audio).mp3" type="audio/mpeg">
+          Browser kamu tidak mendukung audio.
+        </audio>
+      </div>
+
+      <div class="track" data-aos="zoom-in" data-aos-delay="600">
+        <p>allah lindungi stickmazz</p>
+        <audio controls controlsList="nodownload">
+          <source src="allah lindungi stickmazz (audio).mp3" type="audio/mpeg">
+          Browser kamu tidak mendukung audio.
+        </audio>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <p>© 2026 StickNext Saga Rail • Dibuat oleh Screet • Pure imagination</p>
+  </footer>
+
+  <!-- AOS JS -->
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>
+    AOS.init({
+      duration: 800,
+      once: true,
+      easing: 'ease-out'
+    });
+  </script>
+
+  <!-- Loading Screen JS -->
+  <script>
+    window.addEventListener('load', () => {
+      const loader = document.getElementById('loader');
+      loader.classList.add('hidden');
+      setTimeout(() => {
+        loader.style.display = 'none';
+      }, 1000); // fade out planet + komet
+    });
+  </script>
+</body>
+</html>

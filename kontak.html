@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kontak - StickNext Saga Rail</title>
+  <link rel="stylesheet" href="CSS.css">
+
+  <!-- Google Fonts: Orbitron -->
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <!-- Loading Screen -->
+  <div id="loader" class="loader">
+    <div class="spinner"></div>
+    <p id="loading-text">Menghubungkan ke jalur kosmik...</p>
+  </div>
+
+  <!-- Header -->
+  <header>
+    <div class="header-left">
+      <h1>Kontak StickNext Saga Rail</h1>
+      <p>Hubungi kami untuk bergabung dalam saga</p>
+    </div>
+
+    <!-- Tombol hamburger (HP) -->
+    <div class="hamburger" id="hamburger-btn">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+
+    <!-- Nav normal (PC) -->
+    <nav class="main-nav">
+      <ul>
+        <li><a href="Beranda.html">Beranda</a></li>
+        <li><a href="galeri.html">Galeri</a></li>
+        <li><a href="anggota.html">Anggota</a></li>
+        <li><a href="tentang.html">Tentang</a></li>
+        <li><a href="kontak.html">Kontak</a></li>
+        <li><a href="disclaimer.html">Disclaimer</a></li>
+        <li><a href="HTML audio.html">Audio</a></li>
+      </ul>
+      <div id="clock"></div>
+    </nav>
+
+    <!-- Sidebar (HP) -->
+    <div class="sidebar" id="sidebar">
+      <span class="close-sidebar" id="close-sidebar">&times;</span>
+      <ul>
+        <li><a href="Beranda.html">Beranda</a></li>
+        <li><a href="galeri.html">Galeri</a></li>
+        <li><a href="anggota.html">Anggota</a></li>
+        <li><a href="tentang.html">Tentang</a></li>
+        <li><a href="kontak.html">Kontak</a></li>
+        <li><a href="disclaimer.html">Disclaimer</a></li>
+        <li><a href="HTML audio.html">Audio</a></li>
+      </ul>
+      <div id="clock-mobile" class="clock-mobile"></div>
+    </div>
+  </header>
+
+  <!-- Konten Kontak -->
+  <main>
+    <section id="kontak">
+      <h2>Informasi Kontak</h2>
+      <p>Silakan hubungi kami melalui informasi berikut:</p>
+
+      <ul>
+        <li>Email: <strong>rail.saga@komunitas.id</strong></li>
+        <li>Instagram: <strong>@sticksagarail</strong></li>
+        <li>Twitter: <strong>@sticksagarail</strong></li>
+      </ul>
+    </section>
+
+    <section id="form-kontak">
+      <h2>Kirim Pesan</h2>
+      <form action="#" method="post">
+        <label for="nama">Nama:</label><br>
+        <input type="text" id="nama" name="nama"><br><br>
+
+        <label for="email">Email:</label><br>
+        <input type="email" id="email" name="email"><br><br>
+
+        <label for="pesan">Pesan:</label><br>
+        <textarea id="pesan" name="pesan" rows="5"></textarea><br><br>
+
+        <button type="submit">Kirim</button>
+      </form>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2026 StickNext Saga Rail • Dibuat oleh Screet</p>
+  </footer>
+
+  <!-- Clock JS -->
+  <script>
+    function updateClock() {
+      const now = new Date();
+      const time = now.toLocaleTimeString('id-ID', { 
+        hour12: false, 
+        timeZone: 'Asia/Jakarta' 
+      });
+      document.getElementById('clock').innerText = time;
+      const clockMobile = document.getElementById('clock-mobile');
+      if (clockMobile) clockMobile.innerText = time;
+    }
+    setInterval(updateClock, 1000);
+    updateClock();
+  </script>
+
+  <!-- Loading Screen JS Unik (Glitch Text) -->
+  <script>
+    window.addEventListener('load', () => {
+      const loader = document.getElementById('loader');
+      const text = document.getElementById('loading-text');
+
+      // Step 1: glitch effect pada teks
+      let glitchInterval = setInterval(() => {
+        text.style.textShadow = 
+          Math.random() > 0.5 
+            ? "2px 0 red, -2px 0 cyan" 
+            : "0 2px lime, 0 -2px magenta";
+      }, 100);
+
+      // Step 2: setelah 1 detik, stop glitch dan fade out
+      setTimeout(() => {
+        clearInterval(glitchInterval);
+        text.style.transition = "opacity 0.8s ease";
+        text.style.opacity = "0";
+      }, 1000);
+
+      // Step 3: hilangkan loader
+      setTimeout(() => {
+        loader.style.transition = "opacity 1s ease";
+        loader.style.opacity = "0";
+        setTimeout(() => {
+          loader.style.display = "none";
+        }, 1000);
+      }, 1800);
+    });
+  </script>
+
+  <!-- Script Hamburger + Sidebar -->
+  <script>
+    const hamburger = document.getElementById('hamburger-btn');
+    const sidebar = document.getElementById('sidebar');
+    const closeBtn = document.getElementById('close-sidebar');
+
+    if (hamburger && sidebar && closeBtn) {
+      hamburger.addEventListener('click', () => {
+        sidebar.classList.toggle('active');
+      });
+
+      closeBtn.addEventListener('click', () => {
+        sidebar.classList.remove('active');
+      });
+
+      document.addEventListener('click', (e) => {
+        if (!sidebar.contains(e.target) && !hamburger.contains(e.target)) {
+          sidebar.classList.remove('active');
+        }
+      });
+    }
+  </script>
+</body>
+</html>
