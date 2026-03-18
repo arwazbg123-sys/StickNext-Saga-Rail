@@ -1,0 +1,128 @@
+/* disclaimer.css - versi mengintimidasi & canggih 2026 */
+
+/* Reset & Base */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+  background: #000;
+  color: #e0e0e0;
+  font-family: 'Courier New', 'Courier', monospace;
+  line-height: 1.7;
+  overflow-x: hidden;
+}
+
+/* Background gelap dengan efek halus */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(circle at 20% 80%, rgba(230, 57, 70, 0.08) 0%, transparent 40%),
+              radial-gradient(circle at 80% 20%, rgba(0, 255, 224, 0.06) 0%, transparent 50%);
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* Container utama */
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 60px 20px 100px;
+  position: relative;
+}
+
+/* Judul */
+h1 {
+  font-family: 'Orbitron', monospace;
+  font-size: clamp(3rem, 8vw, 5.5rem);
+  color: #e63946;
+  text-align: center;
+  letter-spacing: 6px;
+  margin-bottom: 60px;
+  text-shadow: 
+    0 0 10px #e63946,
+    0 0 30px #e63946,
+    0 0 60px rgba(230, 57, 70, 0.6),
+    0 0 100px rgba(230, 57, 70, 0.3);
+  animation: intensePulse 6s infinite alternate;
+  position: relative;
+}
+
+h1::after {
+  content: "DISCLAIMER";
+  position: absolute;
+  inset: 0;
+  color: rgba(230, 57, 70, 0.15);
+  font-size: 1.1em;
+  filter: blur(8px);
+  z-index: -1;
+  animation: glitch 4s infinite;
+}
+
+@keyframes intensePulse {
+  0% { text-shadow: 0 0 10px #e63946, 0 0 30px #e63946, 0 0 60px rgba(230,57,70,0.6); }
+  100% { text-shadow: 0 0 20px #e63946, 0 0 60px #e63946, 0 0 120px rgba(230,57,70,0.9); }
+}
+
+@keyframes glitch {
+  0% { transform: translate(0); }
+  20% { transform: translate(-2px, 2px); }
+  40% { transform: translate(2px, -2px); }
+  60% { transform: translate(-1px, 1px); }
+  80% { transform: translate(1px, -1px); }
+  100% { transform: translate(0); }
+}
+
+/* Paragraf */
+p {
+  font-size: 1.15rem;
+  margin-bottom: 1.8rem;
+  text-align: justify;
+  color: #d0d0d0;
+  letter-spacing: 0.4px;
+  position: relative;
+  padding-left: 1.5rem;
+}
+
+p::before {
+  content: ">";
+  position: absolute;
+  left: 0;
+  color: #e63946;
+  font-weight: bold;
+  opacity: 0.6;
+}
+
+/* Strong / highlight */
+strong {
+  color: #ff4444;
+  font-weight: bold;
+  background: rgba(230, 57, 70, 0.12);
+  padding: 0 4px;
+  border-radius: 3px;
+}
+
+/* Responsif HP */
+@media (max-width: 768px) {
+  .container {
+    padding: 40px 15px 80px;
+  }
+  h1 {
+    font-size: clamp(2.5rem, 10vw, 4rem);
+    letter-spacing: 4px;
+  }
+  p {
+    font-size: 1.05rem;
+    padding-left: 1.2rem;
+  }
+}
+
+/* Efek tambahan saat hover teks (opsional, bikin lebih canggih) */
+p:hover {
+  color: #fff;
+  transition: color 0.4s;
+}
