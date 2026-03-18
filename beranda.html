@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+ï»¿<!DOCTYPE html>
 <html lang="id">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>StickNext Saga Rail • Kereta KAI Menjelajah Multiverse</title>
+  <title>StickNext Saga Rail â€¢ Kereta KAI Menjelajah Multiverse</title>
 
   <!-- CSS utama (satu file saja, desktop + mobile di dalamnya) -->
   <link rel="stylesheet" href="CSS.css">
@@ -38,12 +38,33 @@
     </div>
 
     <!-- Nav normal (muncul di PC, disembunyi di HP) -->
-    <nav class="main-nav" id="main-nav"></nav>
+    <nav class="main-nav" id="main-nav">
+      <ul>
+        <li><a href="beranda.html">Beranda</a></li>
+        <li><a href="galeri.html">Galeri</a></li>
+        <li><a href="anggota.html">Anggota</a></li>
+        <li><a href="tentang.html">Tentang</a></li>
+        <li><a href="kontak.html">Kontak</a></li>
+        <li><a href="disclaimer.html">Disclaimer</a></li>
+        <li><a href="HTML audio.html">Audio</a></li>
+        <li><a href="kebebasan.html">Kebebasan</a></li>
+      </ul>
+      <div id="clock"></div>
+    </nav>
 
     <!-- Sidebar (muncul di HP pas hamburger ditekan) -->
     <div class="sidebar" id="sidebar" aria-hidden="true" aria-label="Menu seluler">
-      <span class="close-sidebar" id="close-sidebar" aria-label="Tutup menu">×</span>
-      <div id="sidebar-content"></div>
+      <span class="close-sidebar" id="close-sidebar" aria-label="Tutup menu">Ã—</span>
+      <ul>
+        <li><a href="beranda.html">Beranda</a></li>
+        <li><a href="galeri.html">Galeri</a></li>
+        <li><a href="anggota.html">Anggota</a></li>
+        <li><a href="tentang.html">Tentang</a></li>
+        <li><a href="kontak.html">Kontak</a></li>
+        <li><a href="disclaimer.html">Disclaimer</a></li>
+        <li><a href="HTML audio.html">Audio</a></li>
+        <li><a href="kebebasan.html">Kebebasan</a></li>
+      </ul>
       <div id="clock-mobile" class="clock-mobile"></div>
     </div>
   </header>
@@ -86,7 +107,7 @@
 
   <!-- Footer -->
   <footer>
-    <p>© 2026 StickNext Saga Rail • Dibuat oleh Screet • Pure imagination</p>
+    <p>Â© 2026 StickNext Saga Rail â€¢ Dibuat oleh Mrsov â€¢ Pure imagination</p>
   </footer>
 
   <!-- AOS JS -->
@@ -147,7 +168,7 @@
     }
   </script>
 
-  <!-- Dynamic Nav + Cabang + Active Link -->
+  <!-- Cabang + Active Link (static nav sudah di HTML) -->
   <script>
     const pages = [
       { title: 'Beranda', href: 'beranda.html' },
@@ -156,37 +177,18 @@
       { title: 'Tentang', href: 'tentang.html' },
       { title: 'Kontak', href: 'kontak.html' },
       { title: 'Disclaimer', href: 'disclaimer.html' },
-      { title: 'Audio', href: 'HTML audio.html' }
+      { title: 'Audio', href: 'HTML audio.html' },
+      { title: 'Kebebasan', href: 'kebebasan.html' }
     ];
 
-    const current = window.location.pathname.split('/').pop();
+    const current = window.location.pathname.split('/').pop().toLowerCase();
+    document.querySelectorAll('.main-nav a, .sidebar a').forEach((link) => {
+      if (link.getAttribute('href').toLowerCase() === current) {
+        link.classList.add('active-link');
+        link.setAttribute('aria-current', 'page');
+      }
+    });
 
-    function makeNavItems(container, isSidebar = false) {
-      const ul = document.createElement('ul');
-      pages.forEach((page) => {
-        const li = document.createElement('li');
-        const a = document.createElement('a');
-        a.href = page.href;
-        a.innerText = page.title;
-        if (page.href === current) {
-          a.classList.add('active-link');
-          if (isSidebar) a.setAttribute('aria-current', 'page');
-        }
-        li.appendChild(a);
-        ul.appendChild(li);
-      });
-      container.appendChild(ul);
-    }
-
-    const mainNav = document.getElementById('main-nav');
-    const sidebarContent = document.getElementById('sidebar-content');
-
-    if (mainNav && sidebarContent) {
-      makeNavItems(mainNav, false);
-      makeNavItems(sidebarContent, true);
-    }
-
-    // Cabang section cards
     const branchGrid = document.getElementById('branch-grid');
     if (branchGrid) {
       pages.forEach((page) => {
