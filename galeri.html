@@ -29,7 +29,7 @@
     <!-- Nav normal (PC) -->
     <nav class="main-nav">
       <ul>
-        <li><a href="Beranda.html">Beranda</a></li>
+        <li><a href="beranda.html">Beranda</a></li>
         <li><a href="galeri.html">Galeri</a></li>
         <li><a href="anggota.html">Anggota</a></li>
         <li><a href="tentang.html">Tentang</a></li>
@@ -44,7 +44,7 @@
     <div class="sidebar" id="sidebar">
       <span class="close-sidebar" id="close-sidebar">&times;</span>
       <ul>
-        <li><a href="Beranda.html">Beranda</a></li>
+        <li><a href="beranda.html">Beranda</a></li>
         <li><a href="galeri.html">Galeri</a></li>
         <li><a href="anggota.html">Anggota</a></li>
         <li><a href="tentang.html">Tentang</a></li>
@@ -61,6 +61,14 @@
     <section id="galeri">
       <h2>Galeri Karya</h2>
       <p>Setiap karya adalah bab dari saga perjalanan lokomotif KAI melintasi dunia-dunia epik.</p>
+
+      <div class="gallery-actions">
+        <input id="search-query" type="text" placeholder="Cari berdasarkan judul (cth: api, surga, cyber)" aria-label="Cari judul karya">
+        <button id="filter-btn" type="button">Terapkan Pencarian</button>
+        <button id="reset-btn" type="button">Reset Pencarian</button>
+        <button id="shuffle-btn" type="button">Acak Urutan Galeri</button>
+        <p id="gallery-hint">Hint: klik gambar untuk memperbesar.</p>
+      </div>
 
       <div class="grid">
         <!-- Karya 1 -->
@@ -201,6 +209,105 @@
         }
       });
     }
+  </script>
+
+  <script>
+    const galleryGrid = document.querySelector('.grid');
+    const cards = Array.from(document.querySelectorAll('.karya'));
+    const modal = document.getElementById('modal');
+    const modalImg = document.getElementById('modal-img');
+    const closeModal = document.querySelector('.close-modal');
+    const searchInput = document.getElementById('search-query');
+    const filterBtn = document.getElementById('filter-btn');
+    const resetBtn = document.getElementById('reset-btn');
+    const shuffleBtn = document.getElementById('shuffle-btn');
+    const galleryHint = document.getElementById('gallery-hint');
+    let currentModalIndex = -1;
+
+    function openModal(index) {
+      const card = cards[index];
+      if (!card) return;
+      const img = card.querySelector('img');
+      modalImg.src = img.src;
+      modalImg.alt = img.alt;
+      modal.style.display = 'block';
+      currentModalIndex = index;
+      galleryHint.innerText = `Menampilkan: ${card.querySelector('h3').innerText}`;
+    }
+
+    function closeModalFn() {
+      modal.style.display = 'none';
+      currentModalIndex = -1;
+    }
+
+    function highlightCard(card) {
+      card.style.transform = 'translateY(-6px) scale(1.02)';
+      card.style.boxShadow = '0 20px 35px rgba(0,0,0,0.28)';
+    }
+
+    function resetCard(card) {
+      card.style.transform = '';
+      card.style.boxShadow = '';
+    }
+
+    cards.forEach((card, index) => {
+      card.addEventListener('click', () => openModal(index));
+      card.addEventListener('mouseenter', () => highlightCard(card));
+      card.addEventListener('mouseleave', () => resetCard(card));
+      card.addEventListener('dblclick', () => {
+        const isFav = card.classList.toggle('favorite');
+        galleryHint.innerText = isFav ? `${card.querySelector('h3').innerText} sudah ditandai favorit` : `${card.querySelector('h3').innerText} favorit dihapus`;
+      });
+    });
+
+    closeModal?.addEventListener('click', closeModalFn);
+    modal?.addEventListener('click', (e) => { if (e.target === modal) closeModalFn(); });
+
+    document.addEventListener('keydown', (e) => {
+      if (modal.style.display === 'block') {
+        if (e.key === 'ArrowRight') {
+          currentModalIndex = (currentModalIndex + 1) % cards.length;
+          openModal(currentModalIndex);
+        }
+        if (e.key === 'ArrowLeft') {
+          currentModalIndex = (currentModalIndex - 1 + cards.length) % cards.length;
+          openModal(currentModalIndex);
+        }
+        if (e.key === 'Escape') closeModalFn();
+      }
+    });
+
+    function applySearch() {
+      const query = searchInput.value.trim().toLowerCase();
+      let matches = 0;
+      cards.forEach((card) => {
+        const title = card.querySelector('h3').innerText.toLowerCase();
+        const visible = !query || title.includes(query);
+        card.style.display = visible ? '' : 'none';
+        if (visible) matches += 1;
+      });
+      galleryHint.innerText = matches > 0 ? `${matches} karya cocok ditemukan.` : 'Tidak ada karya cocok.';
+    }
+
+    filterBtn.addEventListener('click', applySearch);
+    searchInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') applySearch(); });
+    resetBtn.addEventListener('click', () => {
+      searchInput.value = '';
+      applySearch();
+    });
+
+    shuffleBtn.addEventListener('click', () => {
+      const shuffled = cards.sort(() => Math.random() - 0.5);
+      shuffled.forEach((card) => galleryGrid.appendChild(card));
+      galleryHint.innerText = 'Galeri diacak! Klik gambar lagi untuk membuka.';
+    });
+
+    window.addEventListener('scroll', () => {
+      const progress = (window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100;
+      document.documentElement.style.setProperty('--scroll-progress', `${Math.max(0, Math.min(100, progress))}%`);
+    });
+
+    galleryHint.innerText = 'Tekan Enter di kotak cari, klik ganda untuk favorit, panah di modal untuk navigasi.';
   </script>
 </body>
 </html>
