@@ -1,0 +1,296 @@
+/* ====== GLOBAL STYLE ====== */
+body {
+  margin: 0;
+  padding: 0;
+  background: radial-gradient(ellipse at bottom, #0d0d1a 0%, #000000 100%);
+  color: #fff;
+  font-family: 'Orbitron', sans-serif;
+  overflow-x: hidden;
+}
+
+/* Header */
+header {
+  text-align: center;
+  padding: 2rem 1rem;
+  color: #fff;
+  text-shadow: 0 0 20px #ff004c;
+}
+
+header h1 {
+  font-size: 2.2rem;
+  margin-bottom: 0.5rem;
+}
+
+header p {
+  font-size: 1.1rem;
+  opacity: 0.8;
+}
+
+/* ====== LATAR BELAKANG KOSMIK ====== */
+.stars {
+  width: 100%;
+  height: 100%;
+  background: transparent;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: -2;
+}
+
+.stars::after {
+  content: '';
+  position: absolute;
+  width: 200%;
+  height: 200%;
+  background: transparent url('https://www.transparenttextures.com/patterns/stardust.png') repeat;
+  animation: moveStars 120s linear infinite;
+}
+
+@keyframes moveStars {
+  from { transform: translateY(0); }
+  to { transform: translateY(-100px); }
+}
+
+/* Komet jatuh background */
+.comet {
+  position: fixed;
+  width: 3px;
+  height: 80px;
+  background: linear-gradient(180deg, #ff004c, transparent);
+  top: -100px;
+  left: 50%;
+  animation: fall 5s linear infinite;
+  opacity: 0.8;
+  z-index: -1;
+}
+
+@keyframes fall {
+  0% { transform: translate(0, 0) rotate(45deg); opacity: 1; }
+  100% { transform: translate(-500px, 1000px) rotate(45deg); opacity: 0; }
+}
+
+/* ====== TRACK STYLE ====== */
+.track {
+  margin: 2rem auto;
+  max-width: 700px;
+  padding: 1.5rem;
+  background: rgba(255, 0, 76, 0.08);
+  border: 1px solid #ff004c;
+  border-radius: 12px;
+  box-shadow: 0 0 25px rgba(255, 0, 76, 0.4);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.track:hover {
+  transform: scale(1.03);
+  box-shadow: 0 0 35px rgba(255, 0, 76, 0.7);
+}
+
+.track p {
+  font-size: 1.3rem;
+  color: #fff;
+  text-shadow: 0 0 15px #ff004c;
+  margin-bottom: 0.8rem;
+}
+
+/* ====== AUDIO PLAYER NEON ====== */
+audio {
+  width: 100%;
+  outline: none;
+  filter: drop-shadow(0 0 12px #ff004c);
+  border-radius: 10px;
+}
+
+/* Panel kontrol */
+audio::-webkit-media-controls-panel {
+  background: rgba(20, 20, 20, 0.95);
+  border-radius: 10px;
+  box-shadow: 0 0 20px #ff004c;
+}
+
+/* Tombol play/pause */
+audio::-webkit-media-controls-play-button,
+audio::-webkit-media-controls-pause-button {
+  background-color: #ff004c;
+  border-radius: 50%;
+  box-shadow: 0 0 10px #ff004c;
+}
+
+/* Waktu */
+audio::-webkit-media-controls-current-time-display,
+audio::-webkit-media-controls-time-remaining-display {
+  color: #ff004c;
+  text-shadow: 0 0 8px #ff004c;
+}
+
+/* Progress bar */
+audio::-webkit-media-controls-timeline {
+  accent-color: #ff004c;
+}
+
+/* Volume slider */
+audio::-webkit-media-controls-volume-slider {
+  accent-color: #ff004c;
+}
+
+/* ====== Hilangkan tombol download ====== */
+audio::-webkit-media-controls-enclosure {
+  overflow: hidden;
+}
+
+audio::-webkit-media-controls-download-button {
+  display: none !important;
+}
+
+/* ====== FOOTER ====== */
+footer {
+  text-align: center;
+  padding: 1rem;
+  font-size: 0.9rem;
+  color: #aaa;
+  text-shadow: 0 0 10px #ff004c;
+}
+
+/* ====== LOADING SCREEN AUDIO ====== */
+.audio-loader {
+  position: fixed;
+  inset: 0;
+  background: #000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  transition: opacity 1s ease;
+}
+
+.audio-loader.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Nebula berdenyut pelan */
+.nebula-pulse {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 40% 60%, rgba(230, 57, 70, 0.15) 0%, transparent 70%);
+  animation: nebulaPulse 14s infinite alternate ease-in-out;
+}
+
+@keyframes nebulaPulse {
+  0% { opacity: 0.25; transform: scale(1); }
+  100% { opacity: 0.7; transform: scale(1.18); }
+}
+
+/* Planet berputar */
+.planet {
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, #ff004c, #0d0d1a 70%);
+  box-shadow: 0 0 40px #ff004c, inset 0 0 30px rgba(255,255,255,0.2);
+  animation: spinPlanet 12s linear infinite;
+  position: relative;
+  z-index: 2;
+}
+
+.planet::after {
+  content: '';
+  position: absolute;
+  top: -20px;
+  left: -20px;
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  border: 2px dashed rgba(255,0,76,0.4);
+  animation: orbitGlow 8s linear infinite;
+}
+
+@keyframes spinPlanet {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes orbitGlow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* Efek pecah planet saat loader hilang */
+.audio-loader.hidden .planet {
+  animation: explodePlanet 1s forwards;
+}
+
+@keyframes explodePlanet {
+  0% { transform: scale(1); opacity: 1; }
+  100% { transform: scale(2); opacity: 0; filter: blur(10px); }
+}
+
+/* Komet jatuh (tiga komet dengan delay berbeda biar lebih hidup) */
+.komet-container {
+  position: relative;
+  width: 100%;
+  height: 300px;
+}
+
+.komet {
+  position: absolute;
+  top: -200px;
+  left: 50%;
+  width: 5px;
+  height: 160px;
+  background: linear-gradient(to bottom, transparent, #ff004c, #ff004c, transparent);
+  transform: translateX(-50%) rotate(45deg);
+  animation: kometFall 5s linear infinite;
+  opacity: 0;
+}
+
+.komet:nth-child(2) {
+  animation-delay: 1.2s;
+  left: 35%;
+}
+
+.komet:nth-child(3) {
+  animation-delay: 2.8s;
+  left: 65%;
+}
+
+.komet::before {
+  content: '';
+  position: absolute;
+  top: -30px;
+  left: -12px;
+  width: 30px;
+  height: 30px;
+  background: #ff004c;
+  border-radius: 50%;
+  box-shadow: 0 0 50px #ff004c, 0 0 90px #ff004c;
+  animation: kometGlow 2s infinite alternate;
+}
+
+@keyframes kometFall {
+  0% { top: -200px; opacity: 0; transform: translateX(-50%) rotate(45deg); }
+  15% { opacity: 1; }
+  85% { opacity: 1; }
+  100% { top: 120vh; opacity: 0; transform: translateX(-50%) rotate(45deg); }
+}
+
+@keyframes kometGlow {
+  from { box-shadow: 0 0 40px #ff004c; }
+  to { box-shadow: 0 0 90px #ff004c, 0 0 140px #ff004c; }
+}
+
+/* Teks loading neon */
+.loader-text {
+  margin-top: 3rem;
+  font-family: 'Orbitron', monospace;
+  font-size: 1.8rem;
+  color: #e63946;
+  text-shadow: 0 0 30px #e63946, 0 0 60px #ff004c;
+  animation: pulseText 2.8s infinite alternate;
+}
+
+@keyframes pulseText {
+  from { opacity: 0.6; text-shadow: 0 0 20px #e63946; }
+  to { opacity: 1; text-shadow: 0 0 50px #e63946, 0 0 90px #ff004c; }
+}
