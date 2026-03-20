@@ -10,20 +10,52 @@
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&display=swap" rel="stylesheet">
 
   <style>
-    /* Loader style */
-    .loader {
-      position: fixed;
-      inset: 0;
-      background: #000;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      z-index: 9999;
-      color: #e63946;
-      font-family: 'Orbitron', monospace;
-      text-align: center;
+    :root{
+      color-scheme: dark;
     }
+    body{
+      background: linear-gradient(180deg,#090909 0%,#0a0a0f 48%,#080809 100%);
+      color:#f2f2f2;
+      font-family:'Orbitron',Arial,sans-serif;
+      line-height:1.6;
+      margin:0;
+      padding:0 1rem 2rem;
+      min-height:100vh;
+    }
+
+    header{
+      background:#020202;
+      border-bottom:2px solid #b71c1c;
+      padding:1rem 1.25rem;
+      text-align:center;
+      position:sticky;
+      top:0;
+      z-index:999;
+    }
+
+    header h1{margin:0;font-size:clamp(1.8rem,4vw,2.8rem);letter-spacing:1px;text-transform:uppercase;color:#ff3b3b;}
+    header p{margin-top:.35rem;color:#f5dfdf;font-style:italic;font-size:1rem;}
+
+    .alert-panel{margin:1.2rem auto;max-width:1000px;background:#2b0605;border:2px solid #d32f2f;border-radius:12px;padding:1rem 1.2rem;
+    box-shadow:0 6px 18px rgba(0,0,0,.7);}
+    .alert-panel h2{font-size:1.25rem;color:#ffb4b4;margin-bottom:.4rem;}
+    .alert-panel p{margin:.5rem 0;color:#ffdede;}
+
+    .content-wrapper{max-width:1000px;margin:0 auto;padding:1.2rem;}
+    .content-wrapper h1{color:#e53935;font-size:2rem;margin-bottom:.7rem;}
+    .content-wrapper p{margin:.7rem 0;color:#e3e3e3;font-size:1.02rem;}
+
+    .risk-meter{margin:1rem 0;padding:.65rem;border:1px solid #f44336;border-radius:9px;background:linear-gradient(90deg,#f44336 0%,#f44336 20%,#ffa726 20%,#ffca28 45%,#4caf50 45%,#4caf50 100%);
+      position:relative;overflow:hidden;}
+    .risk-meter span{position:absolute;top:-1px;left:0;width:0;height:100%;background:rgba(0,0,0,.2);transition:width .3s ease;}
+
+    .compliance-bar{display: flex; align-items: center; justify-content: space-between; margin: 1rem 0;}
+    .btn-serious{display:inline-block;background:#b71c1c;color:#fff;padding:.7rem 1rem;border:1px solid #ff5252;border-radius:8px;font-weight:700;cursor:pointer;text-decoration:none;transition:.2s;}
+    .btn-serious:hover{background:#d32f2f;transform:translateY(-1px);}
+
+    .command-log{margin-top:1rem;border:1px solid rgba(255,255,255,.15);border-radius:9px;padding:1rem;background:rgba(0,0,0,.45);font-family:monospace;color:#f9f9f9;}
+
+    .loader{position:fixed;inset:0; background:#000; display:flex; flex-direction:column; align-items:center; justify-content:center; z-index:9999; color:#e63946; font-family:'Orbitron',monospace; text-align:center;}
     .loader .exclamation {
       font-size: 10rem; /* lebih besar dari sebelumnya */
       color: #e63946;
@@ -52,10 +84,31 @@
     <p id="loading-text">MEMASUKI HALAMAN DISCLAIMER</p>
   </div>
 
+  <!-- Header -->
+  <header>
+    <div class="header-left">
+      <h1>Disclaimer</h1>
+      <p>Pembukaan legal dan perlindungan hak cipta</p>
+    </div>
+  </header>
+
   <!-- Konten Disclaimer -->
-  <h1>Disclaimer</h1>
-  <p>
-    StickNext Rail Saga adalah sebuah karya fiksi yang lahir dari imajinasi kreatif komunitas kami. 
+  <div class="content-wrapper">
+    <div class="alert-panel">
+      <h2>PERINGATAN: HARUS DIBACA SEBELUM MELANJUT</h2>
+      <p>Halaman ini hanya menyajikan informasi legal. Tidak ada komponen navigasi yang memecah fokus.</p>
+      <p>Untuk melanjutkan membaca, tekan tombol konfirmasi di bawah ini.</p>
+      <div class="compliance-bar">
+        <span><strong>Level risiko legal: TINGGI</strong></span>
+        <button id="confirm-read" class="btn-serious" disabled>Memahami (5 detik)</button>
+      </div>
+      <div class="risk-meter"><span id="risk-progress"></span></div>
+    </div>
+
+    <div id="disclaimer-body">
+      <h1>Disclaimer</h1>
+      <p>
+        StickNext Rail Saga adalah sebuah karya fiksi yang lahir dari imajinasi kreatif komunitas kami. 
     Saga ini menampilkan kisah-kisah epik, intens, bahkan kadang bernuansa gelap, 
     namun seluruh cerita, karakter, konflik, dan simbol yang ditampilkan 
     <strong>tidak memiliki hubungan langsung dengan realitas operasional maupun kebijakan PT Kereta Api Indonesia (KAI)</strong>.
@@ -84,6 +137,7 @@
     sekaligus memahami bahwa tujuan kami adalah mendukung dan mengangkat citra KAI, 
     bukan sebaliknya.
   </p>
+  </div> <!-- /.content-wrapper -->
 
   <!-- Loading Screen JS -->
   <script>
@@ -104,6 +158,32 @@
           loader.style.display = "none";
         }, 2000);
       }, 5000); // lebih panjang biar makin intimidatif
+
+      // Compliance countdown
+      const confirmRead = document.getElementById('confirm-read');
+      const riskProgress = document.getElementById('risk-progress');
+      let count = 5;
+      const timer = setInterval(() => {
+        if (count <= 0) {
+          clearInterval(timer);
+          confirmRead.textContent = 'Klik untuk mengkonfirmasi';
+          confirmRead.disabled = false;
+          riskProgress.style.width = '100%';
+          return;
+        }
+        confirmRead.textContent = `Memahami (${count} detik)`;
+        riskProgress.style.width = `${(5 - count) / 5 * 100}%`;
+        count -= 1;
+      }, 1000);
+
+      confirmRead?.addEventListener('click', () => {
+        const section = document.getElementById('disclaimer-body');
+        if (section) {
+          section.scrollIntoView({ behavior: 'smooth' });
+        }
+        confirmRead.disabled = true;
+        confirmRead.textContent = 'Terverifikasi';
+      });
     });
   </script>
 </body>

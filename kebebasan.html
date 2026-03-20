@@ -142,13 +142,8 @@
   showMessages();
   </script>
 
+  <script src="nav.js"></script>
   <script>
-    const hamburger = document.getElementById('hamburger-btn');
-    const sidebar = document.getElementById('sidebar');
-    const closeSide = document.getElementById('close-sidebar');
-    hamburger.addEventListener('click', () => sidebar.classList.toggle('active'));
-    closeSide.addEventListener('click', () => sidebar.classList.remove('active'));
-    document.addEventListener('click', (e) => { if (!sidebar.contains(e.target) && !hamburger.contains(e.target)) sidebar.classList.remove('active'); });
     window.addEventListener('load', () => {
       const loader = document.getElementById('loader'); loader.style.opacity='0'; setTimeout(() => loader.style.display='none', 800);
     });
