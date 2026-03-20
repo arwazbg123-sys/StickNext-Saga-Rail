@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FAQ StickNext Saga Rail</title>
+  <link rel="stylesheet" href="CSS.css">
+  <style>
+    body { background: #0f1324; color: #e7efff; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; padding: 1rem; min-height: 100vh; }
+    .container { max-width: 960px; margin: 0 auto; background: rgba(16, 20, 40, 0.96); border: 1px solid #5297ff33; border-radius: 12px; padding: 1.1rem; }
+    h1 { color: #87baff; }
+    .accordion { margin-top: 1rem; }
+    .question { background: rgba(33, 43, 81, 0.95); border: 1px solid #5d86ff22; border-radius: 8px; margin-bottom: .65rem; }
+    .question button { width: 100%; text-align: left; color: #d3eaff; background: transparent; border: none; padding: .85rem; font-size: 1rem; font-weight: 600; cursor: pointer; display: flex; justify-content: space-between; align-items: center; }
+    .question button:hover { background: rgba(60, 80, 130, 0.7); }
+    .answer { max-height: 0; overflow: hidden; transition: max-height .28s ease, padding .28s ease; padding: 0 .85rem; }
+    .answer.open { padding: .75rem .85rem .85rem; max-height: 350px; }
+    .answer p { margin: .35rem 0; color: #c8ddff; }
+    .toggle-icon { transition: transform .3s; }
+    .toggle-icon.open { transform: rotate(90deg); }
+    .back-link { margin-top: 1rem; display: inline-block; color: #87c7ff; text-decoration: underline; }
+  </style>
+</head>
+<body>
+  <section class="container">
+    <h1>FAQ: StickNext Saga Rail</h1>
+    <p>Halaman ini dibuat khusus sebagai titik FAQ interaktif untuk pertanyaan umum seputar proyek. Dibuat untuk developer/penikmat yang ingin tahu fitur, navigasi, dan rencana pengembangan.</p>
+
+    <div class="accordion" id="faqAccordion">
+      <div class="question">
+        <button type="button" aria-expanded="false">
+          Apa tujuan utama StickNext Saga Rail?
+          <span class="toggle-icon">▶</span>
+        </button>
+        <div class="answer" role="region">
+          <p>StickNext Saga Rail bertujuan jadi portal komunitas dengan situs demo kreatif, media visual, dan fitur interaktif untuk anggota serta pengembang.</p>
+        </div>
+      </div>
+
+      <div class="question">
+        <button type="button" aria-expanded="false">
+          Bagaimana cara menambahkan halaman baru di navigasi?
+          <span class="toggle-icon">▶</span>
+        </button>
+        <div class="answer" role="region">
+          <p>Tambahkan file HTML baru dan update `navigasi.html` dengan kartu baru sekaligus link. Navigasi utama dijaga sebagai satu-satunya sumber daftar global.</p>
+        </div>
+      </div>
+
+      <div class="question">
+        <button type="button" aria-expanded="false">
+          Bisakah halaman ini dijadikan daftar dev-only?
+          <span class="toggle-icon">▶</span>
+        </button>
+        <div class="answer" role="region">
+          <p>Iya, semua halaman khusus dev (statistik, monitoring) bisa dihubungkan dari `navigasi.html`, agar tidak tersebar di menu umum.</p>
+        </div>
+      </div>
+
+      <div class="question">
+        <button type="button" aria-expanded="false">
+          Bagaimana memeriksa status koneksi browser?
+          <span class="toggle-icon">▶</span>
+        </button>
+        <div class="answer" role="region">
+          <p>Gunakan `statistik-jaringan.html` (Network Information API), atau gunakan `navigator.onLine`, `fetch` speed test, serta monitoring server backend di lingkungan produksi.</p>
+        </div>
+      </div>
+
+      <div class="question">
+        <button type="button" aria-expanded="false">
+          Apakah ada fitur privasi untuk data pengguna?
+          <span class="toggle-icon">▶</span>
+        </button>
+        <div class="answer" role="region">
+          <p>Situs ini tidak mengumpulkan data pengguna secara otomatis. Semua uji hanya berjalan di browser klien dan menggunakan endpoint lokal saat ini.</p>
+        </div>
+      </div>
+    </div>
+
+    <a class="back-link" href="navigasi.html">← Kembali ke Navigasi</a>
+  </section>
+
+  <script>
+    document.querySelectorAll('.question button').forEach(button => {
+      button.addEventListener('click', () => {
+        const answer = button.nextElementSibling;
+        const icon = button.querySelector('.toggle-icon');
+        const isOpen = answer.classList.contains('open');
+
+        document.querySelectorAll('.answer.open').forEach(a => {
+          a.classList.remove('open');
+          a.previousElementSibling.querySelector('.toggle-icon').classList.remove('open');
+          a.previousElementSibling.setAttribute('aria-expanded', 'false');
+        });
+
+        if (!isOpen) {
+          answer.classList.add('open');
+          icon.classList.add('open');
+          button.setAttribute('aria-expanded', 'true');
+        } else {
+          answer.classList.remove('open');
+          icon.classList.remove('open');
+          button.setAttribute('aria-expanded', 'false');
+        }
+      });
+    });
+  </script>
+</body>
+</html>
