@@ -73,17 +73,20 @@
       </ul>
     </section>
 
-    <section id="form-kontak">
+    <section>
       <h2>Kirim Pesan</h2>
-      <form action="#" method="post">
+      <form id="form-kontak" novalidate>
         <label for="nama">Nama:</label><br>
-        <input type="text" id="nama" name="nama"><br><br>
+        <input type="text" id="nama" name="nama" required><br><br>
 
         <label for="email">Email:</label><br>
-        <input type="email" id="email" name="email"><br><br>
+        <input type="email" id="email" name="email" required><br><br>
+
+        <label for="subjek">Subjek:</label><br>
+        <input type="text" id="subjek" name="subjek"><br><br>
 
         <label for="pesan">Pesan:</label><br>
-        <textarea id="pesan" name="pesan" rows="5"></textarea><br><br>
+        <textarea id="pesan" name="pesan" rows="6" required></textarea><br><br>
 
         <button type="submit">Kirim</button>
       </form>
@@ -142,6 +145,9 @@
       }, 1800);
     });
   </script>
+
+  <!-- Script Kontak (modular complex) -->
+  <script src="kontak.js"></script>
 
   <!-- Script Hamburger + Sidebar -->
   <script src="nav.js"></script>
