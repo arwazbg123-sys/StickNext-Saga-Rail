@@ -26,10 +26,10 @@ function validateEmail(value) {
 
 function validateForm(data) {
   if (!data.nama || !data.email || !data.pesan) {
-    return 'Nama, email, dan pesan wajib diisi.';
+    return 'Nama, email, dan pesan diisi dulu woy.';
   }
   if (!validateEmail(data.email)) {
-    return 'Format email tidak valid.';
+    return 'Format email gak valid woy.';
   }
   return '';
 }
@@ -47,7 +47,7 @@ function getPendingMessages() {
     if (!raw) return [];
     return JSON.parse(raw);
   } catch (e) {
-    console.warn('Gagal membaca pesan pending:', e);
+    console.warn('Gagal baca pesan pending nih:', e);
     return [];
   }
 }
@@ -104,10 +104,10 @@ async function flushPendingMessages() {
       await postContact(item.payload);
       pending.splice(i, 1);
       i -= 1;
-      showStatus('Pesan pending berhasil terkirim ke server.', 'success');
+      showStatus('yey Pesan pending berhasil terkirim ke server.', 'success');
     } catch (err) {
-      showStatus('Pesan pending tetap disimpan karena server tidak tersedia.', 'warning');
-      console.warn('Flush pending gagal:', err);
+      showStatus('duh Pesan pending tetap disimpan karena server gak tersedia.', 'warning');
+      console.warn('wah Flush pending gagal:', err);
       break;
     }
   }
@@ -138,7 +138,7 @@ async function sendMessage(event) {
     return;
   }
 
-  showStatus('Mengirim, tunggu sebentar...', 'info');
+  showStatus('Mengirim, tunggu bentar ya...', 'info');
   try {
     const hasil = await postContact(payload);
     showStatus('Berhasil dikirim. Tanggapan server: ' + (hasil?.json ? JSON.stringify(hasil.json) : 'OK'), 'success');
@@ -147,7 +147,7 @@ async function sendMessage(event) {
   } catch (error) {
     console.error('Gagal kirim:', error);
     addPendingMessage({timestamp: Date.now(), payload});
-    showStatus('Server tidak dapat dijangkau. Pesan disimpan sementara dan akan dicoba lagi bila online.', 'warning');
+    showStatus('wah Server lagi gak bisa dijangkau. Pesan disimpan sementara dan akan dicoba lagi kalo online.', 'warning');
   }
 }
 
@@ -157,7 +157,7 @@ function bindEvents() {
   form.addEventListener('submit', sendMessage);
 
   window.addEventListener('online', () => {
-    showStatus('Online kembali. Mengirim pesan pending...', 'info');
+    showStatus('akhirnya Online kembali. Mengirim pesan pending...', 'info');
     flushPendingMessages();
   });
 }
@@ -170,7 +170,7 @@ function init() {
   statusArea.style.padding = '0.9rem';
   statusArea.style.borderRadius = '7px';
   statusArea.style.border = '1px solid #81afff33';
-  statusArea.innerText = 'Silakan isi formulir dan kirim.';
+  statusArea.innerText = 'Silakan isi formulir nya dan kirim.';
 
   const formSection = query('form-kontak');
   if (formSection) {
