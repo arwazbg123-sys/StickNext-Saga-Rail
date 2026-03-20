@@ -5,6 +5,82 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Galeri - StickNext Saga Rail</title>
   <link rel="stylesheet" href="CSS.css">
+  <style>
+    /* Modal detail & watermark */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 9999;
+      inset: 0;
+      background-color: rgba(0, 0, 0, 0.86);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+      overflow: auto;
+    }
+    .modal-content {
+      max-width: 95vw;
+      max-height: 80vh;
+      border: 2px solid #f8f9fa;
+      border-radius: 0.85rem;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.55);
+      transition: transform 180ms ease;
+      transform-origin: center center;
+      object-fit: contain;
+      background: #111;
+    }
+    .close-modal {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      color: #fff;
+      font-size: 2rem;
+      cursor: pointer;
+      user-select: none;
+      z-index: 10000;
+    }
+    .watermark {
+      position: absolute;
+      bottom: 1rem;
+      right: 1rem;
+      color: rgba(255,255,255,0.45);
+      font-size: 0.8rem;
+      padding: 0.25rem 0.4rem;
+      border: 1px solid rgba(255,255,255,0.22);
+      border-radius: 6px;
+      backdrop-filter: blur(4px);
+      user-select: none;
+      z-index: 10000;
+    }
+    .modal-controls {
+      position: absolute;
+      bottom: 1rem;
+      left: 1rem;
+      display: flex;
+      gap: 0.4rem;
+      align-items: center;
+      z-index: 10000;
+      flex-wrap: wrap;
+    }
+    .modal-controls button {
+      border: 1px solid rgba(255,255,255,0.35);
+      background: rgba(0,0,0,0.45);
+      color: #fff;
+      padding: 0.35rem 0.7rem;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 0.9rem;
+    }
+    .modal-controls button:hover {
+      background: rgba(255,255,255,0.12);
+    }
+    .modal-meta {
+      color: #ddd;
+      margin-left: 0.5rem;
+      font-size: 0.8rem;
+    }
+  </style>
 </head>
 <body>
   <!-- Loading Screen -->
@@ -200,7 +276,17 @@
   <!-- Modal Zoom Gambar -->
   <div id="modal" class="modal">
     <span class="close-modal">&times;</span>
-    <img class="modal-content" id="modal-img">
+    <img class="modal-content" id="modal-img" alt="Preview karya" />
+
+    <div class="modal-controls">
+      <button id="zoom-out" type="button">-</button>
+      <button id="zoom-reset" type="button">Reset</button>
+      <button id="zoom-in" type="button">+</button>
+      <button id="rotate-left" type="button">⟲</button>
+      <button id="rotate-right" type="button">⟳</button>
+      <button id="fit-screen" type="button">Fit</button>
+      <span id="modal-dimension" class="modal-meta">Dimensi: -</span>
+    </div>
     <div class="watermark">StickNext Saga Rail</div>
   </div>
 
@@ -265,27 +351,79 @@
     const modal = document.getElementById('modal');
     const modalImg = document.getElementById('modal-img');
     const closeModal = document.querySelector('.close-modal');
+    const zoomIn = document.getElementById('zoom-in');
+    const zoomOut = document.getElementById('zoom-out');
+    const zoomReset = document.getElementById('zoom-reset');
+    const rotateLeft = document.getElementById('rotate-left');
+    const rotateRight = document.getElementById('rotate-right');
+    const fitScreen = document.getElementById('fit-screen');
+    const dimensionInfo = document.getElementById('modal-dimension');
     const searchInput = document.getElementById('search-query');
     const filterBtn = document.getElementById('filter-btn');
     const resetBtn = document.getElementById('reset-btn');
     const shuffleBtn = document.getElementById('shuffle-btn');
     const galleryHint = document.getElementById('gallery-hint');
+
     let currentModalIndex = -1;
+    let currentZoom = 1;
+    let currentRotation = 0;
+
+    const MIN_ZOOM = 0.4;
+    const MAX_ZOOM = 3.2;
+    const ZOOM_STEP = 0.2;
+
+    function updateTransform() {
+      modalImg.style.transform = `scale(${currentZoom}) rotate(${currentRotation}deg)`;
+      updateDimension();
+    }
+
+    function updateDimension() {
+      if (!modalImg.naturalWidth) {
+        dimensionInfo.innerText = 'Dimensi: menunggu...';
+      } else {
+        const displayW = modalImg.clientWidth;
+        const displayH = modalImg.clientHeight;
+        dimensionInfo.innerText = `Dimensi: asli ${modalImg.naturalWidth}x${modalImg.naturalHeight}px • tampil ${displayW}x${displayH}px`;
+      }
+    }
 
     function openModal(index) {
       const card = cards[index];
       if (!card) return;
+
       const img = card.querySelector('img');
       modalImg.src = img.src;
       modalImg.alt = img.alt;
-      modal.style.display = 'block';
+
+      modal.style.display = 'flex';
       currentModalIndex = index;
-      galleryHint.innerText = `Menampilkan: ${card.querySelector('h3').innerText}`;
+      currentZoom = 1;
+      currentRotation = 0;
+      updateTransform();
+
+      galleryHint.innerText = `Menampilkan: ${card.querySelector('h3').innerText} (klik untuk full view, gunakan kontrol zoom/rotasi)`;
     }
 
     function closeModalFn() {
       modal.style.display = 'none';
       currentModalIndex = -1;
+      modalImg.style.transform = 'none';
+    }
+
+    function doZoom(delta) {
+      currentZoom = Math.max(MIN_ZOOM, Math.min(MAX_ZOOM, currentZoom + delta));
+      updateTransform();
+    }
+
+    function doRotate(delta) {
+      currentRotation = (currentRotation + delta) % 360;
+      updateTransform();
+    }
+
+    function fitToScreen() {
+      currentZoom = 1;
+      currentRotation = 0;
+      updateTransform();
     }
 
     function highlightCard(card) {
@@ -311,8 +449,25 @@
     closeModal?.addEventListener('click', closeModalFn);
     modal?.addEventListener('click', (e) => { if (e.target === modal) closeModalFn(); });
 
+    modalImg.addEventListener('load', () => {
+      currentZoom = 1;
+      currentRotation = 0;
+      updateTransform();
+    });
+
+    modalImg.addEventListener('click', () => {
+      doZoom(0.2);
+    });
+
+    zoomIn?.addEventListener('click', () => doZoom(ZOOM_STEP));
+    zoomOut?.addEventListener('click', () => doZoom(-ZOOM_STEP));
+    zoomReset?.addEventListener('click', fitToScreen);
+    rotateLeft?.addEventListener('click', () => doRotate(-90));
+    rotateRight?.addEventListener('click', () => doRotate(90));
+    fitScreen?.addEventListener('click', fitToScreen);
+
     document.addEventListener('keydown', (e) => {
-      if (modal.style.display === 'block') {
+      if (modal.style.display === 'flex') {
         if (e.key === 'ArrowRight') {
           currentModalIndex = (currentModalIndex + 1) % cards.length;
           openModal(currentModalIndex);
@@ -322,6 +477,8 @@
           openModal(currentModalIndex);
         }
         if (e.key === 'Escape') closeModalFn();
+        if (e.key === 'ArrowUp') doZoom(ZOOM_STEP);
+        if (e.key === 'ArrowDown') doZoom(-ZOOM_STEP);
       }
     });
 
@@ -355,7 +512,7 @@
       document.documentElement.style.setProperty('--scroll-progress', `${Math.max(0, Math.min(100, progress))}%`);
     });
 
-    galleryHint.innerText = 'Tekan Enter di kotak cari, klik ganda untuk favorit, panah di modal untuk navigasi.';
+    galleryHint.innerText = 'Tekan Enter di kotak cari, klik ganda untuk favorit, panah/zoom untuk navigasi, atau klik foto untuk zoom cepat.';
   </script>
 </body>
 </html>
