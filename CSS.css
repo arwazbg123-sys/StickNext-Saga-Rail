@@ -540,3 +540,142 @@ button:hover {
   margin-top: 1rem;
   color: #ff6b6b;
 }
+
+/* Blog Styles */
+.blog-hero {
+  text-align: center;
+  padding: 2rem 1rem;
+  background: linear-gradient(135deg, rgba(230, 57, 70, 0.1), rgba(0, 184, 255, 0.1));
+  border-radius: 15px;
+  margin-bottom: 2rem;
+  border: 1px solid rgba(230, 57, 70, 0.3);
+}
+
+.blog-hero h2 {
+  color: #e63946;
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+  text-shadow: 0 0 10px rgba(230, 57, 70, 0.5);
+}
+
+.blog-hero p {
+  color: #bbb;
+  font-size: 1.1rem;
+}
+
+.stats-section {
+  margin-bottom: 2rem;
+}
+
+.search-filter {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  justify-content: center;
+}
+
+.search-filter input, .search-filter select {
+  padding: 0.75rem;
+  border: 1px solid #e63946;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.1);
+  color: #e0e0e0;
+  font-size: 1rem;
+  min-width: 200px;
+}
+
+.search-filter input:focus, .search-filter select:focus {
+  outline: none;
+  border-color: #ff6b6b;
+  box-shadow: 0 0 5px rgba(230, 57, 70, 0.5);
+}
+
+.blog-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.blog-card {
+  background: rgba(17, 17, 17, 0.9);
+  border: 1px solid rgba(230, 57, 70, 0.3);
+  border-radius: 15px;
+  padding: 1.5rem;
+  transition: transform 0.3s, box-shadow 0.3s;
+  overflow: hidden;
+}
+
+.blog-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px rgba(230, 57, 70, 0.3);
+}
+
+.blog-card img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 10px;
+  margin-bottom: 1rem;
+}
+
+.blog-card h3 {
+  color: #7cd7ff;
+  margin-bottom: 0.5rem;
+  font-size: 1.2rem;
+}
+
+.blog-card .badge {
+  display: inline-block;
+  background: #00a4ff;
+  color: #fff;
+  font-size: 0.7rem;
+  padding: 0.2rem 0.5rem;
+  border-radius: 999px;
+  margin-bottom: 0.5rem;
+}
+
+.blog-card small {
+  color: #99b7d8;
+  display: block;
+  margin-bottom: 1rem;
+}
+
+.blog-card p {
+  color: #d2e7ff;
+  line-height: 1.5;
+  margin-bottom: 1rem;
+}
+
+.blog-card a {
+  color: #99d7ff;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.blog-card a:hover {
+  text-decoration: underline;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 2rem;
+}
+
+.pagination button {
+  padding: 0.5rem 1rem;
+  background: rgba(230, 57, 70, 0.2);
+  border: 1px solid #e63946;
+  color: #e0e0e0;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.pagination button:hover, .pagination button.active {
+  background: #e63946;
+  color: #fff;
+}

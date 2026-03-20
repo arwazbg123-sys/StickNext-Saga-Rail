@@ -24,6 +24,76 @@ let currentPage = 1;
 const itemsPerPage = 6;
 let filteredNotes = initialNotes;
 
+// Futuristic Loader Functions
+function startLoader() {
+  const loader = document.getElementById('loader');
+  if (loader) {
+    loader.style.display = 'flex';
+    loader.style.opacity = '1';
+    animateParticles();
+  }
+}
+
+function stopLoader() {
+  const loader = document.getElementById('loader');
+  if (loader) {
+    loader.style.opacity = '0';
+    setTimeout(() => {
+      loader.style.display = 'none';
+    }, 1000);
+  }
+}
+
+function animateParticles() {
+  const particles = document.querySelectorAll('.loader-particle');
+  particles.forEach((particle, index) => {
+    const angle = (index / particles.length) * 2 * Math.PI;
+    const radius = 60;
+    const x = Math.cos(angle) * radius;
+    const y = Math.sin(angle) * radius;
+    particle.style.transform = `translate(${x}px, ${y}px)`;
+    particle.style.animation = `orbit 3s linear infinite`;
+    particle.style.animationDelay = `${index * 0.2}s`;
+  });
+}
+
+function glitchText() {
+  const text = document.querySelector('.loader-text');
+  if (!text) return;
+  const original = 'Memuat Saga Blog...';
+  let glitched = '';
+  for (let i = 0; i < original.length; i++) {
+    if (Math.random() > 0.8) {
+      glitched += String.fromCharCode(65 + Math.floor(Math.random() * 26));
+    } else {
+      glitched += original[i];
+    }
+  }
+  text.textContent = glitched;
+  setTimeout(glitchText, 150);
+}
+
+function renderGrid(notes, page = 1) {
+  const start = (page - 1) * itemsPerPage;
+  const end = start + itemsPerPage;
+  const paginatedNotes = notes.slice(start, end);
+
+  let html = '';
+  paginatedNotes.forEach(function(note) {
+    html += '<div class="blog-card" data-aos="zoom-in">' +
+      '<img src="' + note.img + '" alt="' + note.title + '">' +
+      '<h3>' + note.title + ' <span class="badge">' + note.tag + '</span></h3>' +
+      '<small>' + note.date + ' • ' + (note.type === 'dev' ? 'Catatan Developer' : 'Berita') + '</small>' +
+      '<p>' + note.desc + '</p>' +
+      '<a href="' + note.link + '">Baca selengkapnya &raquo;</a>' +
+      '</div>';
+  });
+  blogGrid.innerHTML = html;
+
+  renderPagination(notes.length);
+  countArticles.innerText = notes.length;
+}
+
 function renderGrid(notes, page = 1) {
   const start = (page - 1) * itemsPerPage;
   const end = start + itemsPerPage;
@@ -92,12 +162,17 @@ function tickStatUpdate() {
 }
 
 function setup() {
-  renderGrid(filteredNotes);
-  tickStatUpdate();
-  setInterval(tickStatUpdate, 1100);
-  forceUpdateBtn.addEventListener('click', tickStatUpdate);
-  searchInput.addEventListener('input', filterNotes);
-  filterSelect.addEventListener('change', filterNotes);
+  startLoader();
+  glitchText();
+  setTimeout(() => {
+    renderGrid(filteredNotes);
+    tickStatUpdate();
+    setInterval(tickStatUpdate, 1100);
+    forceUpdateBtn.addEventListener('click', tickStatUpdate);
+    searchInput.addEventListener('input', filterNotes);
+    filterSelect.addEventListener('change', filterNotes);
+    stopLoader();
+  }, 3000); // Simulate loading time
 }
 
 document.addEventListener('DOMContentLoaded', setup);
@@ -109,12 +184,3 @@ function updateClock() {
 }
 setInterval(updateClock, 1000);
 updateClock();
-
-// Loader hide
-window.addEventListener('load', function() {
-  const loader = document.getElementById('loader');
-  loader.style.opacity = '0';
-  setTimeout(function() {
-    loader.style.display = 'none';
-  }, 800);
-});
