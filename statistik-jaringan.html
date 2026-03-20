@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Statistik Jaringan Developer</title>
+  <link rel="stylesheet" href="CSS.css">
+  <style>
+    body { background: #10122b; color: #d7e9ff; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; padding: 1rem; min-height: 100vh; }
+    .card { max-width: 900px; margin: 0 auto; background: rgba(12, 16, 45, 0.94); border: 1px solid #4488ff55; border-radius: 12px; padding: 1.2rem; }
+    h1 { color: #77b8ff; font-size: clamp(1.6rem, 4vw, 2.4rem); }
+    .info-list { display: grid; gap: .75rem; margin-top: .8rem; }
+    .info-item { background: rgba(255,255,255,0.05); border: 1px solid rgba(119,184,255,0.28); border-radius: 8px; padding: .7rem; }
+    .info-item strong { color: #a4d7ff; }
+    button { margin-top: 1rem; background: #2a74ff; color: #ffffff; border: none; border-radius: 8px; padding: 0.65rem 1rem; cursor: pointer; font-weight: 600; }
+    button:hover { background: #1f58e5; }
+    .badan-catatan { margin-top: .8rem; color: #cddcff; background: rgba(255,255,255,.05); border-radius: 8px; border: 1px solid rgba(255,255,255,.15); padding: .8rem; }
+    a { color: #79cff5; text-decoration: underline; }
+  </style>
+</head>
+<body>
+  <section class="card">
+    <h1>Status Jaringan - Developer</h1>
+    <p>Halaman ini dirancang khusus untuk developer memantau kemampuan koneksi (latensi, jenis koneksi, downlink) di lingkungan lokal atau di server.</p>
+
+    <div class="info-list" id="stats">
+      <div class="info-item"><strong>Jenis Koneksi:</strong> <span id="connType">-</span></div>
+      <div class="info-item"><strong>Effective Type:</strong> <span id="effectiveType">-</span></div>
+      <div class="info-item"><strong>Downlink (Mbps):</strong> <span id="downlink">-</span></div>
+      <div class="info-item"><strong>RTT (ms):</strong> <span id="rtt">-</span></div>
+      <div class="info-item"><strong>Saved Data:</strong> <span id="saveData">-</span></div>
+      <div class="info-item"><strong>Pengukuran Ping (3x):</strong> <span id="pingResults">-</span></div>
+      <div class="info-item"><strong>Waktu Server Lokal:</strong> <span id="sistemWaktu">-</span></div>
+    </div>
+
+    <button id="checkBtn">Jalankan Uji Kecepatan</button>
+
+    <section class="badan-catatan">
+      <p>Catatan:
+      <ul>
+        <li>Fitur <strong>Network Information API</strong> hanya tersedia di browser tertentu (Chrome/Edge, Opera, dan sebagian Firefox dengan flag). Jika tidak tersedia, data akan menunjukkan “tidak tersedia”.</li>
+        <li>Metode pengukuran ping melakukan <code>fetch</code> ke dokumen saat ini dengan cache-bust untuk mengestimasi waktu perjalanan.</li>
+        <li>Untuk hasil lebih akurat pada server, gunakan endpoint server khusus yang melayani file kecil dari lokasi yang sama.</li>
+      </ul>
+      </p>
+      <p><a href="navigasi.html">Kembali ke Navigasi Utama</a></p>
+    </section>
+  </section>
+
+  <script>
+    const connTypeEl = document.getElementById('connType');
+    const effectiveTypeEl = document.getElementById('effectiveType');
+    const downlinkEl = document.getElementById('downlink');
+    const rttEl = document.getElementById('rtt');
+    const saveDataEl = document.getElementById('saveData');
+    const pingResultsEl = document.getElementById('pingResults');
+    const sistemWaktuEl = document.getElementById('sistemWaktu');
+    const btn = document.getElementById('checkBtn');
+
+    function tampilkanInfoKoneksi() {
+      const net = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+      if (!net) {
+        connTypeEl.innerText = 'tidak tersedia';
+        effectiveTypeEl.innerText = 'tidak tersedia';
+        downlinkEl.innerText = 'tidak tersedia';
+        rttEl.innerText = 'tidak tersedia';
+        saveDataEl.innerText = 'tidak tersedia';
+        return;
+      }
+      connTypeEl.innerText = net.type || 'unknown';
+      effectiveTypeEl.innerText = net.effectiveType || 'unknown';
+      downlinkEl.innerText = !isNaN(net.downlink) ? net.downlink.toFixed(2) : 'unknown';
+      rttEl.innerText = !isNaN(net.rtt) ? net.rtt.toFixed(1) : 'unknown';
+      saveDataEl.innerText = net.saveData ? 'aktif' : 'non-aktif';
+    }
+
+    async function pingUji(kali = 3) {
+      const url = window.location.pathname + '?cache=' + Date.now();
+      const hasil = [];
+      for (let i = 0; i < kali; i++) {
+        const start = performance.now();
+        try {
+          await fetch(url, {cache: 'no-store', method: 'GET', mode: 'same-origin'});
+          hasil.push((performance.now() - start).toFixed(1));
+        } catch (e) {
+          hasil.push('gagal');
+        }
+        await new Promise(r => setTimeout(r, 260));
+      }
+      return hasil;
+    }
+
+    async function ukurSemua() {
+      btn.disabled = true;
+      btn.innerText = 'Mengukur...';
+      sistemWaktuEl.innerText = new Date().toLocaleString('id-ID');
+      tampilkanInfoKoneksi();
+      const ping = await pingUji(3);
+      pingResultsEl.innerText = ping.join(' ms ')
+      if (!pingResultsEl.innerText.includes('gagal')) {
+        const angka = ping.filter(x => x !== 'gagal').map(Number);
+        if (angka.length > 0) {
+          const avg = angka.reduce((a,b) => a+b, 0)/angka.length;
+          pingResultsEl.innerText += ` (rata-rata ${avg.toFixed(1)} ms)`;
+        }
+      }
+      sistemWaktuEl.innerText = new Date().toLocaleString('id-ID');
+      btn.disabled = false;
+      btn.innerText = 'Jalankan Uji Kecepatan';
+    }
+
+    btn.addEventListener('click', ukurSemua);
+    window.addEventListener('load', () => {
+      tampilkanInfoKoneksi();
+      sistemWaktuEl.innerText = new Date().toLocaleString('id-ID');
+    });
+  </script>
+</body>
+</html>
