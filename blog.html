@@ -5,114 +5,94 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Blog StickNext Saga Rail</title>
   <link rel="stylesheet" href="CSS.css">
-  <style>
-    body { background: #0b0d19; color: #e8ebff; padding: 1rem; font-family: 'Segoe UI', Tahoma, Verdana, sans-serif; }
-    .container { max-width: 1100px; margin: 0 auto; }
-    .top-bar { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: .75rem; margin-bottom: 1rem; }
-    .top-bar h1 { margin: 0; color: #7fc7ff; }
-    .stats { display: flex; flex-wrap: wrap; align-items: stretch; gap: .6rem; }
-    .stat-card { background: rgba(19, 27, 57, 0.9); border: 1px solid #59b0ff44; border-radius: 10px; padding: .75rem 1rem; min-width: 160px; flex: 1; }
-    .stat-card strong { display: block; color: #aaddff; margin-bottom: .35rem; font-size: .85rem; }
-    .stat-card span { font-size: 1.25rem; font-weight: 700; color: #f0f7ff; }
-    .note-list { margin: 1rem 0; list-style: none; padding: 0; }
-    .note-item { border: 1px solid rgba(133, 195, 255, .4); border-radius: 12px; margin-bottom: .9rem; background: rgba(6, 11, 31, 0.85); padding: .95rem 1rem; }
-    .note-item h2 { margin: 0 0 .4rem; color: #7cd7ff; }
-    .note-item small { color: #99b7d8; }
-    .note-item p { color: #d2e7ff; line-height: 1.5; }
-    .note-item a.update-link { color: #99d7ff; text-decoration: underline; }
-    .badge { display: inline-block; background: #00a4ff; color: #fff; font-size: .7rem; padding: .2rem .55rem; border-radius: 999px; margin-left: 0.6rem; }
-    .reload-btn { margin-top: 1rem; background: #00b8ff; color: #fff; border: none; border-radius: 8px; padding: .65rem 1rem; cursor: pointer; }
-    .reload-btn:hover { background: #009ae4; }
-  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
 </head>
 <body>
-  <div class="container">
-    <div class="top-bar">
-      <h1>Blog & Catatan Developer</h1>
-      <a href="navigasi.html" style="color:#99d7ff; text-decoration:underline;">← Kembali ke Navigasi</a>
+  <div id="loader" class="loader"><div class="spinner"></div><p>Memuat blog...</p></div>
+  <header>
+    <div class="header-left">
+      <h1>Blog StickNext</h1>
+      <p>Berita, Catatan Developer & Update Terbaru</p>
     </div>
-
-    <div class="stats" aria-live="polite" aria-atomic="true">
-      <div class="stat-card">
-        <strong>Artikel</strong>
-        <span id="count-articles">0</span>
-      </div>
-      <div class="stat-card">
-        <strong>Pengunjung Hari Ini</strong>
-        <span id="count-visitors">0</span>
-      </div>
-      <div class="stat-card">
-        <strong>Rata-rata Load (ms)</strong>
-        <span id="avg-load">-</span>
-      </div>
-      <div class="stat-card">
-        <strong>Status Cloud</strong>
-        <span id="cloud-status">terhubung</span>
-      </div>
+    <div class="hamburger" id="hamburger-btn"><span></span><span></span><span></span></div>
+    <nav class="main-nav">
+      <ul>
+        <li><a href="beranda.html">Beranda</a></li>
+        <li><a href="galeri.html">Galeri</a></li>
+        <li><a href="anggota.html">Anggota</a></li>
+        <li><a href="tentang.html">Tentang</a></li>
+        <li><a href="kontak.html">Kontak</a></li>
+        <li><a href="disclaimer.html">Disclaimer</a></li>
+        <li><a href="HTML audio.html">Audio</a></li>
+        <li><a href="kebebasan.html">Kebebasan</a></li>
+        <li><a href="blog.html" class="active-link">Blog</a></li>
+      </ul>
+      <div id="clock"></div>
+    </nav>
+    <div class="sidebar" id="sidebar" aria-hidden="true" aria-label="menu seluler">
+      <span class="close-sidebar" id="close-sidebar">×</span>
+      <ul>
+        <li><a href="beranda.html">Beranda</a></li>
+        <li><a href="galeri.html">Galeri</a></li>
+        <li><a href="anggota.html">Anggota</a></li>
+        <li><a href="tentang.html">Tentang</a></li>
+        <li><a href="kontak.html">Kontak</a></li>
+        <li><a href="disclaimer.html">Disclaimer</a></li>
+        <li><a href="HTML audio.html">Audio</a></li>
+        <li><a href="kebebasan.html">Kebebasan</a></li>
+        <li><a href="blog.html">Blog</a></li>
+      </ul>
+      <div id="clock-mobile" class="clock-mobile"></div>
     </div>
+  </header>
+  <main>
+    <section class="blog-hero" data-aos="fade-down">
+      <h2>Blog & Catatan Developer</h2>
+      <p>Tetap update dengan berita terbaru, catatan pengembangan, dan inovasi dari StickNext Saga Rail.</p>
+    </section>
 
-    <button class="reload-btn" id="forceUpdate">Perbarui Statistik</button>
+    <section class="stats-section" data-aos="fade-up">
+      <div class="stats" aria-live="polite" aria-atomic="true">
+        <div class="stat-card">
+          <strong>Artikel</strong>
+          <span id="count-articles">0</span>
+        </div>
+        <div class="stat-card">
+          <strong>Pengunjung Hari Ini</strong>
+          <span id="count-visitors">0</span>
+        </div>
+        <div class="stat-card">
+          <strong>Rata-rata Load (ms)</strong>
+          <span id="avg-load">-</span>
+        </div>
+        <div class="stat-card">
+          <strong>Status Cloud</strong>
+          <span id="cloud-status">terhubung</span>
+        </div>
+      </div>
+      <button class="reload-btn" id="forceUpdate">Perbarui Statistik</button>
+    </section>
 
-    <ul class="note-list" id="notes">
-      <!-- artikel dinamis akan terisi -->
-    </ul>
-  </div>
+    <section class="search-filter" data-aos="fade-up">
+      <input type="text" id="search-input" placeholder="Cari artikel..." aria-label="Cari artikel">
+      <select id="filter-select" aria-label="Filter berdasarkan kategori">
+        <option value="all">Semua Kategori</option>
+        <option value="dev">Catatan Developer</option>
+        <option value="news">Berita</option>
+      </select>
+    </section>
 
-  <script>
-    const initialNotes = [
-      { id: 1, type: 'dev', title: 'Deployment staging siap', date: '2026-03-20', desc: 'Backend API baru telah dipasang; endpoint `/api/contact` tersedia. Pastikan test load 1000 request per menit dan cek return code 2xx.', link: '#', tag: 'update' },
-      { id: 2, type: 'news', title: 'Fitur Network Stat Resmi Rilis', date: '2026-03-19', desc: 'Tampilan UI baru untuk statistik jaringan dev. Berhasil ditambahkan di `navigasi` dan `statistik-jaringan.html`.', link: 'statistik-jaringan.html', tag: 'berita' },
-      { id: 3, type: 'dev', title: 'Pembaruan FAQ interaktif', date: '2026-03-18', desc: 'Pertanyaan developer dan tips roadmap ditambahkan ke halaman FAQ. Accordion dibuat satu terbuka dan keyboard friendly.', link: 'faq.html', tag: 'catatan' },
-      { id: 4, type: 'news', title: 'Kecerdasan Buatan Naufal Mrsov', date: '2026-03-18', desc: 'Kecerdasan buatan Naufal Mrsov Mazzi akan hadir sebagai kecerdasan Buatan Indonesia Pertama.', link: '#', tag: 'berita' },
-      { id: 5, type: 'dev', title: 'Pembaruan kata Halaman Kontak', date: '2026-12-18', desc: 'Merubah Kosakata Di Halaman Kontak Menjadi lebih santai dan gaul untuk pengalaman penjelajahan yang unik.', link: 'kontak.html', tag: 'dev' },
-      { id: 5, type: 'news', title: 'Fitur Login', date: '2026-12-18', desc: 'Fitur Login akan ditambahkan untuk membuat situs StickNext Saga Rail Menjadi Profesional dan Resmi.', link: '#', tag: 'berita' },
-    ];
+    <section class="blog-grid" id="blog-grid" data-aos="fade-up">
+      <!-- Artikel akan di-render di sini -->
+    </section>
 
-    const notesContainer = document.getElementById('notes');
-    const countArticles = document.getElementById('count-articles');
-    const countVisitors = document.getElementById('count-visitors');
-    const avgLoad = document.getElementById('avg-load');
-    const cloudStatus = document.getElementById('cloud-status');
-    const forceUpdateBtn = document.getElementById('forceUpdate');
-
-    let visitors = Math.floor(Math.random() * 450 + 200);  // nilai random awal
-    let loadMs = Math.floor(Math.random() * 320 + 150);
-    let articles = initialNotes.length;
-
-    function renderNotes() {
-      notesContainer.innerHTML = initialNotes.map(note => {
-        return `<li class="note-item">
-          <h2>${note.title} <span class="badge">${note.tag}</span></h2>
-          <small>${note.date} • ${note.type === 'dev' ? 'Catatan Developer' : note.type === 'news' ? 'Berita' : 'Umum'}</small>
-          <p>${note.desc}</p>
-          <p><a class="update-link" href="${note.link}">Baca selengkapnya &raquo;</a></p>
-        </li>`;
-      }).join('');
-      countArticles.innerText = articles;
-    }
-
-    function tickStatUpdate() {
-      visitors += Math.floor(Math.random() * 8 - 2); if (visitors < 0) visitors = 0;
-      loadMs = Math.max(70, loadMs + Math.floor(Math.random() * 31 - 15));
-      countVisitors.innerText = visitors.toLocaleString('id-ID');
-      avgLoad.innerText = loadMs + ' ms';
-      const uptime = Math.random() > 0.05 ? 'terhubung' : 'terputus';
-      cloudStatus.innerText = uptime;
-      cloudStatus.style.color = uptime === 'terhubung' ? '#88ff94' : '#ff5f5f';
-      if (uptime === 'terputus' && Math.random() < 0.35) {
-        cloudStatus.innerText = 'pemulihan...';
-        cloudStatus.style.color = '#f5d940';
-      }
-    }
-
-    function setup() {
-      renderNotes();
-      tickStatUpdate();
-      setInterval(tickStatUpdate, 1100);
-      forceUpdateBtn.addEventListener('click', tickStatUpdate);
-    }
-
-    document.addEventListener('DOMContentLoaded', setup);
-  </script>
-</body>
-</html>
+    <div class="pagination" id="pagination" data-aos="fade-up">
+      <!-- Pagination akan di-render di sini -->
+    </div>
+  </main>
+  <footer><p>© 2026 StickNext Saga Rail • Blog Developer</p></footer>
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>AOS.init({duration:800,once:true,easing:'ease-out'});</script>
+  <script src="nav.js"></script>
+  <script src="blog.js"></script>
