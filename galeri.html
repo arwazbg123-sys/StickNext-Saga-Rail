@@ -341,27 +341,7 @@
   </script>
 
   <!-- Script Hamburger + Sidebar -->
-  <script>
-    const hamburger = document.getElementById('hamburger-btn');
-    const sidebar = document.getElementById('sidebar');
-    const closeBtn = document.getElementById('close-sidebar');
-
-    if (hamburger && sidebar && closeBtn) {
-      hamburger.addEventListener('click', () => {
-        sidebar.classList.toggle('active');
-      });
-
-      closeBtn.addEventListener('click', () => {
-        sidebar.classList.remove('active');
-      });
-
-      document.addEventListener('click', (e) => {
-        if (!sidebar.contains(e.target) && !hamburger.contains(e.target)) {
-          sidebar.classList.remove('active');
-        }
-      });
-    }
-  </script>
+  <script src="nav.js"></script>
 
   <script>
     const galleryGrid = document.querySelector('.grid');
