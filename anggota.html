@@ -79,6 +79,58 @@
     .sidebar.active {
       display: block;
     }
+
+    .member-grid {
+      display: grid;
+      gap: 1rem;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      margin-top: 1.25rem;
+    }
+    .member-card {
+      background: linear-gradient(145deg, rgba(10, 23, 42, .85), rgba(26, 41, 64, .92));
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.38);
+      transition: transform 250ms ease, box-shadow 250ms ease;
+    }
+    .member-card:hover {
+      transform: translateY(-4px) scale(1.01);
+      box-shadow: 0 14px 32px rgba(0,0,0,0.45);
+    }
+    .member-card img {
+      width: 100%;
+      object-fit: cover;
+      height: 175px;
+      display: block;
+    }
+    .member-card-content {
+      padding: 0.95rem 1rem 1rem;
+    }
+    .member-card h3 {
+      margin: 0 0 0.35rem;
+      font-size: 1.15rem;
+      color: #ade8f4;
+    }
+    .member-card p {
+      margin: 0.15rem 0 0.75rem;
+      color: #cfd8e6;
+      line-height: 1.45;
+    }
+    .member-card .works {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: grid;
+      gap: 0.3rem;
+    }
+    .member-card .works li {
+      color: #f8f9fa;
+      font-size: 0.875rem;
+      background: rgba(255,255,255,0.05);
+      border-radius: 6px;
+      padding: 0.25rem 0.45rem;
+    }
   </style>
 </head>
 <body>
@@ -115,7 +167,7 @@
         <li><a href="tentang.html">Tentang</a></li>
         <li><a href="kontak.html">Kontak</a></li>
         <li><a href="disclaimer.html">Disclaimer</a></li>
-        <li><a href="HTML audio.html">Audio</a></li>
+        <li><a href="HTML audio.html">Audio</a></li>\n        <li><a href="kebebasan.html">Kebebasan</a></li>
       </ul>
       <div id="clock"></div>
     </nav>
@@ -130,7 +182,7 @@
         <li><a href="tentang.html">Tentang</a></li>
         <li><a href="kontak.html">Kontak</a></li>
         <li><a href="disclaimer.html">Disclaimer</a></li>
-        <li><a href="HTML audio.html">Audio</a></li>
+        <li><a href="HTML audio.html">Audio</a></li>\n        <li><a href="kebebasan.html">Kebebasan</a></li>
       </ul>
       <div id="clock-mobile" class="clock-mobile"></div>
     </div>
@@ -142,33 +194,10 @@
       <h2>Daftar Anggota</h2>
       <p>Halaman ini menampilkan profil anggota komunitas StickNext Saga Rail.</p>
 
-      <!-- Template profil anggota -->
-      <article class="profil">
-        <h3>Naufal MrSov</h3>
-        <p>Kreator StickMazz Pemimpin Komunitas.</p>
-        <ul>
-          <li>Karya: StickMazz</li>
-          <li>Karya: StickNext/StickBot</li>
-        </ul>
-      </article>
-
-      <article class="profil">
-        <h3>Nama Kosong</h3>
-        <p>Deskripsi singkat tentang anggota ini.</p>
-        <ul>
-          <li>Karya: Judul Karya 1</li>
-          <li>Karya: Judul Karya 2</li>
-        </ul>
-      </article>
-
-      <article class="profil">
-        <h3>Nama Kosong</h3>
-        <p>Deskripsi singkat tentang anggota ini.</p>
-        <ul>
-          <li>Karya: Judul Karya 1</li>
-          <li>Karya: Judul Karya 2</li>
-        </ul>
-      </article>
+      <!-- Grid profil anggota yang akan di-render via JS -->
+      <div id="member-grid" class="member-grid" aria-live="polite">
+        <p class="placeholder">Memuat data anggota...</p>
+      </div>
     </section>
   </main>
 
@@ -178,6 +207,7 @@
   </footer>
 
   <!-- JS -->
+  <script src="anggota.js"></script>
   <script>
     // Clock
     function updateClock() {
@@ -229,3 +259,4 @@
   </script>
 </body>
 </html>
+
