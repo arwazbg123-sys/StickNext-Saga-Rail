@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Halaman Navigasi - StickNext Saga Rail</title>
+  <link rel="stylesheet" href="CSS.css">
+  <style>
+    body { background: #090a0f; color: #d8d8d8; min-height: 100vh; padding: 2rem 1rem; font-family: 'Orbitron', sans-serif; }
+
+    /* Loading overlay futuristik */
+    .loader-overlay {
+      position: fixed;
+      inset: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: radial-gradient(circle at center, rgba(0, 255, 224, 0.08), rgba(0, 0, 0, 0.82));
+      z-index: 9999;
+      backdrop-filter: blur(5px);
+      color: #00ffe0;
+      font-family: 'Orbitron', monospace;
+      letter-spacing: 1px;
+    }
+
+    .loader-ring {
+      width: 80px;
+      height: 80px;
+      border: 2px solid rgba(0,255,224,0.28);
+      border-top-color: #00ffe0;
+      border-left-color: transparent;
+      border-right-color: transparent;
+      border-radius: 50%;
+      animation: spin 0.9s linear infinite;
+      position: relative;
+    }
+
+    .loader-ring::before,
+    .loader-ring::after {
+      content: '';
+      position: absolute;
+      inset: -18px;
+      border: 2px solid rgba(0,255,224,0.11);
+      border-top-color: rgba(0,255,224,0.4);
+      border-left-color: transparent;
+      border-right-color: transparent;
+      border-radius: 50%;
+      animation: spin 1.5s linear infinite reverse;
+    }
+
+    .loader-ring::after {
+      inset: -32px;
+      border: 2px solid rgba(0,255,224,0.08);
+      border-top-color: rgba(0,255,224,0.35);
+      animation-duration: 2.1s;
+    }
+
+    .loader-text {
+      margin-top: 1rem;
+      text-align: center;
+      font-size: 0.95rem;
+      animation: pulseText 1.3s ease-in-out infinite;
+    }
+
+    @keyframes spin {
+      100% { transform: rotate(360deg); }
+    }
+
+    @keyframes pulseText {
+      0%, 100% { opacity: 0.65; }
+      50% { opacity: 1; }
+    }
+
+    .nav-central { max-width: 1000px; margin: 0 auto; border: 2px solid rgba(255,255,255,.18); border-radius: 14px; padding: 1.25rem; background: rgba(8, 12, 25, 0.88); box-shadow: 0 10px 30px rgba(0,0,0,0.4); }
+    .nav-central h1 { font-size: clamp(1.8rem, 4vw, 2.8rem); color: #00ffe0; margin-bottom: .8rem; }
+    .nav-central p { margin-bottom: 1rem; color: #b8d1de; }
+    .nav-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px,1fr)); gap: 14px; }
+    .nav-card { border: 1px solid rgba(0, 255, 224, 0.22); background: rgba(0, 0, 0, 0.4); border-radius: 10px; padding: 0.9rem; transition: transform .2s, box-shadow .2s; }
+    .nav-card:hover { transform: translateY(-3px); box-shadow: 0 12px 24px rgba(0,255,224,.25); }
+    .nav-card h3 { margin: 0 0 .4rem; color: #96f6ff; }
+    .nav-card a { color: #f0f8ff; text-decoration: none; font-weight: 600; }
+    .nav-card p { color: #d0e9ff; margin: .3rem 0; }
+    .future-list{margin-top:1rem; border-top:1px solid rgba(255,255,255,.18); padding:1rem 0;}
+    .future-list li{margin:0.45rem 0;}
+  </style>
+</head>
+<body>
+  <!-- Loader futuristik -->
+  <div id="navigasi-loader" class="loader-overlay" aria-hidden="false">
+    <div>
+      <div class="loader-ring"></div>
+      <div class="loader-text">Inisialisasi jaringan navigasi saga...</div>
+    </div>
+  </div>
+
+  <section class="nav-central" aria-label="Pusat Navigasi Lengkap">
+    <h1>Halaman Navigasi Utama</h1>
+    <p>Halaman ini berfungsi sebagai pusat seluruh navigasi web StickNext Saga Rail(sitemap) yang tidak tergantung pada menu hamburger. halaman baru akan terdaftar di bawah seiring waktu.</p>
+
+    <div class="nav-grid">
+      <article class="nav-card">
+        <h3>Beranda</h3>
+        <a href="beranda.html">beranda</a>
+        <p>Halaman utama ringkasan dan cuplikan saga.</p>
+      </article>
+      <article class="nav-card">
+        <h3>Galeri</h3>
+        <a href="galeri.html">galeri</a>
+        <p>Koleksi karya dengan mode klik-perbesar.</p>
+      </article>
+      <article class="nav-card">
+        <h3>Anggota</h3>
+        <a href="anggota.html">anggota</a>
+        <p>Daftar profil anggota komunitas.</p>
+      </article>
+      <article class="nav-card">
+        <h3>Tentang</h3>
+        <a href="tentang.html">tentang</a>
+        <p>Visi misi, cerita dan latar belakang proyek.</p>
+      </article>
+      <article class="nav-card">
+        <h3>Kontak</h3>
+        <a href="kontak.html">kontak</a>
+        <p>Informasi kontak dan form pesan komunitas.</p>
+      </article>
+      <article class="nav-card">
+        <h3>Disclaimer</h3>
+        <a href="disclaimer.html">disclaimer</a>
+        <p>Pernyataan legal, risiko, dan hak cipta.</p>
+      </article>
+      <article class="nav-card">
+        <h3>Audio</h3>
+        <a href="HTML audio.html">audio</a>
+        <p>Halaman audio terkait latar dan efek.</p>
+      </article>
+      <article class="nav-card">
+        <h3>Kebebasan</h3>
+        <a href="kebebasan.html">kebebasan</a>
+        <p>Chat room komunitas (Ruang Kebebasan).</p>
+      </article>
+      <article class="nav-card">
+        <h3>Navigasi (ini)</h3>
+        <a href="navigasi.html">navigasi</a>
+        <p>Halaman pusat navigasi lengkap.</p>
+      </article>
+    </div>
+
+    <section class="future-list" aria-label="Halaman yang akan datang">
+      <h2>Halaman Tambahan yang Sedang Direncanakan</h2>
+      <ul>
+        <li>Fitur: <strong>Data Stastik</strong> (Melihat Kecepatan Jaringan dan menganalisis Masalah Terkait).</li>
+        <li>Fitur: <strong>FAQ</strong> (tanya jawab umum seputar StickNext Saga Rail).</li>
+        <li>Fitur: <strong>Blog</strong> (artikel update, berita, catatan developer).</li>
+        <li>Fitur: <strong>Versi Mobile APP</strong> (link unduh & dokumentasi).</li>
+        <li>Fitur: <strong>Kecerdasan Buatan</strong> (Mazzi Sang AI Naufal Mrsov akan hadir membantu).</li>
+      </ul>
+    </section>
+  </section>
+
+  <script>
+    window.addEventListener('load', () => {
+      const loader = document.getElementById('navigasi-loader');
+      if (!loader) return;
+      setTimeout(() => {
+        loader.style.opacity = '0';
+        loader.setAttribute('aria-hidden', 'true');
+        setTimeout(() => {
+          loader.style.display = 'none';
+        }, 450);
+      }, 950);
+    });
+  </script>
+</body>
+</html>

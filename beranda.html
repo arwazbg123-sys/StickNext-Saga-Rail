@@ -48,6 +48,7 @@
         <li><a href="disclaimer.html">Disclaimer</a></li>
         <li><a href="HTML audio.html">Audio</a></li>
         <li><a href="kebebasan.html">Kebebasan</a></li>
+        <li><a href="navigasi.html">Navigasi</a></li>
       </ul>
       <div id="clock"></div>
     </nav>
@@ -64,6 +65,7 @@
         <li><a href="disclaimer.html">Disclaimer</a></li>
         <li><a href="HTML audio.html">Audio</a></li>
         <li><a href="kebebasan.html">Kebebasan</a></li>
+        <li><a href="navigasi.html">Navigasi</a></li>
       </ul>
       <div id="clock-mobile" class="clock-mobile"></div>
     </div>
@@ -146,27 +148,7 @@
   </script>
 
   <!-- Script Hamburger + Sidebar -->
-  <script>
-    const hamburger = document.getElementById('hamburger-btn');
-    const sidebar = document.getElementById('sidebar');
-    const closeBtn = document.getElementById('close-sidebar');
-
-    if (hamburger && sidebar && closeBtn) {
-      hamburger.addEventListener('click', () => {
-        sidebar.classList.toggle('active');
-      });
-
-      closeBtn.addEventListener('click', () => {
-        sidebar.classList.remove('active');
-      });
-
-      document.addEventListener('click', (e) => {
-        if (!sidebar.contains(e.target) && !hamburger.contains(e.target)) {
-          sidebar.classList.remove('active');
-        }
-      });
-    }
-  </script>
+  <script src="nav.js"></script>
 
   <!-- Cabang + Active Link (static nav sudah di HTML) -->
   <script>
@@ -178,7 +160,8 @@
       { title: 'Kontak', href: 'kontak.html' },
       { title: 'Disclaimer', href: 'disclaimer.html' },
       { title: 'Audio', href: 'HTML audio.html' },
-      { title: 'Kebebasan', href: 'kebebasan.html' }
+      { title: 'Kebebasan', href: 'kebebasan.html' },
+      { title: 'Navigasi', href: 'navigasi.html' },
     ];
 
     const current = window.location.pathname.split('/').pop().toLowerCase();
