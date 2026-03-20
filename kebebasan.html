@@ -44,15 +44,32 @@
     </div>
   </header>
   <main>
-    <section id="chat-room" data-aos="fade-up" data-aos-duration="800">
+    <section id="login-section" class="login-section">
+      <h2>Login untuk Mengakses Ruang Kebebasan</h2>
+      <form id="login-form" class="login-form">
+        <div class="form-group">
+          <label for="login-username">Username:</label>
+          <input type="text" id="login-username" required>
+        </div>
+        <div class="form-group">
+          <label for="login-password">Password:</label>
+          <input type="password" id="login-password" required>
+        </div>
+        <button type="submit" id="login-btn">Login</button>
+        <button type="button" id="register-btn">Register</button>
+      </form>
+      <p id="login-message"></p>
+    </section>
+    <section id="chat-room" data-aos="fade-up" data-aos-duration="800" style="display: none;">
       <h2>Ruang Obrolan Komunitas</h2>
       <div class="chat-container">
         <div class="chat-meta">
           <div>
             <label for="username">Nama (alias):</label>
-            <input id="username" type="text" placeholder="Masukkan nama kamu" maxlength="20" aria-label="Nama pengguna">
+            <input id="username" type="text" placeholder="Masukkan nama kamu" maxlength="20" aria-label="Nama pengguna" readonly>
           </div>
           <div>
+            <button id="logout-btn" type="button">Logout</button>
             <button id="clear-btn" type="button">Bersihkan Chat</button>
           </div>
         </div>
@@ -69,11 +86,93 @@
   <script>AOS.init({duration:800,once:true,easing:'ease-out'});</script>
 
   <script>
-  function updateClock() {
-    const now = new Date();
-    document.getElementById('clock').innerText = now.toLocaleTimeString('id-ID', { hour12: false, timeZone: 'Asia/Jakarta' });
+  // Login functionality
+  const loginSection = document.getElementById('login-section');
+  const chatRoom = document.getElementById('chat-room');
+  const loginForm = document.getElementById('login-form');
+  const loginBtn = document.getElementById('login-btn');
+  const registerBtn = document.getElementById('register-btn');
+  const loginMessage = document.getElementById('login-message');
+  const loginUsername = document.getElementById('login-username');
+  const loginPassword = document.getElementById('login-password');
+
+  function hashPassword(password) {
+    return btoa(password); // Simple base64 encoding for demo
   }
-  setInterval(updateClock, 1000); updateClock();
+
+  function getUsers() {
+    return JSON.parse(localStorage.getItem('sticknext-users') || '{}');
+  }
+
+  function saveUsers(users) {
+    localStorage.setItem('sticknext-users', JSON.stringify(users));
+  }
+
+  function login(username, password) {
+    const users = getUsers();
+    if (users[username] && users[username] === hashPassword(password)) {
+      localStorage.setItem('sticknext-logged-in', username);
+      return true;
+    }
+    return false;
+  }
+
+  function register(username, password) {
+    if (password.length < 6) {
+      return 'Password minimal 6 karakter.';
+    }
+    const users = getUsers();
+    if (users[username]) {
+      return 'Username sudah ada.';
+    }
+    users[username] = hashPassword(password);
+    saveUsers(users);
+    return true;
+  }
+
+  function checkLogin() {
+    const loggedIn = localStorage.getItem('sticknext-logged-in');
+    if (loggedIn) {
+      loginSection.style.display = 'none';
+      chatRoom.style.display = 'block';
+      usernameEl.value = loggedIn; // Set username in chat
+    } else {
+      loginSection.style.display = 'block';
+      chatRoom.style.display = 'none';
+    }
+  }
+
+  loginForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const username = loginUsername.value.trim();
+    const password = loginPassword.value.trim();
+    if (login(username, password)) {
+      loginMessage.textContent = 'Login berhasil!';
+      loginMessage.style.color = '#4CAF50';
+      checkLogin();
+    } else {
+      loginMessage.textContent = 'Username atau password salah.';
+    }
+  });
+
+  registerBtn.addEventListener('click', () => {
+    const username = loginUsername.value.trim();
+    const password = loginPassword.value.trim();
+    if (username && password) {
+      const result = register(username, password);
+      if (result === true) {
+        loginMessage.textContent = 'Registrasi berhasil! Silakan login.';
+        loginMessage.style.color = '#4CAF50';
+      } else {
+        loginMessage.textContent = result;
+      }
+    } else {
+      loginMessage.textContent = 'Isi username dan password.';
+    }
+  });
+
+  // Check login on load
+  checkLogin();
   </script>
 
   <script>
@@ -84,6 +183,7 @@
   const messageEl = document.getElementById('message');
   const sendBtn = document.getElementById('send-btn');
   const clearBtn = document.getElementById('clear-btn');
+  const logoutBtn = document.getElementById('logout-btn');
 
   function escapeHtml(text) {
     return text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#039;');
@@ -127,6 +227,11 @@
     if (!confirm('Hapus semua chat untuk semua pengguna?')) return;
     localStorage.removeItem(chatKey); showMessages();
     if (channel) channel.postMessage({ type: 'clear' });
+  });
+
+  logoutBtn.addEventListener('click', () => {
+    localStorage.removeItem('sticknext-logged-in');
+    checkLogin();
   });
 
   window.addEventListener('storage', (e) => {
