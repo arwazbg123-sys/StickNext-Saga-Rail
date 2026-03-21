@@ -1,10 +1,10 @@
 const initialNotes = [
-  { id: 1, type: 'dev', title: 'Deployment staging siap', date: '2026-03-20', desc: 'Backend API baru telah dipasang; endpoint `/api/contact` tersedia. Pastikan test load 1000 request per menit dan cek return code 2xx.', link: '#', tag: 'update', img: 'https://via.placeholder.com/350x200/1a1a2e/e63946?text=Deployment' },
-  { id: 2, type: 'news', title: 'Fitur Network Stat Resmi Rilis', date: '2026-03-19', desc: 'Tampilan UI baru untuk statistik jaringan dev. Berhasil ditambahkan di `navigasi` dan `statistik-jaringan.html`.', link: 'statistik-jaringan.html', tag: 'berita', img: 'https://via.placeholder.com/350x200/1a1a2e/00a4ff?text=Network+Stat' },
-  { id: 3, type: 'dev', title: 'Pembaruan FAQ interaktif', date: '2026-03-18', desc: 'Pertanyaan developer dan tips roadmap ditambahkan ke halaman FAQ. Accordion dibuat satu terbuka dan keyboard friendly.', link: 'faq.html', tag: 'catatan', img: 'https://via.placeholder.com/350x200/1a1a2e/7cd7ff?text=FAQ+Update' },
-  { id: 4, type: 'news', title: 'Kecerdasan Buatan Naufal Mrsov', date: '2026-03-18', desc: 'Kecerdasan buatan Naufal Mrsov Mazzi akan hadir sebagai kecerdasan Buatan Indonesia Pertama.', link: '#', tag: 'berita', img: 'https://via.placeholder.com/350x200/1a1a2e/e63946?text=AI+Naufal' },
-  { id: 5, type: 'dev', title: 'Pembaruan kata Halaman Kontak', date: '2026-12-18', desc: 'Merubah Kosakata Di Halaman Kontak Menjadi lebih santai dan gaul untuk pengalaman penjelajahan yang unik.', link: 'kontak.html', tag: 'dev', img: 'https://via.placeholder.com/350x200/1a1a2e/00a4ff?text=Kontak+Update' },
-  { id: 6, type: 'news', title: 'Fitur Login', date: '2026-12-18', desc: 'Fitur Login akan ditambahkan untuk membuat situs StickNext Saga Rail Menjadi Profesional dan Resmi.', link: '#', tag: 'berita', img: 'https://via.placeholder.com/350x200/1a1a2e/7cd7ff?text=Login+Feature' },
+  { id: 1, type: 'dev', title: 'Deployment staging siap', date: '2026-03-20', desc: 'Backend API baru telah dipasang; endpoint `/api/contact` tersedia. Pastikan test load 1000 request per menit dan cek return code 2xx.', link: '#', tag: 'update' },
+  { id: 2, type: 'news', title: 'Fitur Network Stat Resmi Rilis', date: '2026-03-19', desc: 'Tampilan UI baru untuk statistik jaringan dev. Berhasil ditambahkan di `navigasi` dan `statistik-jaringan.html`.', link: 'statistik-jaringan.html', tag: 'berita' },
+  { id: 3, type: 'dev', title: 'Pembaruan FAQ interaktif', date: '2026-03-18', desc: 'Pertanyaan developer dan tips roadmap ditambahkan ke halaman FAQ. Accordion dibuat satu terbuka dan keyboard friendly.', link: 'faq.html', tag: 'catatan' },
+  { id: 4, type: 'news', title: 'Kecerdasan Buatan Naufal Mrsov', date: '2026-03-18', desc: 'Kecerdasan buatan Naufal Mrsov Mazzi akan hadir sebagai kecerdasan Buatan Indonesia Pertama.', link: '#', tag: 'berita' },
+  { id: 5, type: 'dev', title: 'Pembaruan kata Halaman Kontak', date: '2026-12-18', desc: 'Merubah Kosakata Di Halaman Kontak Menjadi lebih santai dan gaul untuk pengalaman penjelajahan yang unik.', link: 'kontak.html', tag: 'dev' },
+  { id: 6, type: 'news', title: 'Fitur Login', date: '2026-12-18', desc: 'Fitur Login akan ditambahkan untuk membuat situs StickNext Saga Rail Menjadi Profesional dan Resmi.', link: '#', tag: 'berita' },
 ];
 
 const blogGrid = document.getElementById('blog-grid');
@@ -81,28 +81,6 @@ function renderGrid(notes, page = 1) {
   let html = '';
   paginatedNotes.forEach(function(note) {
     html += '<div class="blog-card" data-aos="zoom-in">' +
-      '<img src="' + note.img + '" alt="' + note.title + '">' +
-      '<h3>' + note.title + ' <span class="badge">' + note.tag + '</span></h3>' +
-      '<small>' + note.date + ' • ' + (note.type === 'dev' ? 'Catatan Developer' : 'Berita') + '</small>' +
-      '<p>' + note.desc + '</p>' +
-      '<a href="' + note.link + '">Baca selengkapnya &raquo;</a>' +
-      '</div>';
-  });
-  blogGrid.innerHTML = html;
-
-  renderPagination(notes.length);
-  countArticles.innerText = notes.length;
-}
-
-function renderGrid(notes, page = 1) {
-  const start = (page - 1) * itemsPerPage;
-  const end = start + itemsPerPage;
-  const paginatedNotes = notes.slice(start, end);
-
-  let html = '';
-  paginatedNotes.forEach(function(note) {
-    html += '<div class="blog-card" data-aos="zoom-in">' +
-      '<img src="' + note.img + '" alt="' + note.title + '">' +
       '<h3>' + note.title + ' <span class="badge">' + note.tag + '</span></h3>' +
       '<small>' + note.date + ' • ' + (note.type === 'dev' ? 'Catatan Developer' : 'Berita') + '</small>' +
       '<p>' + note.desc + '</p>' +
