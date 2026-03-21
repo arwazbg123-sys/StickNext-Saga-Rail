@@ -41,11 +41,63 @@
 
   <!-- Konten Utama -->
   <main>
+    <section id="audio-control" data-aos="fade-right" data-aos-duration="700">
+      <h2>Kontrol Audio Pintar</h2>
+      <p>Status: <span id="status-text">Menunggu pemutaran...</span></p>
+      <div class="controls">
+        <button id="play-all" type="button">▶️ Mainkan Semua</button>
+        <button id="pause-all" type="button">⏸️ Jeda Semua</button>
+        <button id="stop-all" type="button">■ Hentikan</button>
+        <button id="shuffle" type="button">🔀 Acak Playlist</button>
+        <button id="next-track" type="button">⏭ Seterusnya</button>
+        <button id="prev-track" type="button">⏮ Sebelumnya</button>
+      </div>
+      <div class="control-range">
+        <label for="global-volume">Volume Global: <span id="volume-label">75%</span></label>
+        <input id="global-volume" type="range" min="0" max="100" value="75">
+      </div>
+      <div class="control-range">
+        <label for="search-track">Cari Track:</label>
+        <input id="search-track" type="text" placeholder="keluarkan kata, misal: gelap" aria-label="Cari track">
+      </div>
+
+      <div class="control-range" id="eq-controls">
+        <h3>Equalizer (EQ) Canggih:</h3>
+        <label for="bass-slider">Bass: <span id="bass-value">0</span>dB</label>
+        <input id="bass-slider" type="range" min="-12" max="12" step="1" value="0">
+        <label for="mid-slider">Mid: <span id="mid-value">0</span>dB</label>
+        <input id="mid-slider" type="range" min="-12" max="12" step="1" value="0">
+        <label for="treble-slider">Treble: <span id="treble-value">0</span>dB</label>
+        <input id="treble-slider" type="range" min="-12" max="12" step="1" value="0">
+      </div>
+
+      <div class="control-range">
+        <h3>Mode Visualizer:</h3>
+        <select id="visualizer-mode">
+          <option value="bars">Bars Spectrum</option>
+          <option value="circular">Circular Wave</option>
+          <option value="waveform">Waveform</option>
+          <option value="particles">Particle Burst</option>
+        </select>
+      </div>
+
+      <div id="ai-assistant" class="control-range">
+        <h3>AI DJ Canggih</h3>
+        <p id="ai-message">AI: Sistem audio canggih siap! Deteksi beat aktif.</p>
+        <button id="ai-suggest" type="button">🎛️ Rekomendasikan Mode</button>
+        <button id="ai-scan" type="button">🔍 Analisa Playlist</button>
+      </div>
+
+      <div>
+        <canvas id="visualizer" width="700" height="120" aria-label="Advanced audio visualizer"></canvas>
+      </div>
+    </section>
+
     <section id="audio-room" data-aos="fade-up" data-aos-duration="800">
       <h2>Playlist Refreshing</h2>
       <p>Dengarkan musik kosmik untuk liburan jiwa.</p>
 
-      <div class="track" data-aos="zoom-in" data-aos-delay="200">
+      <div class="track" data-title="Magenta Vixa" data-aos="zoom-in" data-aos-delay="200">
         <p>Magenta Vixa</p>
         <audio controls controlsList="nodownload">
           <source src="Magenta Vixa (audio).mp3" type="audio/mpeg">
@@ -53,7 +105,7 @@
         </audio>
       </div>
 
-      <div class="track" data-aos="zoom-in" data-aos-delay="400">
+      <div class="track" data-title="Nevery Nature Stickman" data-aos="zoom-in" data-aos-delay="400">
         <p>Nevery Nature Stickman</p>
         <audio controls controlsList="nodownload">
           <source src="Nevery Nature Stickman (audio).mp3" type="audio/mpeg">
@@ -61,7 +113,7 @@
         </audio>
       </div>
 
-      <div class="track" data-aos="zoom-in" data-aos-delay="600">
+      <div class="track" data-title="Saddnes In Soul" data-aos="zoom-in" data-aos-delay="600">
         <p>Saddnes In Soul</p>
         <audio controls controlsList="nodownload">
           <source src="Saddnes In soul (audio).mp3" type="audio/mpeg">
@@ -69,7 +121,7 @@
         </audio>
       </div>
 
-      <div class="track" data-aos="zoom-in" data-aos-delay="600">
+      <div class="track" data-title="dark yourself" data-aos="zoom-in" data-aos-delay="600">
         <p>dark yourself</p>
         <audio controls controlsList="nodownload">
           <source src="dark yourself (audio).mp3" type="audio/mpeg">
@@ -77,7 +129,7 @@
         </audio>
       </div>
 
-      <div class="track" data-aos="zoom-in" data-aos-delay="600">
+      <div class="track" data-title="the skies bowlow" data-aos="zoom-in" data-aos-delay="600">
         <p>the skies bowlow</p>
         <audio controls controlsList="nodownload">
           <source src="the skies bowlow (audio).mp3" type="audio/mpeg">
@@ -85,7 +137,7 @@
         </audio>
       </div>
 
-      <div class="track" data-aos="zoom-in" data-aos-delay="600">
+      <div class="track" data-title="dancenove" data-aos="zoom-in" data-aos-delay="600">
         <p>dancenove</p>
         <audio controls controlsList="nodownload">
           <source src="dancenove (audio).mp3" type="audio/mpeg">
@@ -93,7 +145,7 @@
         </audio>
       </div>
 
-      <div class="track" data-aos="zoom-in" data-aos-delay="600">
+      <div class="track" data-title="dunia gelap chaos" data-aos="zoom-in" data-aos-delay="600">
         <p>dunia gelap chaos</p>
         <audio controls controlsList="nodownload">
           <source src="Dunia gelap chaos (audio).mp3" type="audio/mpeg">
@@ -101,10 +153,114 @@
         </audio>
       </div>
 
-      <div class="track" data-aos="zoom-in" data-aos-delay="600">
+      <div class="track" data-title="allah lindungi stickmazz" data-aos="zoom-in" data-aos-delay="600">
         <p>allah lindungi stickmazz</p>
         <audio controls controlsList="nodownload">
           <source src="allah lindungi stickmazz (audio).mp3" type="audio/mpeg">
+          Browser kamu tidak mendukung audio.
+        </audio>
+      </div>
+
+      <div class="track" data-title="Roona Motivation">
+        <p>Roona Motivation</p>
+        <audio controls controlsList="nodownload">
+          <source src="Roona Motivation - StickMazz (Official Audio).mp3" type="audio/mpeg">
+          Browser kamu tidak mendukung audio.
+        </audio>
+      </div>
+
+      <div class="track" data-title="2 Dunia Bersatu">
+        <p>2 Dunia Bersatu</p>
+        <audio controls controlsList="nodownload">
+          <source src="2 Dunia Bersatu - StickMazz (Official Audio).mp3" type="audio/mpeg">
+          Browser kamu tidak mendukung audio.
+        </audio>
+      </div>
+
+      <div class="track" data-title="Antagonis Iblis">
+        <p>Antagonis Iblis</p>
+        <audio controls controlsList="nodownload">
+          <source src="Antagonis Iblis - StickMazz (Official Audio).mp3" type="audio/mpeg">
+          Browser kamu tidak mendukung audio.
+        </audio>
+      </div>
+
+      <div class="track" data-title="Antagonis Ganas">
+        <p>Antagonis Ganas</p>
+        <audio controls controlsList="nodownload">
+          <source src="Antagonis Ganas - StickMazz (Official Audio).mp3" type="audio/mpeg">
+          Browser kamu tidak mendukung audio.
+        </audio>
+      </div>
+
+      <div class="track" data-title="Albumkane">
+        <p>Albumkane</p>
+        <audio controls controlsList="nodownload">
+          <source src="Albumkane - StickMazz (Official Audio).mp3" type="audio/mpeg">
+          Browser kamu tidak mendukung audio.
+        </audio>
+      </div>
+
+      <div class="track" data-title="I Control Your Souls">
+        <p>I Control Your Souls</p>
+        <audio controls controlsList="nodownload">
+          <source src="I Control Your Souls - StickMazz (Official Audio).mp3" type="audio/mpeg">
+          Browser kamu tidak mendukung audio.
+        </audio>
+      </div>
+
+      <div class="track" data-title="Antagonis Badass">
+        <p>Antagonis Badass</p>
+        <audio controls controlsList="nodownload">
+          <source src="Antagonis Badass - StickMazz (Official Audio).mp3" type="audio/mpeg">
+          Browser kamu tidak mendukung audio.
+        </audio>
+      </div>
+
+      <div class="track" data-title="Balik Bukit Tinggi">
+        <p>Balik Bukit Tinggi</p>
+        <audio controls controlsList="nodownload">
+          <source src="Balik Bukit Tinggi - StickMazz (Official Audio).mp3" type="audio/mpeg">
+          Browser kamu tidak mendukung audio.
+        </audio>
+      </div>
+
+      <div class="track" data-title="Adventure Pirates Of The Sea">
+        <p>Adventure Pirates Of The Sea</p>
+        <audio controls controlsList="nodownload">
+          <source src="Adventure Pirates Of The Sea - StickMazz (Official Audio).mp3" type="audio/mpeg">
+          Browser kamu tidak mendukung audio.
+        </audio>
+      </div>
+
+      <div class="track" data-title="Rel Yang Panjang">
+        <p>Rel Yang Panjang</p>
+        <audio controls controlsList="nodownload">
+          <source src="Rel Yang Panjang - StickMazz (Official Audio).mp3" type="audio/mpeg">
+          Browser kamu tidak mendukung audio.
+        </audio>
+      </div>
+
+      <div class="track" data-title="The Shadow’s Waltz">
+        <p>The Shadow’s Waltz</p>
+        <audio controls controlsList="nodownload">
+          <source src="The Shadow’s Waltz - StickMazz (Official Audio).mp3" type="audio/mpeg">
+          Browser kamu tidak mendukung audio.
+        </audio>
+      </div>
+
+      <div class="track" data-title="Cosmic Pulse">
+        <p>Cosmic Pulse</p>
+        <audio controls controlsList="nodownload">
+          <source src="Cosmic Pulse - StickMazz (Official Audio).mp3" type="audio/mpeg">
+          Browser kamu tidak mendukung audio.
+        </audio>
+      </div>
+
+      <div class="track" data-title="Starlight Divide">
+        <p>Starlight Divide</p>
+        <audio controls controlsList="nodownload">
+          <source src="Starlight Divide - StickMazz (Official Audio).mp3" type="audio/mpeg">
           Browser kamu tidak mendukung audio.
         </audio>
       </div>
@@ -126,6 +282,9 @@
     });
   </script>
 
+  <!-- Audio JS -->
+  <script src="audio.js"></script>
+
   <!-- Loading Screen JS -->
   <script>
     window.addEventListener('load', () => {
@@ -136,5 +295,6 @@
       }, 1000); // fade out planet + komet
     });
   </script>
+
 </body>
 </html>

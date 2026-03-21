@@ -294,3 +294,313 @@ footer {
   from { opacity: 0.6; text-shadow: 0 0 20px #e63946; }
   to { opacity: 1; text-shadow: 0 0 50px #e63946, 0 0 90px #ff004c; }
 }
+
+/* ====== ADVANCED AUDIO FEATURES ====== */
+
+/* Beat Pulse Effect */
+.beat-pulse {
+  position: fixed;
+  pointer-events: none;
+  z-index: 1000;
+  animation: beatPulse 0.5s ease-out forwards;
+}
+
+@keyframes beatPulse {
+  0% {
+    transform: scale(0);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(3);
+    opacity: 0;
+  }
+}
+
+/* Visualizer Mode Selector */
+#visualizer-mode {
+  display: block;
+  margin: 10px 0;
+  padding: 8px;
+  background: rgba(255, 0, 76, 0.1);
+  border: 1px solid #ff004c;
+  border-radius: 8px;
+  color: #fff;
+  font-family: 'Orbitron', monospace;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+#visualizer-mode:focus {
+  outline: none;
+  border-color: #00ffe0;
+  box-shadow: 0 0 15px rgba(0, 255, 224, 0.5);
+}
+
+#visualizer-mode:hover {
+  background: rgba(255, 0, 76, 0.2);
+}
+
+/* EQ Presets */
+#eq-presets {
+  margin-top: 15px;
+}
+
+#eq-presets h4 {
+  color: #00ffe0;
+  font-size: 1rem;
+  margin-bottom: 8px;
+  text-shadow: 0 0 10px rgba(0, 255, 224, 0.5);
+}
+
+.eq-preset-btn {
+  transition: all 0.3s ease;
+}
+
+.eq-preset-btn:hover {
+  background: rgba(0, 255, 224, 0.3) !important;
+  border-color: #00ffe0 !important;
+  transform: scale(1.05);
+  box-shadow: 0 0 10px rgba(0, 255, 224, 0.5);
+}
+
+.eq-preset-btn:active {
+  transform: scale(0.95);
+}
+
+/* Enhanced Controls Styling */
+.control-range {
+  margin-bottom: 1.5rem;
+  padding: 1rem;
+  background: rgba(255, 0, 76, 0.05);
+  border: 1px solid rgba(255, 0, 76, 0.3);
+  border-radius: 10px;
+  transition: all 0.3s ease;
+}
+
+.control-range:hover {
+  border-color: #ff004c;
+  box-shadow: 0 0 15px rgba(255, 0, 76, 0.2);
+}
+
+.control-range label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: #fff;
+  font-weight: 600;
+  text-shadow: 0 0 8px #ff004c;
+}
+
+.control-range input[type="range"] {
+  width: 100%;
+  height: 6px;
+  border-radius: 3px;
+  background: rgba(255, 255, 255, 0.2);
+  outline: none;
+  -webkit-appearance: none;
+  transition: all 0.3s ease;
+}
+
+.control-range input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #ff004c;
+  box-shadow: 0 0 10px #ff004c;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.control-range input[type="range"]::-webkit-slider-thumb:hover {
+  background: #00ffe0;
+  box-shadow: 0 0 15px #00ffe0;
+  transform: scale(1.2);
+}
+
+.control-range input[type="text"] {
+  width: 100%;
+  padding: 0.5rem;
+  background: rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(255, 0, 76, 0.5);
+  border-radius: 5px;
+  color: #fff;
+  font-family: 'Orbitron', monospace;
+  transition: all 0.3s ease;
+}
+
+.control-range input[type="text"]:focus {
+  outline: none;
+  border-color: #00ffe0;
+  box-shadow: 0 0 10px rgba(0, 255, 224, 0.5);
+}
+
+/* Control Buttons Enhancement */
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+  justify-content: center;
+}
+
+.controls button {
+  padding: 0.75rem 1.5rem;
+  background: linear-gradient(45deg, #ff004c, #e63946);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-family: 'Orbitron', monospace;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(255, 0, 76, 0.3);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.controls button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(255, 0, 76, 0.5);
+  background: linear-gradient(45deg, #e63946, #ff004c);
+}
+
+.controls button:active {
+  transform: scale(0.95);
+  box-shadow: 0 2px 10px rgba(255, 0, 76, 0.3);
+}
+
+/* AI Assistant Enhancement */
+#ai-assistant {
+  background: linear-gradient(135deg, rgba(255, 0, 76, 0.1), rgba(0, 255, 224, 0.1));
+  border: 1px solid rgba(255, 0, 76, 0.5);
+  position: relative;
+  overflow: hidden;
+}
+
+#ai-assistant::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(0, 255, 224, 0.1), transparent);
+  animation: aiGlow 3s infinite;
+}
+
+@keyframes aiGlow {
+  0%, 100% { left: -100%; }
+  50% { left: 100%; }
+}
+
+#ai-message {
+  font-style: italic;
+  color: #00ffe0;
+  text-shadow: 0 0 10px rgba(0, 255, 224, 0.5);
+  animation: aiTextPulse 2s infinite alternate;
+}
+
+@keyframes aiTextPulse {
+  from { opacity: 0.8; }
+  to { opacity: 1; }
+}
+
+/* Status Text Enhancement */
+#status-text {
+  color: #ff004c;
+  text-shadow: 0 0 8px #ff004c;
+  font-weight: 600;
+  animation: statusGlow 1.5s infinite alternate;
+}
+
+@keyframes statusGlow {
+  from { text-shadow: 0 0 8px #ff004c; }
+  to { text-shadow: 0 0 15px #ff004c, 0 0 25px #ff004c; }
+}
+
+/* Volume Label Enhancement */
+#volume-label {
+  color: #00ffe0;
+  text-shadow: 0 0 5px rgba(0, 255, 224, 0.5);
+  font-weight: bold;
+}
+
+/* Responsive Design for New Features */
+@media (max-width: 768px) {
+  .controls {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .controls button {
+    width: 100%;
+    max-width: 200px;
+  }
+
+  #eq-presets div {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+    gap: 0.5rem;
+  }
+
+  .eq-preset-btn {
+    font-size: 0.7rem !important;
+    padding: 4px 8px !important;
+  }
+
+  #visualizer-mode {
+    font-size: 0.8rem;
+  }
+}
+
+/* Loading Animation for Beat Effects */
+.beat-loading {
+  animation: beatPulse 1s infinite;
+}
+
+/* Visualizer Canvas Enhancement */
+#visualizer {
+  border: 1px solid rgba(255, 0, 76, 0.3);
+  border-radius: 10px;
+  box-shadow: 0 0 20px rgba(255, 0, 76, 0.2);
+  background: rgba(0, 0, 0, 0.5);
+  transition: all 0.3s ease;
+}
+
+#visualizer:hover {
+  border-color: #00ffe0;
+  box-shadow: 0 0 30px rgba(0, 255, 224, 0.3);
+}
+
+/* Track Hover Effects Enhancement */
+.track {
+  position: relative;
+}
+
+.track::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 100%;
+  background: linear-gradient(to bottom, #ff004c, #00ffe0);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.track:hover::before {
+  opacity: 1;
+}
+
+/* Audio Element Enhancement */
+.track audio {
+  margin-top: 1rem;
+  transition: all 0.3s ease;
+}
+
+.track:hover audio {
+  filter: drop-shadow(0 0 20px #ff004c);
+}
