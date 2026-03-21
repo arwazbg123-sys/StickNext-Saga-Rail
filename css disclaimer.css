@@ -126,3 +126,325 @@ p:hover {
   color: #fff;
   transition: color 0.4s;
 }
+
+/* ====== INTIMIDATING INTERACTIVE EFFECTS ====== */
+
+/* Warning Banner Animation */
+@keyframes warningPulse {
+  0% {
+    background: linear-gradient(45deg, #ff0000, #8b0000);
+    box-shadow: 0 0 20px rgba(255, 0, 0, 0.5);
+  }
+  100% {
+    background: linear-gradient(45deg, #ff4444, #cc0000);
+    box-shadow: 0 0 40px rgba(255, 0, 0, 0.8);
+  }
+}
+
+/* Glitch Effect for Text */
+@keyframes glitch {
+  0% { transform: translate(0); }
+  20% { transform: translate(-2px, 2px); }
+  40% { transform: translate(2px, -2px); }
+  60% { transform: translate(-1px, 1px); }
+  80% { transform: translate(1px, -1px); }
+  100% { transform: translate(0); }
+}
+
+/* Heartbeat Animation */
+@keyframes heartbeat {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.02); }
+  100% { transform: scale(1); }
+}
+
+/* Typing Cursor Blink */
+@keyframes blink {
+  0%, 50% { border-color: #ff0000; }
+  51%, 100% { border-color: transparent; }
+}
+
+/* Click Effect Animation */
+@keyframes clickEffect {
+  0% {
+    transform: scale(0);
+    opacity: 1;
+    border-width: 2px;
+  }
+  50% {
+    transform: scale(1);
+    opacity: 0.8;
+    border-width: 4px;
+  }
+  100% {
+    transform: scale(2);
+    opacity: 0;
+    border-width: 1px;
+  }
+}
+
+/* Warning Popup Animation */
+@keyframes warningPopup {
+  0% {
+    transform: translate(-50%, -50%) scale(0);
+    opacity: 0;
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.1);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+  }
+}
+
+/* Enhanced Screen Shake */
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+  20%, 40%, 60%, 80% { transform: translateX(5px); }
+}
+
+/* Blood Drip Effect */
+@keyframes bloodDrip {
+  0% {
+    transform: translateY(-100px) scaleY(0);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(100vh) scaleY(1);
+    opacity: 0;
+  }
+}
+
+/* Electric Spark Effect */
+@keyframes spark {
+  0% {
+    transform: scale(0) rotate(0deg);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1) rotate(180deg);
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(0) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+/* Random Blood Drips */
+.blood-drip {
+  position: fixed;
+  width: 3px;
+  height: 50px;
+  background: linear-gradient(to bottom, #ff0000, #8b0000);
+  border-radius: 0 0 2px 2px;
+  animation: bloodDrip 3s linear infinite;
+  z-index: 9997;
+  pointer-events: none;
+}
+
+.blood-drip:nth-child(odd) {
+  left: 10%;
+  animation-delay: 0s;
+}
+
+.blood-drip:nth-child(even) {
+  right: 10%;
+  animation-delay: 1.5s;
+}
+
+/* Electric Sparks */
+.electric-spark {
+  position: fixed;
+  width: 20px;
+  height: 20px;
+  background: radial-gradient(circle, #00ffff, #0080ff, transparent);
+  border-radius: 50%;
+  animation: spark 0.8s ease-out forwards;
+  z-index: 9996;
+  pointer-events: none;
+}
+
+/* Enhanced Alert Panel */
+.alert-panel {
+  position: relative;
+  overflow: hidden;
+}
+
+.alert-panel::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 0, 0, 0.1), transparent);
+  animation: scanLine 3s infinite;
+  z-index: 1;
+}
+
+@keyframes scanLine {
+  0%, 100% { left: -100%; }
+  50% { left: 100%; }
+}
+
+/* Risk Meter Enhancement */
+.risk-meter {
+  position: relative;
+  overflow: hidden;
+}
+
+.risk-meter::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: repeating-linear-gradient(
+    90deg,
+    transparent,
+    transparent 10px,
+    rgba(255, 0, 0, 0.1) 10px,
+    rgba(255, 0, 0, 0.1) 20px
+  );
+  animation: riskPulse 2s infinite;
+}
+
+@keyframes riskPulse {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 0.8; }
+}
+
+/* Button Enhancement */
+.btn-serious {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.btn-serious::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition: width 0.6s, height 0.6s;
+}
+
+.btn-serious:hover::before {
+  width: 300px;
+  height: 300px;
+}
+
+.btn-serious:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 30px rgba(255, 0, 0, 0.8);
+}
+
+/* Typing Effect Enhancement */
+#disclaimer-body p {
+  transition: all 0.3s ease;
+}
+
+#disclaimer-body p:hover {
+  background: rgba(255, 0, 0, 0.05);
+  border-left: 3px solid #ff0000;
+  padding-left: 1rem;
+  transform: translateX(5px);
+}
+
+/* Random Effects Container */
+.random-effects {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 9995;
+}
+
+/* Emergency Override */
+.emergency-override {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: #ff0000;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-family: 'Orbitron', monospace;
+  font-size: 0.8rem;
+  opacity: 0.7;
+  transition: opacity 0.3s;
+  z-index: 10000;
+}
+
+.emergency-override:hover {
+  opacity: 1;
+}
+
+/* Mobile Enhancements */
+@media (max-width: 768px) {
+  .blood-drip {
+    width: 2px;
+    height: 30px;
+  }
+
+  .electric-spark {
+    width: 15px;
+    height: 15px;
+  }
+
+  #warning-banner {
+    font-size: 0.8rem !important;
+    padding: 8px !important;
+  }
+
+  #intimidating-cursor {
+    width: 20px !important;
+    height: 20px !important;
+  }
+}
+
+/* Accessibility - Reduce Motion */
+@media (prefers-reduced-motion: reduce) {
+  .blood-drip,
+  .electric-spark,
+  #warning-banner,
+  .shake,
+  .beat-pulse {
+    animation: none !important;
+  }
+
+  * {
+    transition: none !important;
+  }
+}
+
+/* High Contrast Mode */
+@media (prefers-contrast: high) {
+  .alert-panel {
+    border: 3px solid #ff0000 !important;
+  }
+
+  .btn-serious {
+    border: 2px solid #ffffff !important;
+  }
+}

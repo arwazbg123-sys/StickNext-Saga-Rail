@@ -9,6 +9,9 @@
   <!-- Google Fonts: Orbitron -->
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&display=swap" rel="stylesheet">
 
+  <!-- CSS khusus halaman Disclaimer -->
+  <link rel="stylesheet" href="css disclaimer.css">
+
   <style>
     :root{
       color-scheme: dark;
@@ -37,9 +40,10 @@
     header p{margin-top:.35rem;color:#f5dfdf;font-style:italic;font-size:1rem;}
 
     .alert-panel{margin:1.2rem auto;max-width:1000px;background:#2b0605;border:2px solid #d32f2f;border-radius:12px;padding:1rem 1.2rem;
-    box-shadow:0 6px 18px rgba(0,0,0,.7);}
-    .alert-panel h2{font-size:1.25rem;color:#ffb4b4;margin-bottom:.4rem;}
-    .alert-panel p{margin:.5rem 0;color:#ffdede;}
+    box-shadow:0 6px 18px rgba(0,0,0,.7);position:relative;overflow:hidden;}
+    .alert-panel::before{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,0,0,.1),transparent);animation:scanLine 3s infinite;z-index:1;}
+    .alert-panel h2{font-size:1.25rem;color:#ffb4b4;margin-bottom:.4rem;position:relative;z-index:2;}
+    .alert-panel p{margin:.5rem 0;color:#ffdede;position:relative;z-index:2;}
 
     .content-wrapper{max-width:1000px;margin:0 auto;padding:1.2rem;}
     .content-wrapper h1{color:#e53935;font-size:2rem;margin-bottom:.7rem;}
@@ -75,9 +79,48 @@
       50% { transform: scale(1.3); opacity: 0.6; }
       100% { transform: scale(1); opacity: 1; }
     }
+
+    /* Random Effects Container */
+    .random-effects {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 9995;
+    }
+
+    /* Emergency Override Button */
+    .emergency-override {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: #ff0000;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-family: 'Orbitron', monospace;
+      font-size: 0.8rem;
+      opacity: 0.7;
+      transition: opacity 0.3s;
+      z-index: 10000;
+    }
+
+    .emergency-override:hover {
+      opacity: 1;
+    }
   </style>
 </head>
 <body>
+  <!-- Random Effects Container -->
+  <div class="random-effects" id="random-effects"></div>
+
+  <!-- Emergency Override -->
+  <button class="emergency-override" onclick="emergencyOverride()">EMERGENCY OVERRIDE</button>
+
   <!-- Loading Screen -->
   <div id="loader" class="loader">
     <div class="exclamation">!</div>
@@ -108,38 +151,38 @@
     <div id="disclaimer-body">
       <h1>Disclaimer</h1>
       <p>
-        StickNext Rail Saga adalah sebuah karya fiksi yang lahir dari imajinasi kreatif komunitas kami. 
-    Saga ini menampilkan kisah-kisah epik, intens, bahkan kadang bernuansa gelap, 
-    namun seluruh cerita, karakter, konflik, dan simbol yang ditampilkan 
+        StickNext Rail Saga adalah sebuah karya fiksi yang lahir dari imajinasi kreatif komunitas kami.
+    Saga ini menampilkan kisah-kisah epik, intens, bahkan kadang bernuansa gelap,
+    namun seluruh cerita, karakter, konflik, dan simbol yang ditampilkan
     <strong>tidak memiliki hubungan langsung dengan realitas operasional maupun kebijakan PT Kereta Api Indonesia (KAI)</strong>.
   </p>
   <p>
-    Kami menegaskan bahwa saga ini bukanlah representasi resmi, bukan propaganda, 
-    dan tidak dimaksudkan untuk merusak citra Kereta Api Indonesia. 
-    Sebaliknya, tujuan utama kami adalah menyalurkan imajinasi, 
-    memperlihatkan lokomotif Indonesia dari sudut pandang yang berbeda, 
-    serta menghadirkan karya kreatif yang justru 
+    Kami menegaskan bahwa saga ini bukanlah representasi resmi, bukan propaganda,
+    dan tidak dimaksudkan untuk merusak citra Kereta Api Indonesia.
+    Sebaliknya, tujuan utama kami adalah menyalurkan imajinasi,
+    memperlihatkan lokomotif Indonesia dari sudut pandang yang berbeda,
+    serta menghadirkan karya kreatif yang justru
     <strong>menaikkan citra KAI sebagai ikon kebanggaan bangsa</strong>.
   </p>
   <p>
-    Semua elemen cerita yang bersifat dramatis, simbolis, atau gelap hanyalah bagian dari dunia fiksi 
-    yang kami bangun untuk memperkaya pengalaman naratif. 
-    Tidak ada maksud untuk menyinggung, merendahkan, atau menimbulkan persepsi negatif terhadap KAI 
-    maupun insan perkeretaapian Indonesia. 
-    Kami menghormati sepenuhnya peran KAI sebagai penyedia layanan transportasi publik yang vital 
+    Semua elemen cerita yang bersifat dramatis, simbolis, atau gelap hanyalah bagian dari dunia fiksi
+    yang kami bangun untuk memperkaya pengalaman naratif.
+    Tidak ada maksud untuk menyinggung, merendahkan, atau menimbulkan persepsi negatif terhadap KAI
+    maupun insan perkeretaapian Indonesia.
+    Kami menghormati sepenuhnya peran KAI sebagai penyedia layanan transportasi publik yang vital
     bagi masyarakat Indonesia.
   </p>
   <p>
-    Dengan demikian, StickNext Rail Saga harus dipahami sebagai karya seni dan fiksi kreatif, 
-    bukan sebagai refleksi kenyataan. 
-    Kami berharap pembaca dan pengunjung situs ini dapat menikmati saga kami 
-    sebagai bentuk apresiasi terhadap keindahan, kekuatan, dan simbolisme lokomotif Indonesia, 
-    sekaligus memahami bahwa tujuan kami adalah mendukung dan mengangkat citra KAI, 
+    Dengan demikian, StickNext Rail Saga harus dipahami sebagai karya seni dan fiksi kreatif,
+    bukan sebagai refleksi kenyataan.
+    Kami berharap pembaca dan pengunjung situs ini dapat menikmati saga kami
+    sebagai bentuk apresiasi terhadap keindahan, kekuatan, dan simbolisme lokomotif Indonesia,
+    sekaligus memahami bahwa tujuan kami adalah mendukung dan mengangkat citra KAI,
     bukan sebaliknya.
   </p>
   </div> <!-- /.content-wrapper -->
 
-  <!-- Loading Screen JS -->
+  <!-- Original JS -->
   <script>
     window.addEventListener('load', () => {
       const loader = document.getElementById('loader');
@@ -185,6 +228,42 @@
         confirmRead.textContent = 'Terverifikasi';
       });
     });
+  </script>
+
+  <!-- Interactive Intimidation System -->
+  <script src="disclaimer-interactive.js"></script>
+
+  <!-- Emergency Override Function -->
+  <script>
+    function emergencyOverride() {
+      if (confirm('⚠️ EMERGENCY OVERRIDE ⚠️\n\nApakah Anda yakin ingin menonaktifkan sistem intimidasi?\n\nIni akan menghentikan semua efek suara dan visual yang menakutkan.')) {
+        // Stop all intimidating effects
+        const intimidatingDisclaimer = window.intimidatingDisclaimer;
+        if (intimidatingDisclaimer) {
+          intimidatingDisclaimer.destroy();
+        }
+
+        // Remove emergency button
+        const emergencyBtn = document.querySelector('.emergency-override');
+        if (emergencyBtn) {
+          emergencyBtn.remove();
+        }
+
+        // Remove warning banner
+        const warningBanner = document.getElementById('warning-banner');
+        if (warningBanner) {
+          warningBanner.remove();
+        }
+
+        // Remove cursor
+        const cursor = document.getElementById('intimidating-cursor');
+        if (cursor) {
+          cursor.remove();
+        }
+
+        alert('✅ Sistem intimidasi dinonaktifkan.\n\nHalaman disclaimer sekarang dalam mode normal.');
+      }
+    }
   </script>
 </body>
 </html>
