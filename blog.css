@@ -520,3 +520,25 @@ footer {
 .stat-card {
   animation: fadeIn 0.5s ease-out;
 }
+
+/* Search Highlight */
+mark {
+  background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+  color: #fff;
+  padding: 0.1rem 0.3rem;
+  border-radius: 3px;
+  font-weight: bold;
+  text-shadow: 0 0 5px rgba(255, 107, 107, 0.5);
+}
+
+/* Error Message */
+.error-message {
+  color: #ff5f5f;
+  text-align: center;
+  padding: 2rem;
+  background: rgba(255, 95, 95, 0.1);
+  border: 1px solid rgba(255, 95, 95, 0.3);
+  border-radius: 10px;
+  font-size: 1.1rem;
+  text-shadow: 0 0 5px rgba(255, 95, 95, 0.5);
+}

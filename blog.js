@@ -74,55 +74,100 @@ function glitchText() {
 }
 
 function renderGrid(notes, page = 1) {
-  const start = (page - 1) * itemsPerPage;
-  const end = start + itemsPerPage;
-  const paginatedNotes = notes.slice(start, end);
+  try {
+    const start = (page - 1) * itemsPerPage;
+    const end = start + itemsPerPage;
+    const paginatedNotes = notes.slice(start, end);
+    const searchTerm = searchInput.value.toLowerCase().trim();
 
-  let html = '';
-  paginatedNotes.forEach(function(note) {
-    html += '<div class="blog-card" data-aos="zoom-in">' +
-      '<h3>' + note.title + ' <span class="badge">' + note.tag + '</span></h3>' +
-      '<small>' + note.date + ' • ' + (note.type === 'dev' ? 'Catatan Developer' : 'Berita') + '</small>' +
-      '<p>' + note.desc + '</p>' +
-      '<a href="' + note.link + '">Baca selengkapnya &raquo;</a>' +
-      '</div>';
-  });
-  blogGrid.innerHTML = html;
-
-  renderPagination(notes.length);
-  countArticles.innerText = notes.length;
-}
-
-function renderPagination(totalItems) {
-  const totalPages = Math.ceil(totalItems / itemsPerPage);
-  pagination.innerHTML = '';
-
-  for (let i = 1; i <= totalPages; i++) {
-    const btn = document.createElement('button');
-    btn.textContent = i;
-    if (i === currentPage) {
-      btn.classList.add('active');
-    }
-    btn.addEventListener('click', function() {
-      currentPage = i;
-      renderGrid(filteredNotes, currentPage);
+    let html = '';
+    paginatedNotes.forEach(function(note) {
+      const highlightedTitle = highlightText(note.title, searchTerm);
+      const highlightedDesc = highlightText(note.desc, searchTerm);
+      html += '<div class="blog-card" data-aos="zoom-in">' +
+        '<h3>' + highlightedTitle + ' <span class="badge">' + note.tag + '</span></h3>' +
+        '<small>' + note.date + ' • ' + (note.type === 'dev' ? 'Catatan Developer' : 'Berita') + '</small>' +
+        '<p>' + highlightedDesc + '</p>' +
+        '<a href="' + note.link + '">Baca selengkapnya &raquo;</a>' +
+        '</div>';
     });
-    pagination.appendChild(btn);
+    blogGrid.innerHTML = html;
+
+    renderPagination(notes.length);
+    countArticles.innerText = notes.length;
+  } catch (error) {
+    console.error('Error in renderGrid:', error);
+    // Auto-fix: clear grid and show error message
+    blogGrid.innerHTML = '<div class="error-message">Terjadi kesalahan saat memuat artikel. Silakan refresh halaman.</div>';
   }
 }
 
+function renderPagination(totalItems) {
+  try {
+    const totalPages = Math.ceil(totalItems / itemsPerPage);
+    pagination.innerHTML = '';
+
+    for (let i = 1; i <= totalPages; i++) {
+      const btn = document.createElement('button');
+      btn.textContent = i;
+      if (i === currentPage) {
+        btn.classList.add('active');
+      }
+      btn.addEventListener('click', function() {
+        try {
+          currentPage = i;
+          renderGrid(filteredNotes, currentPage);
+        } catch (error) {
+          console.error('Error in pagination click:', error);
+        }
+      });
+      pagination.appendChild(btn);
+    }
+  } catch (error) {
+    console.error('Error in renderPagination:', error);
+    pagination.innerHTML = '<p>Pagination error</p>';
+  }
+}
+
+let searchTimeout;
+
+// Advanced Search with Debouncing and Highlighting
+function debounce(func, delay) {
+  return function(...args) {
+    clearTimeout(searchTimeout);
+    searchTimeout = setTimeout(() => func.apply(this, args), delay);
+  };
+}
+
+function highlightText(text, term) {
+  if (!term) return text;
+  const regex = new RegExp(`(${term})`, 'gi');
+  return text.replace(regex, '<mark>$1</mark>');
+}
+
 function filterNotes() {
-  const searchTerm = searchInput.value.toLowerCase();
-  const filterType = filterSelect.value;
+  try {
+    const searchTerm = searchInput.value.toLowerCase().trim();
+    const filterType = filterSelect.value;
 
-  filteredNotes = initialNotes.filter(function(note) {
-    const matchesSearch = note.title.toLowerCase().includes(searchTerm) || note.desc.toLowerCase().includes(searchTerm);
-    const matchesFilter = filterType === 'all' || note.type === filterType;
-    return matchesSearch && matchesFilter;
-  });
+    filteredNotes = initialNotes.filter(function(note) {
+      const titleMatch = note.title.toLowerCase().includes(searchTerm);
+      const descMatch = note.desc.toLowerCase().includes(searchTerm);
+      const matchesSearch = !searchTerm || titleMatch || descMatch;
+      const matchesFilter = filterType === 'all' || note.type === filterType;
+      return matchesSearch && matchesFilter;
+    });
 
-  currentPage = 1;
-  renderGrid(filteredNotes, currentPage);
+    currentPage = 1;
+    renderGrid(filteredNotes, currentPage);
+  } catch (error) {
+    console.error('Error in filterNotes:', error);
+    // Auto-fix: reset to all notes
+    filteredNotes = initialNotes;
+    currentPage = 1;
+    renderGrid(filteredNotes, currentPage);
+    alert('Terjadi kesalahan pencarian. Menampilkan semua artikel.');
+  }
 }
 
 function tickStatUpdate() {
@@ -147,7 +192,7 @@ function setup() {
     tickStatUpdate();
     setInterval(tickStatUpdate, 1100);
     forceUpdateBtn.addEventListener('click', tickStatUpdate);
-    searchInput.addEventListener('input', filterNotes);
+    searchInput.addEventListener('input', debounce(filterNotes, 300));
     filterSelect.addEventListener('change', filterNotes);
     stopLoader();
   }, 3000); // Simulate loading time
