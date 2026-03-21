@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Syarat dan Ketentuan | StickNext Saga Rail</title>
+  <link rel="stylesheet" href="CSS.css">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    /* Animasi loading khusus untuk halaman Syarat dan Ketentuan */
+    .terms-loader {
+      position: fixed;
+      inset: 0;
+      background: linear-gradient(45deg, #000, #1a1a2e, #000);
+      background-size: 400% 400%;
+      animation: backgroundShift 3s ease-in-out infinite;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      transition: opacity 1.5s ease;
+      color: #e63946;
+      font-family: 'Orbitron', monospace;
+      font-size: 1.8rem;
+      text-shadow: 0 0 20px rgba(230, 57, 70, 0.8), 0 0 40px rgba(230, 57, 70, 0.5);
+    }
+
+    @keyframes backgroundShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .terms-loader .complex-spinner {
+      position: relative;
+      width: 100px;
+      height: 100px;
+      margin-bottom: 2rem;
+    }
+
+    .terms-loader .complex-spinner::before,
+    .terms-loader .complex-spinner::after {
+      content: '';
+      position: absolute;
+      border: 6px solid transparent;
+      border-radius: 50%;
+      animation: complexSpin 2s linear infinite;
+    }
+
+    .terms-loader .complex-spinner::before {
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      border-top: 6px solid #e63946;
+      border-right: 6px solid rgba(230, 57, 70, 0.3);
+      animation-delay: 0s;
+    }
+
+    .terms-loader .complex-spinner::after {
+      top: 10px;
+      left: 10px;
+      right: 10px;
+      bottom: 10px;
+      border-bottom: 6px solid #e63946;
+      border-left: 6px solid rgba(230, 57, 70, 0.3);
+      animation-delay: 1s;
+      animation-direction: reverse;
+    }
+
+    @keyframes complexSpin {
+      to { transform: rotate(360deg); }
+    }
+
+    .terms-loader .typing-text {
+      overflow: hidden;
+      border-right: 2px solid #e63946;
+      white-space: nowrap;
+      animation: typing 3s steps(30, end), blink-caret 0.75s step-end infinite;
+      width: 0;
+      max-width: 100%;
+    }
+
+    @keyframes typing {
+      from { width: 0; }
+      to { width: 100%; }
+    }
+
+    @keyframes blink-caret {
+      from, to { border-color: transparent; }
+      50% { border-color: #e63946; }
+    }
+
+    .terms-loader p {
+      margin-top: 1rem;
+      font-size: 1.2rem;
+      opacity: 0;
+      animation: fadeIn 2s ease-in-out 1.5s forwards;
+    }
+
+    @keyframes fadeIn {
+      to { opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+  <div id="loader" class="loader"><div class="spinner"></div><p>Memuat syarat dan ketentuan...</p></div>
+  <header>
+    <div class="header-left">
+      <h1>Syarat dan Ketentuan</h1>
+      <p>Aturan penggunaan situs StickNext Saga Rail.</p>
+    </div>
+    <div class="hamburger" id="hamburger-btn"><span></span><span></span><span></span></div>
+    <nav class="main-nav">
+      <ul>
+        <li><a href="beranda.html">Beranda</a></li>
+        <li><a href="galeri.html">Galeri</a></li>
+        <li><a href="anggota.html">Anggota</a></li>
+        <li><a href="tentang.html">Tentang</a></li>
+        <li><a href="kontak.html">Kontak</a></li>
+        <li><a href="disclaimer.html">Disclaimer</a></li>
+        <li><a href="HTML audio.html">Audio</a></li>
+        <li><a href="kebebasan.html">Kebebasan</a></li>
+        <li><a href="syarat-ketentuan.html" class="active-link">Syarat & Ketentuan</a></li>
+      </ul>
+      <div id="clock"></div>
+    </nav>
+    <div class="sidebar" id="sidebar" aria-hidden="true" aria-label="menu seluler">
+      <span class="close-sidebar" id="close-sidebar">×</span>
+      <ul>
+        <li><a href="beranda.html">Beranda</a></li>
+        <li><a href="galeri.html">Galeri</a></li>
+        <li><a href="anggota.html">Anggota</a></li>
+        <li><a href="tentang.html">Tentang</a></li>
+        <li><a href="kontak.html">Kontak</a></li>
+        <li><a href="disclaimer.html">Disclaimer</a></li>
+        <li><a href="HTML audio.html">Audio</a></li>
+        <li><a href="kebebasan.html">Kebebasan</a></li>
+        <li><a href="syarat-ketentuan.html">Syarat & Ketentuan</a></li>
+      </ul>
+      <div id="clock-mobile" class="clock-mobile"></div>
+    </div>
+  </header>
+  <main>
+    <section class="content-section">
+      <h2>Syarat dan Ketentuan Penggunaan Situs</h2>
+      <p>Selamat datang di situs StickNext Saga Rail. Dengan mengakses dan menggunakan situs ini, Anda setuju untuk terikat oleh syarat dan ketentuan berikut. Jika Anda tidak setuju dengan ketentuan ini, harap jangan gunakan situs ini.</p>
+
+      <h3>1. Penggunaan Situs</h3>
+      <p>Situs ini disediakan untuk tujuan informasi, komunikasi, dan hiburan komunitas. Anda setuju untuk menggunakan situs ini hanya untuk tujuan yang sah dan tidak melanggar hukum yang berlaku di Indonesia.</p>
+
+      <h3>2. Hak Cipta dan Kekayaan Intelektual</h3>
+      <p>Semua konten di situs ini, termasuk teks, gambar, audio, video, dan kode, dilindungi oleh hak cipta. Anda tidak diperbolehkan menyalin, mendistribusikan, atau menggunakan konten ini tanpa izin tertulis dari pemilik situs.</p>
+
+      <h3>3. Tanggung Jawab Pengguna</h3>
+      <p>Anda bertanggung jawab atas semua aktivitas yang dilakukan melalui akun Anda. Jangan posting konten yang melanggar hukum, menghina, atau merugikan pihak lain. Kami berhak menghapus konten yang tidak sesuai.</p>
+
+      <h3>4. Kebijakan Privasi</h3>
+      <p>Kami menghormati privasi Anda. Data pribadi yang dikumpulkan digunakan hanya untuk tujuan situs ini. Lihat halaman Privasi untuk detail lebih lanjut.</p>
+
+      <h3>5. Pembatasan Tanggung Jawab</h3>
+      <p>Situs ini disediakan "sebagaimana adanya". Kami tidak bertanggung jawab atas kerugian langsung atau tidak langsung yang timbul dari penggunaan situs ini.</p>
+
+      <h3>6. Perubahan Ketentuan</h3>
+      <p>Kami berhak mengubah syarat dan ketentuan ini kapan saja. Perubahan akan diberitahukan melalui situs ini.</p>
+
+      <h3>7. Kontak</h3>
+      <p>Jika Anda memiliki pertanyaan tentang syarat dan ketentuan ini, hubungi kami melalui halaman Kontak.</p>
+
+      <p>Terakhir diperbarui: Maret 2026</p>
+    </section>
+  </main>
+  <script src="nav.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
