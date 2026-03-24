@@ -100,8 +100,23 @@
     });
   }
 
+  function addAIMenuItem() {
+    const aiLinkHTML = '<li><a href="ai.html">Obrolsan AI</a></li>';
+
+    const mainUl = document.querySelector('.main-nav ul');
+    const sidebarUl = document.querySelector('.sidebar ul');
+
+    if (mainUl && !mainUl.querySelector('a[href="ai.html"]')) {
+      mainUl.insertAdjacentHTML('beforeend', aiLinkHTML);
+    }
+    if (sidebarUl && !sidebarUl.querySelector('a[href="ai.html"]')) {
+      sidebarUl.insertAdjacentHTML('beforeend', aiLinkHTML);
+    }
+  }
+
   function init() {
     setAriaState(false);
+    addAIMenuItem();
     highlightActiveLink();
     setupEvents();
   }

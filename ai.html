@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Obrolsan AI | StickNext Saga Rail</title>
+  <link rel="stylesheet" href="CSS.css" />
+  <link rel="stylesheet" href="ai.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet" />
+</head>
+<body>
+  <header>
+    <div class="header-left">
+      <h1>Obrolsan Kecerdasan Buatan</h1>
+      <p>Berinteraksi dengan AI canggih untuk bantuan dan eksplorasi.</p>
+    </div>
+    <div class="hamburger" id="hamburger-btn"><span></span><span></span><span></span></div>
+    <nav class="main-nav">
+      <ul>
+        <li><a href="beranda.html">Beranda</a></li>
+        <li><a href="galeri.html">Galeri</a></li>
+        <li><a href="anggota.html">Anggota</a></li>
+        <li><a href="tentang.html">Tentang</a></li>
+        <li><a href="kontak.html">Kontak</a></li>
+        <li><a href="disclaimer.html">Disclaimer</a></li>
+        <li><a href="HTML audio.html">Audio</a></li>
+        <li><a href="kebebasan.html">Kebebasan</a></li>
+        <li><a href="syarat-ketentuan.html">Syarat & Ketentuan</a></li>
+        <li><a href="ai.html" class="active-link">Obrolsan AI</a></li>
+      </ul>
+      <div id="clock"></div>
+    </nav>
+    <div class="sidebar" id="sidebar" aria-hidden="true" aria-label="menu seluler">
+      <span class="close-sidebar" id="close-sidebar">×</span>
+      <ul>
+        <li><a href="beranda.html">Beranda</a></li>
+        <li><a href="galeri.html">Galeri</a></li>
+        <li><a href="anggota.html">Anggota</a></li>
+        <li><a href="tentang.html">Tentang</a></li>
+        <li><a href="kontak.html">Kontak</a></li>
+        <li><a href="disclaimer.html">Disclaimer</a></li>
+        <li><a href="HTML audio.html">Audio</a></li>
+        <li><a href="kebebasan.html">Kebebasan</a></li>
+        <li><a href="syarat-ketentuan.html">Syarat & Ketentuan</a></li>
+        <li><a href="ai.html" class="active-link">Obrolsan AI</a></li>
+      </ul>
+      <div id="clock-mobile" class="clock-mobile"></div>
+    </div>
+  </header>
+
+  <main class="ai-main-container">
+    <section class="ai-intro">
+      <h2>Selamat datang di Obrolan Mazzi</h2>
+      <p>Mazzi Sang Kecerdasan buatan Naufal Mrsov siap membantu, mengobrol, dan memberikan bantuan dalam berbagai bidang.</p>
+    </section>
+
+    <section class="chat-window" aria-label="Obrolan AI">
+      <div id="messages" class="messages"></div>
+      <form id="chat-form" class="chat-form" autocomplete="off">
+        <input id="chat-input" type="text" name="prompt" placeholder="Tulis pertanyaan kamu di sini..." required />
+        <button type="submit" id="send-btn">Kirim</button>
+      </form>
+      <div id="api-status" class="api-status">Status: siap</div>
+    </section>
+
+    <section class="api-setup">
+      <h3>Pengaturan API</h3>
+      <label for="api-keys">Daftar API Key (pisah koma):</label>
+      <input id="api-keys" type="text" placeholder="sk-xxx1, sk-xxx2, sk-xxx3" />
+      <p>*Masukkan minimal 1 API key. Jika satu key limit, akan otomatis pindah ke key selanjutnya.</p>
+      <p>*Ganti endpoint berikut di <code>ai.js</code> (default placeholder): <code>https://api.example.com/ai</code>.</p>
+    </section>
+
+    <section class="api-setup">
+      <h3>Pengaturan Kepribadian AI</h3>
+      <label for="personality-select">Pilih Kepribadian:</label>
+      <select id="personality-select">
+        <option value="friendly">Friendly dan Supportive</option>
+        <option value="professional">Profesional dan Formal</option>
+        <option value="playful">Lucu dan Santai</option>
+        <option value="concise">Ringkas dan Efisien</option>
+        <option value="custom">Kustom (input sendiri)</option>
+      </select>
+      <label for="custom-personality" style="margin-top:8px;display:block;">Prompt Kepribadian (opsional):</label>
+      <textarea id="custom-personality" rows="3" placeholder="Masukkan instruksi kepribadian khusus..." style="width:100%;border-radius:8px; border:1px solid rgba(97,193,255,0.5); background:rgba(5,10,22,0.86); color:#d3f0ff; padding:0.6rem;"></textarea>
+      <p style="font-size:0.85rem; color:#b2ccff;">Tekan Ctrl+P untuk fokus ke input kepribadian.</p>
+    </section>
+  </main>
+
+  <script src="nav.js"></script>
+  <script src="script.js"></script>
+  <script src="ai.js"></script>
+</body>
+</html>
