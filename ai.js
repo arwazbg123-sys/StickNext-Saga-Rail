@@ -8,13 +8,12 @@ const customPersonalityInput = document.getElementById('custom-personality');
 
 const providers = [
   { name: 'Groq', apiKey: '', endpoint: 'https://api.groq.com/openai/v1/chat/completions', model: 'llama3-1-8b-instruct' },
-  { name: 'Fireworks', apiKey: 'fw_xxx', endpoint: 'https://api.fireworks.ai/inference/v1/chat/completions', model: 'accounts/fireworks/models/llama-v3p1-8b-instruct' },
-  { name: 'Together', apiKey: 'xxx', endpoint: 'https://api.together.xyz/v1/chat/completions', model: 'meta-llama/Llama-3.1-8B-Instruct-Turbo' },
-  { name: 'OpenRouter', apiKey: 'sk-or-v1-xxx', endpoint: 'https://openrouter.ai/api/v1/chat/completions', model: 'meta-llama/llama-3.1-8b-instruct:free' },
-  // tambah sisanya sesuai daftar di atas
+  { name: 'Fireworks', apiKey: '', endpoint: 'https://api.fireworks.ai/inference/v1/chat/completions', model: 'accounts/fireworks/models/llama-v3p1-8b-instruct' },
+  { name: 'Together', apiKey: '', endpoint: 'https://api.together.xyz/v1/chat/completions', model: 'meta-llama/Llama-3.1-8B-Instruct-Turbo' },
+  { name: 'OpenRouter', apiKey: '', endpoint: 'https://openrouter.ai/api/v1/chat/completions', model: 'meta-llama/llama-3.1-8b-instruct:free' },
 ];
 
-let currentIndex = 0;
+let currentProviderIndex = 0;
 
 const aiConfig = {
   maxRetriesPerProvider: 1,
@@ -26,9 +25,6 @@ const aiConfig = {
     custom: '',
   },
 };
-
-let activeKeyIndex = 0;
-let activeModelIndex = 0;
 
 function appendMessage(text, sender) {
   const messageEl = document.createElement('div');
@@ -52,46 +48,28 @@ function getPersonalityPrompt() {
   return aiConfig.personalityPresets[selected] || aiConfig.personalityPresets.friendly;
 }
 
-function getProviders() {
-  const text = apiKeysInput?.value.trim();
-  const availableProviders = providers.map(p => ({ ...p }));
+function getProvidersWithKeys() {
+  const inputKeys = apiKeysInput?.value.trim() || '';
+  const keyList = inputKeys ? inputKeys.split(',').map(k => k.trim()).filter(Boolean) : [];
 
-  if (!text) {
-    return availableProviders;
-  }
-
-  const rawKeys = text.split(',').map(k => k.trim()).filter(Boolean);
-  if (rawKeys.length === 0) return availableProviders;
-
-  for (let i = 0; i < availableProviders.length; i++) {
-    if (rawKeys[i]) {
-      availableProviders[i].apiKey = rawKeys[i];
-    }
-  }
-
-  if (rawKeys.length > availableProviders.length) {
-    rawKeys.slice(availableProviders.length).forEach((extraKey, extraIndex) => {
-      availableProviders.push({
-        name: `Custom${extraIndex + 1}`,
-        apiKey: extraKey,
-        endpoint: availableProviders[0].endpoint,
-        model: availableProviders[0].model,
-      });
-    });
-  }
-
-  return availableProviders;
+  return providers
+    .map((prov, index) => ({
+      ...prov,
+      apiKey: keyList[index] || prov.apiKey,
+    }))
+    .filter(p => p.apiKey && p.apiKey.length > 5);
 }
 
 async function kirimKeMazzi(pesan) {
   const systemPrompt = getPersonalityPrompt();
-  const providerList = getProviders();
-  if (!providerList.length) {
-    throw new Error('Tidak ada provider yang dikonfigurasi.');
+  const providerList = getProvidersWithKeys();
+
+  if (providerList.length === 0) {
+    return 'Masukkan dulu API Key di bagian Pengaturan API ya bro 🥺';
   }
 
   for (let i = 0; i < providerList.length; i++) {
-    const prov = providerList[(currentIndex + i) % providerList.length];
+    const prov = providerList[(currentProviderIndex + i) % providerList.length];
 
     try {
       setStatus(`Mencoba ${prov.name}...`);
@@ -132,7 +110,7 @@ async function kirimKeMazzi(pesan) {
         konten = 'Respon tidak ditemukan di payload API.';
       }
 
-      currentIndex = (currentIndex + i) % providerList.length;
+      currentProviderIndex = (currentProviderIndex + i) % providerList.length;
       return konten;
 
     } catch (err) {
