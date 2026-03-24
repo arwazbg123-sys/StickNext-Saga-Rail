@@ -7,7 +7,7 @@ const personalitySelect = document.getElementById('personality-select');
 const customPersonalityInput = document.getElementById('custom-personality');
 
 const providers = [
-  { name: 'Groq', apiKey: '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', endpoint: 'https://api.groq.com/openai/v1/chat/completions', model: 'llama3-1-8b-instruct' },
+  { name: 'Groq', apiKey: '', endpoint: 'https://api.groq.com/openai/v1/chat/completions', model: 'llama3-1-8b-instruct' },
   { name: 'Fireworks', apiKey: 'fw_xxx', endpoint: 'https://api.fireworks.ai/inference/v1/chat/completions', model: 'accounts/fireworks/models/llama-v3p1-8b-instruct' },
   { name: 'Together', apiKey: 'xxx', endpoint: 'https://api.together.xyz/v1/chat/completions', model: 'meta-llama/Llama-3.1-8B-Instruct-Turbo' },
   { name: 'OpenRouter', apiKey: 'sk-or-v1-xxx', endpoint: 'https://openrouter.ai/api/v1/chat/completions', model: 'meta-llama/llama-3.1-8b-instruct:free' },
