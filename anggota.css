@@ -398,16 +398,44 @@ header, main, footer {
 
 /* Badge System - Enhanced */
 .badge-founder {
-  background: linear-gradient(135deg, #FFD700, #FFA500) !important;
-  box-shadow: 0 0 30px rgba(255, 215, 0, 1), 0 0 60px rgba(255, 165, 0, 0.6) !important;
-  border: 2px solid rgba(255, 215, 0, 0.8) !important;
-  animation: founderGlow 2s ease-in-out infinite;
+  background: linear-gradient(135deg, #FFD700, #FFA500, #FFD700),
+              radial-gradient(circle at 20% 20%, rgba(255, 215, 0, 0.8) 2px, transparent 2px),
+              radial-gradient(circle at 80% 80%, rgba(255, 165, 0, 0.6) 1px, transparent 1px),
+              radial-gradient(circle at 40% 60%, rgba(255, 215, 0, 0.7) 1.5px, transparent 1.5px) !important;
+  background-size: 100% 100%, 20px 20px, 15px 15px, 25px 25px;
+  box-shadow: 0 0 30px rgba(255, 215, 0, 1), 0 0 60px rgba(255, 165, 0, 0.6), 0 0 90px rgba(255, 215, 0, 0.4) !important;
+  /* Removed border for futuristic look */
+  position: relative;
+  overflow: hidden;
+  animation: founderGlow 2s ease-in-out infinite, founderParticles 3s linear infinite;
+}
+
+.badge-founder::before {
+  content: '👑';
+  position: absolute;
+  top: -5px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 1.2em;
+  opacity: 0.8;
+  animation: crownFloat 2s ease-in-out infinite;
+}
+
+.badge-founder::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle, rgba(255, 215, 0, 0.3) 0%, transparent 70%);
+  animation: goldShimmer 1.5s ease-in-out infinite alternate;
 }
 
 .badge-founder-special {
-  /* Additional highlight for founder badge if needed */
-  border-width: 3px !important;
-  box-shadow: 0 0 40px rgba(255, 215, 0, 1), 0 0 80px rgba(255, 165, 0, 0.65) !important;
+  /* Enhanced futuristic effects for special founder badge */
+  box-shadow: 0 0 40px rgba(255, 215, 0, 1), 0 0 80px rgba(255, 165, 0, 0.65), 0 0 120px rgba(255, 215, 0, 0.5) !important;
+  animation: founderGlow 1.5s ease-in-out infinite, founderParticles 2.5s linear infinite, specialPulse 3s ease-in-out infinite;
 }
 
 .badge-guardian {
@@ -438,6 +466,13 @@ header, main, footer {
   animation: commanderGlow 2s ease-in-out infinite;
 }
 
+.badge-visionary {
+  background: linear-gradient(135deg, #8A2BE2, #DA70D6) !important;
+  box-shadow: 0 0 30px rgba(138, 43, 226, 1), 0 0 60px rgba(138, 43, 226, 0.6) !important;
+  border: 2px solid rgba(138, 43, 226, 0.8) !important;
+  animation: visionaryGlow 2.5s ease-in-out infinite;
+}
+
 @keyframes founderGlow {
   0%, 100% { 
     box-shadow: 0 0 30px rgba(255, 215, 0, 1), 0 0 60px rgba(255, 165, 0, 0.6);
@@ -447,6 +482,26 @@ header, main, footer {
     box-shadow: 0 0 50px rgba(255, 215, 0, 1), 0 0 100px rgba(255, 165, 0, 0.8);
     transform: scale(1.08);
   }
+}
+
+@keyframes founderParticles {
+  0% { background-position: 0% 0%; }
+  100% { background-position: 100% 100%; }
+}
+
+@keyframes crownFloat {
+  0%, 100% { transform: translateX(-50%) translateY(0px); opacity: 0.8; }
+  50% { transform: translateX(-50%) translateY(-3px); opacity: 1; }
+}
+
+@keyframes goldShimmer {
+  0% { opacity: 0.3; transform: scale(1); }
+  100% { opacity: 0.7; transform: scale(1.05); }
+}
+
+@keyframes specialPulse {
+  0%, 100% { filter: brightness(1) hue-rotate(0deg); }
+  50% { filter: brightness(1.2) hue-rotate(10deg); }
 }
 
 @keyframes guardianGlow {
@@ -490,6 +545,165 @@ header, main, footer {
   50% { 
     box-shadow: 0 0 40px rgba(255, 0, 110, 0.9), 0 0 80px rgba(255, 0, 110, 0.6);
     transform: scale(1.05);
+  }
+}
+
+/* Suspended Card Punishment Visual Effects - Enhanced Frozen Look */
+.suspended-card {
+  position: relative;
+  opacity: 0.7;
+  filter: grayscale(100%) blur(0.5px) sepia(0.3) hue-rotate(180deg) saturate(0.5);
+  /* Removed pointer-events: none to allow clicking for dramatic effect */
+  border: 3px solid #00BFFF !important; /* Deep sky blue for icy effect */
+  box-shadow: 0 0 25px rgba(0, 191, 255, 0.6), 0 0 50px rgba(0, 191, 255, 0.3) !important;
+  background: linear-gradient(135deg, rgba(173, 216, 230, 0.2), rgba(135, 206, 250, 0.1));
+  animation: suspendedFreeze 4s ease-in-out infinite;
+  will-change: filter, transform; /* Optimize for mobile performance */
+  cursor: pointer; /* Indicate it's clickable */
+}
+
+.suspended-card::before {
+  content: '🚫 CONDEMNED 🚫';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(-10deg);
+  background: linear-gradient(135deg, rgba(0, 191, 255, 0.9), rgba(30, 144, 255, 0.8));
+  color: white;
+  padding: 12px 25px;
+  border-radius: 15px;
+  font-weight: bold;
+  font-size: 1.1em;
+  text-align: center;
+  z-index: 10;
+  box-shadow: 0 0 20px rgba(0, 191, 255, 0.8), inset 0 0 10px rgba(255, 255, 255, 0.3);
+  animation: suspendedFrost 3s ease-in-out infinite alternate;
+  border: 2px solid rgba(255, 255, 255, 0.5);
+}
+
+.suspended-card::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background:
+    radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.4) 1px, transparent 1px),
+    radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.3) 0.5px, transparent 0.5px),
+    radial-gradient(circle at 60% 40%, rgba(255, 255, 255, 0.5) 0.8px, transparent 0.8px),
+    linear-gradient(45deg, transparent 40%, rgba(173, 216, 230, 0.1) 50%, transparent 60%);
+  pointer-events: none;
+  animation: iceCrystals 6s linear infinite;
+}
+
+/* Additional frost particles for dramatic effect */
+.suspended-card .frost-particle-1,
+.suspended-card .frost-particle-2,
+.suspended-card .frost-particle-3 {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.8), rgba(173, 216, 230, 0.6));
+  border-radius: 50%;
+  animation: snowFall 4s linear infinite;
+}
+
+.suspended-card .frost-particle-1 {
+  top: 10%;
+  left: 15%;
+  animation-delay: 0s;
+}
+
+.suspended-card .frost-particle-2 {
+  top: 20%;
+  right: 20%;
+  animation-delay: 1s;
+  width: 3px;
+  height: 3px;
+}
+
+.suspended-card .frost-particle-3 {
+  bottom: 15%;
+  left: 70%;
+  animation-delay: 2s;
+  width: 5px;
+  height: 5px;
+}
+
+@keyframes suspendedFreeze {
+  0%, 100% {
+    filter: grayscale(100%) blur(0.5px) sepia(0.3) hue-rotate(180deg) saturate(0.5) brightness(0.9);
+    transform: scale(1) rotate(0deg);
+  }
+  25% {
+    filter: grayscale(100%) blur(0.3px) sepia(0.3) hue-rotate(180deg) saturate(0.5) brightness(0.95);
+    transform: scale(1.01) rotate(0.5deg);
+  }
+  50% {
+    filter: grayscale(100%) blur(0.5px) sepia(0.3) hue-rotate(180deg) saturate(0.5) brightness(0.85);
+    transform: scale(0.99) rotate(-0.5deg);
+  }
+  75% {
+    filter: grayscale(100%) blur(0.3px) sepia(0.3) hue-rotate(180deg) saturate(0.5) brightness(0.95);
+    transform: scale(1.01) rotate(0.5deg);
+  }
+}
+
+@keyframes suspendedFrost {
+  0% {
+    transform: translate(-50%, -50%) rotate(-10deg) scale(1);
+    box-shadow: 0 0 20px rgba(0, 191, 255, 0.8), inset 0 0 10px rgba(255, 255, 255, 0.3);
+  }
+  50% {
+    transform: translate(-50%, -50%) rotate(-10deg) scale(1.05);
+    box-shadow: 0 0 30px rgba(0, 191, 255, 1), inset 0 0 15px rgba(255, 255, 255, 0.5);
+  }
+  100% {
+    transform: translate(-50%, -50%) rotate(-10deg) scale(1);
+    box-shadow: 0 0 20px rgba(0, 191, 255, 0.8), inset 0 0 10px rgba(255, 255, 255, 0.3);
+  }
+}
+
+@keyframes iceCrystals {
+  0% { opacity: 0.3; }
+  50% { opacity: 0.6; }
+  100% { opacity: 0.3; }
+}
+
+@keyframes snowFall {
+  0% {
+    transform: translateY(-10px) rotate(0deg);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(110px) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+@keyframes visionaryGlow {
+  0%, 100% { 
+    box-shadow: 0 0 30px rgba(138, 43, 226, 1), 0 0 60px rgba(138, 43, 226, 0.6);
+    transform: scale(1) rotate(0deg);
+  }
+  25% { 
+    box-shadow: 0 0 45px rgba(138, 43, 226, 1.1), 0 0 90px rgba(138, 43, 226, 0.7);
+    transform: scale(1.1) rotate(1deg);
+  }
+  50% { 
+    box-shadow: 0 0 60px rgba(138, 43, 226, 1.2), 0 0 120px rgba(138, 43, 226, 0.8);
+    transform: scale(1.15) rotate(0deg);
+  }
+  75% { 
+    box-shadow: 0 0 45px rgba(138, 43, 226, 1.1), 0 0 90px rgba(138, 43, 226, 0.7);
+    transform: scale(1.1) rotate(-1deg);
   }
 }
 
@@ -582,6 +796,129 @@ header, main, footer {
 @keyframes vipPulse {
   0%, 100% { transform: scale(1); opacity: 0.37; }
   50% { transform: scale(1.03); opacity: 0.65; }
+}
+
+/* Suspended Modal Dramatic Effects */
+.suspended-modal {
+  background: rgba(0, 0, 0, 0.95) !important;
+  backdrop-filter: blur(10px);
+}
+
+.suspended-modal .modal-content {
+  background: linear-gradient(135deg, rgba(0, 191, 255, 0.1), rgba(30, 144, 255, 0.05));
+  border: 2px solid rgba(0, 191, 255, 0.5);
+  box-shadow: 0 0 50px rgba(0, 191, 255, 0.8), 0 0 100px rgba(0, 191, 255, 0.4);
+  animation: modalCondemnation 1s ease-out;
+}
+
+.suspended-drama {
+  text-align: center;
+  padding: 2rem;
+  color: white;
+}
+
+.condemnation-symbol {
+  font-size: 4rem;
+  animation: symbolPulse 2s ease-in-out infinite;
+  margin-bottom: 1rem;
+}
+
+.condemnation-title {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #FF4500;
+  text-shadow: 0 0 20px rgba(255, 69, 0, 0.8);
+  animation: titleShake 1.5s ease-in-out infinite;
+  margin-bottom: 2rem;
+}
+
+.condemnation-message {
+  font-size: 1.2rem;
+  line-height: 1.6;
+  margin-bottom: 2rem;
+}
+
+.heroic-quote {
+  font-style: italic;
+  color: #FFD700;
+  font-size: 1.4rem;
+  text-shadow: 0 0 15px rgba(255, 215, 0, 0.6);
+  animation: quoteGlow 3s ease-in-out infinite alternate;
+}
+
+.condemnation-effects {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  margin: 2rem 0;
+}
+
+.condemnation-effects span {
+  font-size: 3rem;
+  animation: effectFloat 2s ease-in-out infinite alternate;
+}
+
+.effect-1 { animation-delay: 0s; }
+.effect-2 { animation-delay: 0.5s; }
+.effect-3 { animation-delay: 1s; }
+
+.condemnation-close {
+  background: linear-gradient(135deg, #FF4500, #FF6347);
+  color: white;
+  border: none;
+  padding: 1rem 2rem;
+  font-size: 1.1rem;
+  font-weight: bold;
+  border-radius: 10px;
+  cursor: pointer;
+  box-shadow: 0 0 20px rgba(255, 69, 0, 0.6);
+  transition: all 0.3s ease;
+  animation: buttonPulse 2s ease-in-out infinite;
+}
+
+.condemnation-close:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 30px rgba(255, 69, 0, 0.8);
+}
+
+@keyframes modalCondemnation {
+  0% {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes symbolPulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.2); }
+}
+
+@keyframes titleShake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  75% { transform: translateX(5px); }
+}
+
+@keyframes quoteGlow {
+  0% { text-shadow: 0 0 15px rgba(255, 215, 0, 0.6); }
+  100% { text-shadow: 0 0 25px rgba(255, 215, 0, 1); }
+}
+
+@keyframes effectFloat {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-10px); }
+}
+
+@keyframes buttonPulse {
+  0%, 100% { box-shadow: 0 0 20px rgba(255, 69, 0, 0.6); }
+  50% { box-shadow: 0 0 30px rgba(255, 69, 0, 0.9); }
 }
 
 @keyframes cosmicSparkle {

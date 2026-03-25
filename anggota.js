@@ -23,7 +23,8 @@
       GUARDIAN: 'guardian',
       DEVELOPER: 'developer',
       ELITE: 'elite',
-      COMMANDER: 'commander'
+      COMMANDER: 'commander',
+      VISIONARY: 'visionary' // kategori baru khusus untuk kreator kosmik
     };
     MEMBER_STATUS = {
       ACTIVE: 'active',
@@ -119,7 +120,8 @@
         guardian: getMembersByCategory(MEMBER_CATEGORIES.GUARDIAN).length,
         developer: getMembersByCategory(MEMBER_CATEGORIES.DEVELOPER).length,
         elite: getMembersByCategory(MEMBER_CATEGORIES.ELITE).length,
-        commander: getMembersByCategory(MEMBER_CATEGORIES.COMMANDER).length
+        commander: getMembersByCategory(MEMBER_CATEGORIES.COMMANDER).length,
+        visionary: getMembersByCategory(MEMBER_CATEGORIES.VISIONARY).length
       },
       totalWorks: allMembers.reduce((sum, member) => sum + member.works.length, 0),
       averageLevel: Math.round(allMembers.reduce((sum, member) => sum + (member.level || 1), 0) / allMembers.length)
@@ -174,6 +176,12 @@
       color: '#FF006E',
       glow: '0 0 15px rgba(255, 0, 110, 0.6)',
       special: false
+    },
+    visionary: {
+      name: '🌌 Visionary',
+      color: '#8A2BE2',
+      glow: '0 0 20px rgba(138, 43, 226, 0.8)',
+      special: true
     }
   };
 
@@ -280,6 +288,43 @@
     }
 
     try {
+      // Reset modal content from any previous suspended state
+      const modalContent = modal.querySelector('.modal-content');
+      if (modalContent) {
+        modalContent.innerHTML = `
+          <div class="modal-header">
+            <img id="modal-image" src="" alt="Member Photo">
+            <span class="modal-close">&times;</span>
+            <div id="modal-badge" class="modal-badge"></div>
+          </div>
+          <div class="modal-body">
+            <h3 id="modal-name"></h3>
+            <p class="title" id="modal-title"></p>
+            <p id="modal-description"></p>
+            <div class="modal-works">
+              <h4>Karya/Kontribusi:</h4>
+              <ul id="modal-works-list"></ul>
+            </div>
+          </div>
+        `;
+      }
+
+      // Re-initialize modal elements after reset
+      modalImg = document.getElementById('modal-image');
+      modalName = document.getElementById('modal-name');
+      modalTitle = document.getElementById('modal-title');
+      modalDescription = document.getElementById('modal-description');
+      modalWorks = document.getElementById('modal-works-list');
+      modalBadge = document.getElementById('modal-badge');
+      modalCloseButton = document.querySelector('.modal-close');
+
+      // Re-attach event listener for close button
+      if (modalCloseButton) {
+        modalCloseButton.addEventListener('click', closeModal);
+      }
+
+      // Remove suspended modal class if present
+      modal.classList.remove('suspended-modal');
       if (modalImg) {
         modalImg.src = member.img;
         modalImg.onerror = function() {
@@ -321,9 +366,7 @@
         modal.classList.add('show');
       }, 10);
 
-      if (isMobile) {
-        triggerHapticFeedback();
-      }
+      // Removed haptic feedback for regular modals - only suspended gets the warning
     } catch (error) {
       console.error('Error opening modal:', error);
       closeModal();
@@ -348,6 +391,75 @@
       // Force close as fallback
       modal.style.display = 'none';
       modal.classList.remove('active', 'show');
+    }
+  }
+
+  function openSuspendedModal(member) {
+    if (!modal) {
+      console.warn('Modal element not found');
+      return;
+    }
+
+    try {
+      // Clear normal modal content
+      if (modalImg) modalImg.style.display = 'none';
+      if (modalName) modalName.style.display = 'none';
+      if (modalTitle) modalTitle.style.display = 'none';
+      if (modalDescription) modalDescription.style.display = 'none';
+      if (modalWorks) modalWorks.style.display = 'none';
+      if (modalBadge) modalBadge.style.display = 'none';
+
+      // Create dramatic suspended content
+      const suspendedContent = document.createElement('div');
+      suspendedContent.className = 'suspended-modal-content';
+      suspendedContent.innerHTML = `
+        <div class="suspended-drama">
+          <div class="condemnation-symbol">⚖️</div>
+          <h1 class="condemnation-title">YOU HAVE BEEN SUSPENDED!</h1>
+          <div class="condemnation-message">
+            <p><strong>${member.name}</strong> has violated the sacred codes of StickNext Saga Rail.</p>
+            <p>Their actions have brought dishonor to the community.</p>
+            <p class="heroic-quote">"In the name of justice, you are hereby exiled from our digital realm!"</p>
+          </div>
+          <div class="condemnation-effects">
+            <span class="effect-1">❄️</span>
+            <span class="effect-2">🚫</span>
+            <span class="effect-3">⚡</span>
+          </div>
+          <button class="condemnation-close" onclick="closeModal()">Accept Judgment</button>
+        </div>
+      `;
+
+      // Replace modal content
+      const modalContent = modal.querySelector('.modal-content');
+      if (modalContent) {
+        modalContent.innerHTML = '';
+        modalContent.appendChild(suspendedContent);
+      }
+
+      modal.classList.add('active', 'suspended-modal');
+      modal.style.display = 'block';
+
+      setTimeout(() => {
+        modal.classList.add('show');
+      }, 10);
+
+      if (isMobile) {
+        triggerHapticFeedback();
+        // Add extra vibration for drama
+        if ('vibrate' in navigator) {
+          navigator.vibrate([200, 100, 200]);
+        }
+      }
+
+      // Auto-close after dramatic display
+      setTimeout(() => {
+        closeModal();
+      }, 8000);
+
+    } catch (error) {
+      console.error('Error opening suspended modal:', error);
+      closeModal();
     }
   }
 
@@ -470,6 +582,18 @@
       }
     }
 
+    // Suspended card gets punishment visual effects
+    if (member.status === MEMBER_STATUS.SUSPENDED) {
+      card.classList.add('suspended-card');
+
+      // Add frost particles for dramatic frozen effect
+      for (let i = 1; i <= 3; i++) {
+        const particle = document.createElement('div');
+        particle.className = `frost-particle-${i}`;
+        card.appendChild(particle);
+      }
+    }
+
     const img = document.createElement('img');
     img.src = member.img;
     img.alt = `${member.name}'s photo`;
@@ -508,7 +632,11 @@
 
     card.addEventListener('click', () => {
       addRippleEffect(card, { touches: [{ clientX: card.getBoundingClientRect().left + card.clientWidth / 2, clientY: card.getBoundingClientRect().top + card.clientHeight / 2 }] });
-      openModal(member);
+      if (member.status === MEMBER_STATUS.SUSPENDED) {
+        openSuspendedModal(member);
+      } else {
+        openModal(member);
+      }
     });
 
     card.addEventListener('touchstart', (event) => {

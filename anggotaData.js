@@ -14,7 +14,8 @@
     GUARDIAN: 'guardian',
     DEVELOPER: 'developer',
     ELITE: 'elite',
-    COMMANDER: 'commander'
+    COMMANDER: 'commander',
+    VISIONARY: 'visionary' // kategori baru khusus untuk kreator kosmik
   };
 
   // Status types
@@ -28,14 +29,13 @@
   // MEMBER DATA
   // ==========================================
 
-  // Individual member definitions - Easy to add/remove members
   const MEMBERS = {
     naufal: {
       name: 'Naufal MrSov',
       title: 'Kreator / Leader',
       description: 'Pembuat StickNext Saga Rail, ahli desain stiker dan pengembang proyek komunitas.',
       img: 'Naufal Mrsov.images.jpg',
-      works: ['StickMazz', 'StickNext', 'StickBot'],
+      works: ['StickMazz', 'StickNext', 'StickNext Saga Rail'],
       status: MEMBER_STATUS.ACTIVE,
       badge: MEMBER_CATEGORIES.FOUNDER,
       joinDate: '2024-01-01',
@@ -70,7 +70,7 @@
       name: 'Paratugas Idol Devas',
       title: 'Programmer',
       description: 'Membangun fitur interaktif dan fungsionalitas situs dengan JavaScript.',
-      img: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgdmlld0JveD0iMCAwIDEwMCAxMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIiBmaWxsPSIjRjNGNEY2Ii8+Cjx0ZXh0IHg9IjUwIiB5PSI1NSIgZm9udC1mYW1pbHk9IkFyaWFsLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjEyIiBmaWxsPSIjOUI5QkE0IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkeT0iMC4zZW0iPk5vIEF2YXRhcjwvdGV4dD4KPC9zdmc+',
+      img: 'data:image/svg+xml;base64,...', // placeholder avatar
       works: ['Fitur Anggota', 'Sistem Rating', 'Animasi Loader'],
       status: MEMBER_STATUS.ACTIVE,
       badge: MEMBER_CATEGORIES.DEVELOPER,
@@ -100,14 +100,37 @@
       badge: MEMBER_CATEGORIES.COMMANDER,
       joinDate: '2024-06-01',
       level: 8
-    }
+    },
+
+    lea: {
+      name: 'Growmeliana Leviana (Lea)',
+      title: 'Visionary Creator',
+      description: 'Arsitek kosmik StickNext, pencipta dunia glitch, audio lounge futuristik, dan saga rail interaktif.',
+      img: 'Lea.jpeg', // bisa diganti dengan foto/avatar kamu
+      works: ['StickNext Universe', 'StickNext Go to Future', 'Audio Lounge Kosmik', 'Loader Planet Berputar'],
+      status: MEMBER_STATUS.ACTIVE,
+      badge: MEMBER_CATEGORIES.VISIONARY,
+      joinDate: '2024-07-01',
+      level: 10
+    },
+
+    dummySuspended: {
+  name: 'Dummy Suspended',
+  title: 'Anggota Percobaan',
+  description: 'Akun ini dibuat hanya untuk menguji status suspended.',
+  img: 'IMG_20251219_115810.jpg', // avatar placeholder
+  works: ['Tes Suspended Mode'],
+  status: MEMBER_STATUS.SUSPENDED,
+  badge: MEMBER_CATEGORIES.DEVELOPER,
+  joinDate: '2026-03-25',
+  level: 1
+}
   };
 
   // ==========================================
   // EXPORTS
   // ==========================================
 
-  // Make data available globally
   window.AnggotaData = {
     MEMBERS,
     MEMBER_CATEGORIES,
