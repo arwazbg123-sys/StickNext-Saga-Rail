@@ -25,6 +25,12 @@ function validateDOM() {
 const GROQ_API_KEY = "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";
 // ===================================================
 
+// Validasi API Key
+if (!GROQ_API_KEY || GROQ_API_KEY.trim() === "") {
+  console.error('❌ ERROR: GROQ_API_KEY tidak ditemukan atau kosong. Silakan isi key di ai.js');
+  setStatus('Error: API Key missing');
+}
+
 const aiConfig = {
   temperature: 0.9,
   maxTokens: 1100,
@@ -224,6 +230,10 @@ document.addEventListener('keydown', (e) => {
     if (e.ctrlKey && e.key.toLowerCase() === 'k') {
       e.preventDefault();
       chatInput?.focus();
+    }
+    if (e.ctrlKey && e.key.toLowerCase() === 'p') {
+      e.preventDefault();
+      customPersonalityInput?.focus();
     }
   } catch (e) {
     console.error('❌ Keyboard event error:', e);
