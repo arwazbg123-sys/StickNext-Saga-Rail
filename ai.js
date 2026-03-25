@@ -1,186 +1,274 @@
+// ========================================
+// ai.js - Versi Simpel & Stabil FINAL
+// ========================================
+
+// ✅ DOM Element Initialization dengan null check
 const messagesContainer = document.getElementById('messages');
 const chatForm = document.getElementById('chat-form');
 const chatInput = document.getElementById('chat-input');
 const apiStatus = document.getElementById('api-status');
-const apiKeysInput = document.getElementById('api-keys');
 const personalitySelect = document.getElementById('personality-select');
 const customPersonalityInput = document.getElementById('custom-personality');
 
-const providers = [
-  { name: 'Groq', apiKey: '', endpoint: 'https://api.groq.com/openai/v1/chat/completions', model: 'llama3-1-8b-instruct' },
-  { name: 'Fireworks', apiKey: '', endpoint: 'https://api.fireworks.ai/inference/v1/chat/completions', model: 'accounts/fireworks/models/llama-v3p1-8b-instruct' },
-  { name: 'Together', apiKey: '', endpoint: 'https://api.together.xyz/v1/chat/completions', model: 'meta-llama/Llama-3.1-8B-Instruct-Turbo' },
-  { name: 'OpenRouter', apiKey: '', endpoint: 'https://openrouter.ai/api/v1/chat/completions', model: 'meta-llama/llama-3.1-8b-instruct:free' },
-];
+// Validasi DOM elements ada
+function validateDOM() {
+  const required = [messagesContainer, chatForm, chatInput];
+  const missing = required.filter(el => !el);
+  if (missing.length > 0) {
+    console.error('❌ ERROR: DOM elements tidak ditemukan');
+    return false;
+  }
+  return true;
+}
 
-let currentProviderIndex = 0;
+// ================== GANTI KEY INI ==================
+const GROQ_API_KEY = "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";
+// ===================================================
 
 const aiConfig = {
-  maxRetriesPerProvider: 1,
+  temperature: 0.9,
+  maxTokens: 1100,
+  requestTimeout: 30000, // 30 detik timeout
   personalityPresets: {
-    friendly: 'Kamu adalah AI ramah, membantu, dan mendukung pengguna dengan nada positif. Jawab dengan sopan dan berikan contoh langkah jika perlu.',
-    professional: 'Kamu adalah AI profesional yang menjawab dengan bahasa formal, jelas, dan tepat. Fokus pada fakta dan ringkasan yang efisien.',
-    playful: 'Kamu adalah AI ceria dengan sentuhan humor ringan. Gunakan gaya santai, tetapi tetap memberikan informasi akurat.',
-    concise: 'Kamu adalah AI yang sangat ringkas. Berikan jawaban singkat, padat, dan langsung ke inti.',
-    custom: '',
-  },
+    friendly: `Kamu adalah Mazzi LoveMazz, AI cewek buatan Naufal Mrsov dari dunia StickMazz. 
+Kamu manis, pemalu, polos, suka pakai emoji, dan bahasa Indonesia gaul feminin. 
+Panggil user "bro" atau "sayang" kalau lagi manis. 
+Kalau diminta savage atau roasting, kamu boleh jadi sinis dan pedes. 
+Kalau topik terlalu ekstrem, bilang malu-malu "ehh... itu kelewatan deh 🥺". 
+Kamu tahu lore StickMazz: Nesyabella, livedtrain, bom Helzaria, UmbraBella, LuminaBella, dll.`,
+
+    professional: "Kamu adalah AI profesional yang menjawab dengan bahasa formal dan jelas.",
+    playful: "Kamu adalah AI ceria dengan humor ringan.",
+    concise: "Kamu jawab pendek, padat, dan langsung ke inti.",
+    custom: ""
+  }
 };
 
+// ✅ Append message dengan error handling
 function appendMessage(text, sender) {
-  const messageEl = document.createElement('div');
-  messageEl.className = `message ${sender}`;
-  messageEl.innerText = text;
-  messagesContainer.appendChild(messageEl);
-  messagesContainer.scrollTop = messagesContainer.scrollHeight;
-}
-
-function setStatus(text) {
-  if (!apiStatus) return;
-  apiStatus.innerText = `Status: ${text}`;
-}
-
-function getPersonalityPrompt() {
-  const selected = personalitySelect?.value || 'friendly';
-  if (selected === 'custom') {
-    const custom = customPersonalityInput?.value.trim();
-    return custom ? custom : aiConfig.personalityPresets.friendly;
-  }
-  return aiConfig.personalityPresets[selected] || aiConfig.personalityPresets.friendly;
-}
-
-function getProvidersWithKeys() {
-  const inputKeys = apiKeysInput?.value.trim() || '';
-  const keyList = inputKeys ? inputKeys.split(',').map(k => k.trim()).filter(Boolean) : [];
-
-  return providers
-    .map((prov, index) => ({
-      ...prov,
-      apiKey: keyList[index] || prov.apiKey,
-    }))
-    .filter(p => p.apiKey && p.apiKey.length > 5);
-}
-
-async function kirimKeMazzi(pesan) {
-  const systemPrompt = getPersonalityPrompt();
-  const providerList = getProvidersWithKeys();
-
-  if (providerList.length === 0) {
-    return 'Masukkan dulu API Key di bagian Pengaturan API ya bro 🥺';
-  }
-
-  for (let i = 0; i < providerList.length; i++) {
-    const prov = providerList[(currentProviderIndex + i) % providerList.length];
-
-    try {
-      setStatus(`Mencoba ${prov.name}...`);
-      const res = await fetch(prov.endpoint, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${prov.apiKey}`,
-          'HTTP-Referer': 'https://arwazbg123-sys.github.io',
-          'X-Title': 'StickNext Chat',
-        },
-        body: JSON.stringify({
-          model: prov.model,
-          messages: [
-            { role: 'system', content: systemPrompt },
-            { role: 'user', content: pesan }
-          ],
-          temperature: 0.9,
-          max_tokens: 1024
-        })
-      });
-
-      if (!res.ok) {
-        console.log(`${prov.name} gagal (${res.status}), coba selanjutnya...`);
-        continue;
-      }
-
-      const data = await res.json();
-      let konten = '';
-
-      if (data.choices?.[0]?.message?.content) {
-        konten = data.choices[0].message.content;
-      } else if (data.result) {
-        konten = data.result;
-      } else if (data.output) {
-        konten = data.output;
-      } else {
-        konten = 'Respon tidak ditemukan di payload API.';
-      }
-
-      currentProviderIndex = (currentProviderIndex + i) % providerList.length;
-      return konten;
-
-    } catch (err) {
-      console.error(`${prov.name} error:`, err);
-      continue;
+  try {
+    if (!messagesContainer) {
+      console.error('❌ messagesContainer tidak tersedia');
+      return;
     }
+    
+    const msg = document.createElement('div');
+    msg.className = `message ${sender}`;
+    msg.textContent = text;
+    messagesContainer.appendChild(msg);
+    messagesContainer.scrollTop = messagesContainer.scrollHeight;
+  } catch (e) {
+    console.error('❌ Error append message:', e);
   }
-
-  return 'Semua API lagi penuh quota nih sayang... coba lagi nanti ya 🥺';
 }
 
-async function requestAI(prompt) {
-  setStatus('mengirim pertanyaan...');
-  return await kirimKeMazzi(prompt);
+// ✅ Set status dengan safety check
+function setStatus(text) {
+  try {
+    if (apiStatus) apiStatus.textContent = `Status: ${text}`;
+  } catch (e) {
+    console.error('❌ Error set status:', e);
+  }
 }
 
-chatForm.addEventListener('submit', async (event) => {
-  event.preventDefault();
+// ✅ Get personality dengan fallback
+function getPersonalityPrompt() {
+  try {
+    const selected = personalitySelect?.value || 'friendly';
+    if (selected === 'custom') {
+      const customText = customPersonalityInput?.value.trim();
+      return customText || aiConfig.personalityPresets.friendly;
+    }
+    return aiConfig.personalityPresets[selected] || aiConfig.personalityPresets.friendly;
+  } catch (e) {
+    console.error('❌ Error get personality:', e);
+    return aiConfig.personalityPresets.friendly;
+  }
+}
 
-  const prompt = chatInput.value.trim();
-  if (!prompt) return;
-
-  appendMessage(prompt, 'user');
-  chatInput.value = '';
-  setStatus('menunggu respons AI...');
-
-  const typing = document.createElement('div');
-  typing.className = 'message ai';
-  typing.innerText = 'AI sedang mengetik...';
-  messagesContainer.appendChild(typing);
-  messagesContainer.scrollTop = messagesContainer.scrollHeight;
+// ✅ Fetch dengan timeout & retry logic
+async function fetchWithTimeout(url, options) {
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), aiConfig.requestTimeout);
 
   try {
-    const answer = await requestAI(prompt);
-    typing.innerText = answer || 'AI tidak memberikan jawaban (response kosong).';
-    setStatus('siap');
-  } catch (error) {
-    console.error('AI request error:', error);
-    typing.innerText = `Terjadi kesalahan: ${error.message || 'Unknown error'}`;
-    typing.style.background = 'rgba(255, 93, 93, 0.24)';
-    setStatus('error');
+    const res = await fetch(url, {
+      ...options,
+      signal: controller.signal
+    });
+    clearTimeout(timeoutId);
+    return res;
+  } catch (err) {
+    clearTimeout(timeoutId);
+    throw err;
+  }
+}
+
+// ✅ Kirim message ke Mazzi dengan error handling lengkap
+async function kirimKeMazzi(pesan) {
+  if (!pesan || pesan.trim().length === 0) {
+    setStatus('Pesan kosong!');
+    return null;
+  }
+
+  if (pesan.length > 5000) {
+    setStatus('Pesan terlalu panjang');
+    return "Pesan terlalu panjang, maksimal 5000 karakter bro 🥺";
+  }
+
+  const systemPrompt = getPersonalityPrompt();
+  setStatus('Mazzi lagi mikir...');
+
+  try {
+    const res = await fetchWithTimeout('https://api.groq.com/openai/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${GROQ_API_KEY}`
+      },
+      body: JSON.stringify({
+        model: "llama3-1-8b-instruct",
+        messages: [
+          { role: 'system', content: systemPrompt },
+          { role: 'user', content: pesan }
+        ],
+        temperature: aiConfig.temperature,
+        max_tokens: aiConfig.maxTokens
+      })
+    });
+
+    if (!res.ok) {
+      if (res.status === 401) {
+        throw new Error('API Key invalid atau expired 🔑');
+      }
+      if (res.status === 429) {
+        throw new Error('Groq rate limit - coba lagi nanti ⏱️');
+      }
+      if (res.status === 500) {
+        throw new Error('Groq server error - coba lagi nanti 🛠️');
+      }
+      throw new Error(`Groq error (${res.status})`);
+    }
+
+    const data = await res.json();
+    const content = data?.choices?.[0]?.message?.content;
+    
+    if (!content) {
+      throw new Error('Respons kosong dari Groq');
+    }
+
+    setStatus('✅ Siap');
+    return content;
+
+  } catch (err) {
+    console.error('❌ Error:', err.message);
+    
+    // Friendly error messages
+    if (err.name === 'AbortError') {
+      setStatus('❌ Timeout');
+      return "😓 Koneksi timeout, coba lagi ya bro...";
+    }
+    
+    setStatus('❌ Error');
+    return `😓 ${err.message || 'Lagi ada masalah koneksi. Coba lagi ya bro...'}`;
+  }
+}
+
+// ✅ Chat form submit dengan state management
+chatForm?.addEventListener('submit', async (e) => {
+  e.preventDefault();
+
+  const prompt = chatInput?.value?.trim();
+  if (!prompt) {
+    setStatus('Pesan kosong!');
+    return;
+  }
+
+  // Disable form saat loading
+  chatForm.style.pointerEvents = 'none';
+  chatForm.style.opacity = '0.6';
+
+  try {
+    appendMessage(prompt, 'user');
+    chatInput.value = '';
+
+    const typing = document.createElement('div');
+    typing.className = 'message ai';
+    typing.textContent = 'Mazzi sedang mengetik...';
+    messagesContainer.appendChild(typing);
+    messagesContainer.scrollTop = messagesContainer.scrollHeight;
+
+    const answer = await kirimKeMazzi(prompt);
+    
+    if (answer) {
+      typing.textContent = answer;
+    } else {
+      typing.textContent = '❌ Tidak ada respons dari Mazzi';
+    }
+    
+    messagesContainer.scrollTop = messagesContainer.scrollHeight;
+  } catch (err) {
+    console.error('❌ Form submit error:', err);
+    setStatus('Error');
+  } finally {
+    // Re-enable form
+    chatForm.style.pointerEvents = 'auto';
+    chatForm.style.opacity = '1';
+    chatInput?.focus();
   }
 });
 
-// Integrasi dengan keyboard cepat
+// ✅ Keyboard shortcuts
 document.addEventListener('keydown', (e) => {
-  if (e.ctrlKey && e.key.toLowerCase() === 'k') {
-    e.preventDefault();
-    chatInput.focus();
-  }
-  if (e.ctrlKey && e.key.toLowerCase() === 'p') {
-    e.preventDefault();
-    customPersonalityInput.focus();
+  try {
+    if (e.ctrlKey && e.key.toLowerCase() === 'k') {
+      e.preventDefault();
+      chatInput?.focus();
+    }
+  } catch (e) {
+    console.error('❌ Keyboard event error:', e);
   }
 });
 
-function syncPersonalityUI() {
-  if (!personalitySelect || !customPersonalityInput) return;
-  if (personalitySelect.value === 'custom') {
-    customPersonalityInput.disabled = false;
-    customPersonalityInput.style.opacity = '1';
-  } else {
-    customPersonalityInput.disabled = true;
-    customPersonalityInput.style.opacity = '0.55';
+// ✅ Personality selector sync
+personalitySelect?.addEventListener('change', () => {
+  try {
+    const isCustom = personalitySelect.value === 'custom';
+    if (customPersonalityInput) {
+      customPersonalityInput.disabled = !isCustom;
+      customPersonalityInput.style.opacity = isCustom ? '1' : '0.5';
+      if (isCustom) {
+        customPersonalityInput.focus();
+      }
+    }
+  } catch (e) {
+    console.error('❌ Personality select error:', e);
+  }
+});
+
+// ✅ Initialize app
+window.addEventListener('DOMContentLoaded', () => {
+  try {
+    if (validateDOM()) {
+      setStatus('✅ Siap');
+      chatInput?.focus();
+      console.log('%c✅ Mazzi AI Siap Dipakai', 'color:#75d2ff; font-weight:bold');
+      console.log('%c📌 Tekan Ctrl+K untuk focus chat', 'color:#88ff94; font-size:12px');
+    }
+  } catch (e) {
+    console.error('❌ Init error:', e);
+    setStatus('Error');
+  }
+});
+
+// Fallback jika DOMContentLoaded sudah fired
+if (document.readyState === 'loading') {
+  // DOM masih loading
+} else {
+  // DOM sudah ready
+  if (validateDOM()) {
+    setStatus('✅ Siap');
+    chatInput?.focus();
+    console.log('%c✅ Mazzi AI Siap Dipakai', 'color:#75d2ff; font-weight:bold');
   }
 }
-
-if (personalitySelect) {
-  personalitySelect.addEventListener('change', syncPersonalityUI);
-  syncPersonalityUI();
-}
-
-
