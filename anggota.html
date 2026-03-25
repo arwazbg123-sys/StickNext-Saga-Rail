@@ -64,6 +64,25 @@
     </ul>
   </div>
 
+  <!-- Elemen Menakjubkan: Scene Kereta Api -->
+  <div class="railway-scene">
+    <div class="railway-tracks"></div>
+    <div class="train">
+      <div class="smoke"></div>
+      <div class="smoke"></div>
+      <div class="smoke"></div>
+    </div>
+  </div>
+
+  <!-- Partikel Bintang Futuristik -->
+  <div class="stars">
+    <div class="star"></div>
+    <div class="star"></div>
+    <div class="star"></div>
+    <div class="star"></div>
+    <div class="star"></div>
+  </div>
+
   <!-- Konten Anggota -->
   <main>
     <section id="anggota">
@@ -128,7 +147,18 @@
   </footer>
 
   <script src="anggotaData.js" onerror="console.error('anggotaData.js gagal dimuat'); document.dispatchEvent(new CustomEvent('script-error', {detail: 'anggotaData.js'}))"></script>
-  <script src="anggota.js" onerror="console.error('anggota.js gagal dimuat'); document.dispatchEvent(new CustomEvent('script-error', {detail: 'anggota.js'}))"></script>
+  <script>
+    // Load main script after data script has had time to load
+    setTimeout(function() {
+      const script = document.createElement('script');
+      script.src = 'anggota.js';
+      script.onerror = function() {
+        console.error('anggota.js gagal dimuat');
+        document.dispatchEvent(new CustomEvent('script-error', {detail: 'anggota.js'}));
+      };
+      document.head.appendChild(script);
+    }, 200); // 200ms delay to ensure data is loaded
+  </script>
   <script src="nav.js"></script>
   <script>
     // Auto-recovery system for script loading failures

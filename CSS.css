@@ -678,3 +678,146 @@ button:hover {
   background: #e63946;
   color: #fff;
 }
+
+/* ==========================================
+   ELEMENTS MENAKJUBKAN: ANIMASI KERETA API
+   ========================================== */
+
+/* Scene kereta api di background halaman */
+.railway-scene {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 150px;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+/* Rel kereta yang bergerak */
+.railway-tracks {
+  position: absolute;
+  bottom: 20px;
+  left: 0;
+  width: 100%;
+  height: 10px;
+  background: linear-gradient(to right, #666 0%, #999 50%, #666 100%);
+  background-size: 40px 10px;
+  animation: trackMove 2s linear infinite;
+}
+
+@keyframes trackMove {
+  0% { background-position: 0 0; }
+  100% { background-position: 40px 0; }
+}
+
+/* Kereta api yang melintas */
+.train {
+  position: absolute;
+  bottom: 30px;
+  left: -200px;
+  width: 180px;
+  height: 60px;
+  background: linear-gradient(135deg, #333, #555);
+  border-radius: 10px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
+  animation: trainPass 8s linear infinite;
+  z-index: 1;
+}
+
+.train::before {
+  content: '';
+  position: absolute;
+  top: -10px;
+  left: 20px;
+  width: 20px;
+  height: 20px;
+  background: #ff6b6b;
+  border-radius: 50%;
+  box-shadow: 0 0 10px rgba(255, 107, 107, 0.8);
+}
+
+.train::after {
+  content: '';
+  position: absolute;
+  top: -10px;
+  right: 20px;
+  width: 20px;
+  height: 20px;
+  background: #ff6b6b;
+  border-radius: 50%;
+  box-shadow: 0 0 10px rgba(255, 107, 107, 0.8);
+}
+
+@keyframes trainPass {
+  0% { left: -200px; }
+  10% { left: 10%; }
+  90% { left: 90%; }
+  100% { left: 110vw; }
+}
+
+/* Asap kereta */
+.smoke {
+  position: absolute;
+  bottom: 90px;
+  left: 50%;
+  width: 20px;
+  height: 20px;
+  background: rgba(200, 200, 200, 0.6);
+  border-radius: 50%;
+  animation: smokeRise 3s ease-out infinite;
+  opacity: 0;
+}
+
+.smoke:nth-child(2) { animation-delay: 0.5s; left: 52%; }
+.smoke:nth-child(3) { animation-delay: 1s; left: 48%; }
+
+@keyframes smokeRise {
+  0% { opacity: 0; transform: scale(0.5) translateY(0); }
+  20% { opacity: 0.8; transform: scale(1) translateY(-20px); }
+  100% { opacity: 0; transform: scale(1.5) translateY(-60px); }
+}
+
+/* Partikel bintang untuk efek futuristik */
+.stars {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -2;
+  pointer-events: none;
+}
+
+.star {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  background: #fff;
+  border-radius: 50%;
+  animation: twinkle 2s infinite;
+}
+
+.star:nth-child(1) { top: 10%; left: 20%; animation-delay: 0s; }
+.star:nth-child(2) { top: 20%; left: 70%; animation-delay: 0.5s; }
+.star:nth-child(3) { top: 30%; left: 40%; animation-delay: 1s; }
+.star:nth-child(4) { top: 50%; left: 80%; animation-delay: 1.5s; }
+.star:nth-child(5) { top: 70%; left: 10%; animation-delay: 2s; }
+
+@keyframes twinkle {
+  0%, 100% { opacity: 0.3; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.2); }
+}
+
+/* Tambahkan scene ke body */
+body::after {
+  content: '';
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 150px;
+  background: linear-gradient(to top, rgba(10, 10, 10, 0.8), transparent);
+  z-index: -1;
+}
