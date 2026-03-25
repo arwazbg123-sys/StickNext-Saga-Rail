@@ -104,8 +104,10 @@
     return true;
   }
 
-  // Generate the final anggotaData array from MEMBERS object
-  const anggotaData = getAllMembers();
+  // Generate the final anggotaData array from MEMBERS object (dynamic function for data refresh)
+  function getAnggotaData() {
+    return getAllMembers();
+  }
 
   // Statistics functions
   function getMemberStats() {
@@ -653,7 +655,8 @@
     }
     memberGrid.innerHTML = '';
 
-    // Ensure data is available
+    // Ensure data is available (use dynamic function to refresh data)
+    const anggotaData = getAnggotaData();
     if (!anggotaData || anggotaData.length === 0) {
       memberGrid.innerHTML = `
         <div class="member-card" style="text-align: center; padding: 2rem; background: rgba(255,255,255,0.05); border-radius: 10px;">

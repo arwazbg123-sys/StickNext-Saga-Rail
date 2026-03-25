@@ -154,7 +154,7 @@
 
   <script src="anggotaData.js" onerror="console.error('anggotaData.js gagal dimuat'); document.dispatchEvent(new CustomEvent('script-error', {detail: 'anggotaData.js'}))"></script>
   <script>
-    // Load main script after data script has had time to load
+    // Load main script after data script has had time to load (increased for mobile networks)
     setTimeout(function() {
       const script = document.createElement('script');
       script.src = 'anggota.js';
@@ -163,7 +163,7 @@
         document.dispatchEvent(new CustomEvent('script-error', {detail: 'anggota.js'}));
       };
       document.head.appendChild(script);
-    }, 200); // 200ms delay to ensure data is loaded
+    }, 800); // Increased from 200ms to 800ms for better mobile support
   </script>
   <script src="nav.js"></script>
   <script>
