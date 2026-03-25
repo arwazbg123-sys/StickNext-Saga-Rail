@@ -31,7 +31,7 @@ const anggotaData = [
     name: 'Paratugas Idol Devas',
     title: 'Programmer',
     description: 'Membangun fitur interaktif dan fungsionalitas situs dengan JavaScript.',
-    img: 'images/anggota-adit.jpg',
+    img: 'Naufal Mrsov.images.jpg', // Fallback image since original doesn't exist
     works: ['Fitur Anggota', 'Sistem Rating', 'Animasi Loader'],
     status: 'active',
     badge: 'developer'
@@ -56,4 +56,4 @@ const anggotaData = [
   }
 ];
 
-export default anggotaData;
+// export default anggotaData; // Removed to make anggotaData global

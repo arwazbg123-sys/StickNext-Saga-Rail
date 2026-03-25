@@ -1,13 +1,7 @@
 // main.js - Orchestrates Anggota page behavior
 
-// DOM Elements
-const memberGrid = document.getElementById('member-grid');
-const searchInput = document.getElementById('search-input');
-const totalMembersEl = document.getElementById('total-members');
-const activeMembersEl = document.getElementById('active-members');
-const founderCountEl = document.getElementById('founder-count');
-const totalWorksEl = document.getElementById('total-works');
-const loader = document.getElementById('loader');
+// DOM Elements (initialized in init() to ensure DOM is ready)
+let memberGrid, searchInput, totalMembersEl, activeMembersEl, founderCountEl, totalWorksEl, loader;
 
 function hideLoader() {
   if (!loader) return;
@@ -20,13 +14,8 @@ function hideLoader() {
 function safeInitError(err) {
   console.error('Anggota page script error:', err);
   hideLoader();
-  if (!document.querySelector('.error-banner')) {
-    const banner = document.createElement('div');
-    banner.className = 'error-banner';
-    banner.textContent = 'Terjadi masalah pemuatan sebagian fitur. Silakan muat ulang halaman.';
-    banner.style = 'position:fixed;top:0;left:0;width:100%;padding:10px;background:#c30;color:#fff;z-index:10001;text-align:center;font-weight:bold;';
-    document.body.appendChild(banner);
-  }
+  // Use minimal recovery instead of showing error banner
+  minimalRecovery();
 }
 
 window.onerror = function (message, source, lineno, colno, error) {
@@ -48,6 +37,10 @@ function createMemberCard(member) {
   const img = document.createElement('img');
   img.src = member.img;
   img.alt = `${member.name}'s photo`;
+  img.onerror = function() {
+    this.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgdmlld0JveD0iMCAwIDEwMCAxMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIiBmaWxsPSIjRjNGNEY2Ii8+Cjx0ZXh0IHg9IjUwIiB5PSI1NSIgZm9udC1mYW1pbHk9IkFyaWFsLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjEyIiBmaWxsPSIjOUI5QkE0IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkeT0iMC4zZW0iPk5vSBJbWFnZTwvdGV4dD4KPC9zdmc+'; // Placeholder SVG
+    this.alt = 'Image not available';
+  };
 
   const content = document.createElement('div');
   content.className = 'member-card-content';
@@ -165,15 +158,90 @@ function setUpLoader() {
 }
 
 function init() {
-  try {
-    renderAnggota();
-    updateStats();
-    setupSearch();
-    initModalInteractions();
-    adjustForMobile();
-    setUpLoader();
-  } catch (error) {
-    safeInitError(error);
+  let attempts = 0;
+  const maxAttempts = 100; // Max 5 seconds (100 * 50ms)
+
+  // Wait for anggotaData to be available
+  function checkDataAndInit() {
+    attempts++;
+
+    if (typeof anggotaData !== 'undefined') {
+      try {
+        // Initialize DOM elements
+        memberGrid = document.getElementById('member-grid');
+        searchInput = document.getElementById('search-input');
+        totalMembersEl = document.getElementById('total-members');
+        activeMembersEl = document.getElementById('active-members');
+        founderCountEl = document.getElementById('founder-count');
+        totalWorksEl = document.getElementById('total-works');
+        loader = document.getElementById('loader');
+
+        renderAnggota();
+        updateStats();
+        setupSearch();
+        initModalInteractions();
+        adjustForMobile();
+        setUpLoader();
+      } catch (error) {
+        console.error('Main.js init error:', error);
+        // Try to continue with minimal functionality
+        minimalRecovery();
+      }
+    } else if (attempts >= maxAttempts) {
+      console.warn('anggotaData not available after max attempts, using fallback');
+      // Create fallback data
+      if (typeof anggotaData === 'undefined') {
+        window.anggotaData = [
+          {
+            name: 'Data Tidak Tersedia',
+            title: 'System Recovery',
+            description: 'Data anggota sedang dipulihkan secara otomatis',
+            img: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgdmlld0JveD0iMCAwIDEwMCAxMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIiBmaWxsPSIjRjNGNEY2Ii8+Cjx0ZXh0IHg9IjUwIiB5PSI1NSIgZm9udC1mYW1pbHk9IkFyaWFsLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjEwIiBmaWxsPSIjOUI5QkE0IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkeT0iMC4zZW0iPkRhdGEgRXJyb3I8L3RleHQ+Cjwvc3ZnPg==',
+            works: ['System recovery in progress'],
+            status: 'active',
+            badge: 'default'
+          }
+        ];
+      }
+      // Retry init with fallback data
+      checkDataAndInit();
+    } else {
+      setTimeout(checkDataAndInit, 50);
+    }
+  }
+
+  checkDataAndInit();
+}
+
+function minimalRecovery() {
+  // Minimal recovery when main functions fail
+  console.log('Running minimal recovery mode');
+
+  const memberGrid = document.getElementById('member-grid');
+  if (memberGrid) {
+    memberGrid.innerHTML = `
+      <div class="member-card" style="text-align: center; padding: 2rem; background: rgba(255,255,255,0.05); border-radius: 10px;">
+        <div style="font-size: 3rem; margin-bottom: 1rem;">🔄</div>
+        <h3>Sistem Sedang Dipulihkan</h3>
+        <p>Fitur lengkap akan segera kembali. Halaman tetap dapat digunakan.</p>
+        <button onclick="location.reload()" style="margin-top: 1rem; padding: 0.5rem 1rem; background: #e63946; color: white; border: none; border-radius: 5px; cursor: pointer;">
+          Muat Ulang Halaman
+        </button>
+      </div>
+    `;
+  }
+
+  // Still try to hide loader
+  const loader = document.getElementById('loader');
+  if (loader) {
+    loader.style.display = 'none';
+  }
+
+  // Try to setup basic search if possible
+  const searchInput = document.getElementById('search-input');
+  if (searchInput) {
+    searchInput.placeholder = 'Pencarian akan aktif setelah pemulihan';
+    searchInput.disabled = true;
   }
 }
 

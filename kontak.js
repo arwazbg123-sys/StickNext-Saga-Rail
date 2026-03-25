@@ -95,23 +95,27 @@ async function postContact(payload, attempts = 0) {
 }
 
 async function flushPendingMessages() {
-  const pending = getPendingMessages();
-  if (!pending.length) return;
+  try {
+    const pending = getPendingMessages();
+    if (!pending.length) return;
 
-  for (let i = 0; i < pending.length; i++) {
-    const item = pending[i];
-    try {
-      await postContact(item.payload);
-      pending.splice(i, 1);
-      i -= 1;
-      showStatus('yey Pesan pending berhasil terkirim ke server.', 'success');
-    } catch (err) {
-      showStatus('duh Pesan pending tetap disimpan karena server gak tersedia.', 'warning');
-      console.warn('wah Flush pending gagal:', err);
-      break;
+    for (let i = 0; i < pending.length; i++) {
+      const item = pending[i];
+      try {
+        await postContact(item.payload);
+        pending.splice(i, 1);
+        i -= 1;
+        showStatus('yey Pesan pending berhasil terkirim ke server.', 'success');
+      } catch (err) {
+        showStatus('duh Pesan pending tetap disimpan karena server gak tersedia.', 'warning');
+        console.warn('wah Flush pending gagal:', err);
+        break;
+      }
     }
+    setPendingMessages(pending);
+  } catch (error) {
+    console.error('Flush pending messages error:', error);
   }
-  setPendingMessages(pending);
 }
 
 async function sendMessage(event) {
@@ -163,22 +167,31 @@ function bindEvents() {
 }
 
 function init() {
-  const statusArea = document.createElement('div');
-  statusArea.id = 'status-box';
-  statusArea.className = 'status-message info';
-  statusArea.style.marginTop = '1rem';
-  statusArea.style.padding = '0.9rem';
-  statusArea.style.borderRadius = '7px';
-  statusArea.style.border = '1px solid #81afff33';
-  statusArea.innerText = 'Silakan isi formulir nya dan kirim.';
+  try {
+    const statusArea = document.createElement('div');
+    statusArea.id = 'status-box';
+    statusArea.className = 'status-message info';
+    statusArea.style.marginTop = '1rem';
+    statusArea.style.padding = '0.9rem';
+    statusArea.style.borderRadius = '7px';
+    statusArea.style.border = '1px solid #81afff33';
+    statusArea.innerText = 'Silakan isi formulir nya dan kirim.';
 
-  const formSection = query('form-kontak');
-  if (formSection) {
-    formSection.appendChild(statusArea);
+    const formSection = query('form-kontak');
+    if (formSection) {
+      formSection.appendChild(statusArea);
+    }
+
+    bindEvents();
+    flushPendingMessages();
+  } catch (error) {
+    console.error('Kontak init error:', error);
+    // Hide loader as fallback
+    const loader = document.getElementById('loader');
+    if (loader) {
+      loader.style.display = 'none';
+    }
   }
-
-  bindEvents();
-  flushPendingMessages();
 }
 
 document.addEventListener('DOMContentLoaded', init);
