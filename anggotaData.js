@@ -106,7 +106,7 @@
       name: 'Growmeliana Leviana (Lea)',
       title: 'Visionary Creator',
       description: 'Arsitek kosmik StickNext, pencipta dunia glitch, audio lounge futuristik, dan saga rail interaktif.',
-      img: 'Lea.jpeg', // bisa diganti dengan foto/avatar kamu
+      img: 'lea.jpeg', // bisa diganti dengan foto/avatar kamu
       works: ['StickNext Universe', 'StickNext Go to Future', 'Audio Lounge Kosmik', 'Loader Planet Berputar'],
       status: MEMBER_STATUS.ACTIVE,
       badge: MEMBER_CATEGORIES.VISIONARY,
