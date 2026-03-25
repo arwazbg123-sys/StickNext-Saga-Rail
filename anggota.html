@@ -296,6 +296,60 @@
       height: 300px;
     }
 
+    /* Mobile ripple effect */
+    .mobile-ripple {
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.6);
+      transform: scale(0);
+      animation: mobileRipple 0.4s linear;
+      pointer-events: none;
+    }
+
+    @keyframes mobileRipple {
+      to {
+        transform: scale(4);
+        opacity: 0;
+      }
+    }
+
+    /* Mobile optimizations */
+    @media (max-width: 768px) {
+      .member-card {
+        margin-bottom: 1rem;
+      }
+
+      .modal-content {
+        margin: 10% auto;
+        width: 95%;
+        max-width: 500px;
+      }
+
+      .modal-body {
+        padding: 1rem;
+      }
+
+      .modal-body h3 {
+        font-size: 1.3rem;
+      }
+
+      .search-input {
+        font-size: 16px; /* Prevent zoom on iOS */
+      }
+
+      .stats {
+        gap: 1rem;
+      }
+
+      .stat-item {
+        padding: 0.75rem;
+      }
+
+      .stat-number {
+        font-size: 1.8rem;
+      }
+    }
+
     @keyframes fadeInUp {
       from {
         opacity: 0;

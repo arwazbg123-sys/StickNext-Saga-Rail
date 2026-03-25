@@ -65,6 +65,21 @@ const totalMembersEl = document.getElementById('total-members');
 const activeMembersEl = document.getElementById('active-members');
 const totalWorksEl = document.getElementById('total-works');
 
+// Mobile-specific enhancements
+const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth <= 768;
+
+// Touch handling for modal
+let touchStartY = 0;
+let touchStartX = 0;
+let isDragging = false;
+
+// Pull-to-refresh
+let pullStartY = 0;
+let isPulling = false;
+
+// Search debouncing
+let searchTimeout;
+
 // Update Stats
 function updateStats() {
   const totalMembers = anggotaData.length;
@@ -92,6 +107,13 @@ function animateNumber(element, target) {
       element.textContent = Math.floor(current);
     }
   }, 16);
+}
+
+// Haptic feedback for mobile
+function hapticFeedback() {
+  if (isMobile && navigator.vibrate) {
+    navigator.vibrate(50);
+  }
 }
 
 // Filter members based on search
@@ -136,13 +158,13 @@ function renderAnggota() {
     `;
 
     // Add click event for modal
-    card.addEventListener('click', () => openModal(anggota));
+    card.addEventListener('click', (event) => handleCardClick(anggota, event));
 
     memberGrid.appendChild(card);
   });
 }
 
-// Open modal with member details
+// Enhanced modal open with mobile optimizations
 function openModal(member) {
   modalImg.src = member.img;
   modalImg.alt = `Foto ${member.name}`;
@@ -153,20 +175,159 @@ function openModal(member) {
 
   modal.style.display = 'block';
   document.body.style.overflow = 'hidden';
+
+  // Mobile-specific: haptic feedback
+  hapticFeedback();
+
+  // Focus management for accessibility
+  modal.focus();
 }
 
-// Close modal
+// Enhanced modal close
 function closeModal() {
   modal.style.display = 'none';
   document.body.style.overflow = '';
+
+  hapticFeedback();
+}
+
+// Touch event handlers for swipe-to-close modal
+function handleTouchStart(e) {
+  if (!isMobile || modal.style.display !== 'block') return;
+
+  touchStartY = e.touches[0].clientY;
+  touchStartX = e.touches[0].clientX;
+  isDragging = false;
+}
+
+function handleTouchMove(e) {
+  if (!isMobile || modal.style.display !== 'block' || !touchStartY) return;
+
+  const touchY = e.touches[0].clientY;
+  const touchX = e.touches[0].clientX;
+  const deltaY = touchY - touchStartY;
+  const deltaX = Math.abs(touchX - touchStartX);
+
+  // Only allow vertical swipe if more vertical than horizontal
+  if (Math.abs(deltaY) > Math.abs(deltaX) && Math.abs(deltaY) > 30) {
+    isDragging = true;
+    e.preventDefault(); // Prevent scrolling
+    const translateY = Math.max(0, deltaY);
+    modal.style.transform = `translateY(${translateY}px)`;
+    modal.style.transition = 'none';
+  }
+}
+
+function handleTouchEnd(e) {
+  if (!isMobile || modal.style.display !== 'block') return;
+
+  if (isDragging) {
+    const touchEndY = e.changedTouches[0].clientY;
+    const deltaY = touchEndY - touchStartY;
+
+    if (deltaY > 100) { // Swipe down threshold
+      closeModal();
+    } else {
+      // Reset position
+      modal.style.transform = '';
+      modal.style.transition = '';
+    }
+  }
+
+  touchStartY = 0;
+  touchStartX = 0;
+  isDragging = false;
+}
+
+// Pull-to-refresh functionality for mobile
+function handlePullStart(e) {
+  if (!isMobile || window.scrollY > 0) return;
+  pullStartY = e.touches[0].clientY;
+  isPulling = true;
+}
+
+function handlePullMove(e) {
+  if (!isMobile || !isPulling || window.scrollY > 0) return;
+
+  const pullY = e.touches[0].clientY;
+  const pullDistance = pullY - pullStartY;
+
+  if (pullDistance > 0) {
+    e.preventDefault();
+    const pullRatio = Math.min(pullDistance / 100, 1);
+    document.body.style.transform = `translateY(${pullDistance * 0.3}px)`;
+    document.body.style.transition = 'none';
+
+    // Visual feedback
+    if (pullRatio > 0.8) {
+      hapticFeedback();
+    }
+  }
+}
+
+function handlePullEnd(e) {
+  if (!isMobile || !isPulling) return;
+
+  const pullEndY = e.changedTouches[0].clientY;
+  const pullDistance = pullEndY - pullStartY;
+
+  if (pullDistance > 120) { // Pull threshold
+    // Refresh data
+    hapticFeedback();
+    updateStats();
+    renderAnggota();
+    filterMembers(''); // Reset filter
+    if (searchInput) searchInput.value = ''; // Clear search
+  }
+
+  // Reset
+  document.body.style.transform = '';
+  document.body.style.transition = '';
+  pullStartY = 0;
+  isPulling = false;
+}
+
+// Enhanced card click with mobile feedback
+function handleCardClick(member, event) {
+  event.preventDefault();
+
+  if (isMobile) {
+    hapticFeedback();
+    // Add ripple effect
+    const card = event.currentTarget;
+    const ripple = document.createElement('div');
+    ripple.className = 'mobile-ripple';
+    ripple.style.left = `${event.touches ? event.touches[0].clientX - card.offsetLeft : event.clientX - card.offsetLeft}px`;
+    ripple.style.top = `${event.touches ? event.touches[0].clientY - card.offsetTop : event.clientY - card.offsetTop}px`;
+    card.appendChild(ripple);
+
+    setTimeout(() => {
+      ripple.remove();
+      openModal(member);
+    }, 200);
+  } else {
+    openModal(member);
+  }
+}
+
+// Enhanced search with debouncing for mobile
+function debouncedFilter(query) {
+  clearTimeout(searchTimeout);
+  searchTimeout = setTimeout(() => {
+    filterMembers(query);
+    // Smooth scroll to top on mobile when searching
+    if (isMobile && query.length > 0) {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  }, isMobile ? 300 : 150); // Longer debounce on mobile
 }
 
 // Event listeners
 function setupEventListeners() {
-  // Search input
+  // Search input with debouncing
   if (searchInput) {
     searchInput.addEventListener('input', (e) => {
-      filterMembers(e.target.value);
+      debouncedFilter(e.target.value);
     });
   }
 
@@ -190,6 +351,19 @@ function setupEventListeners() {
       closeModal();
     }
   });
+
+  // Mobile touch events
+  if (isMobile) {
+    // Modal swipe to close
+    modal.addEventListener('touchstart', handleTouchStart, { passive: false });
+    modal.addEventListener('touchmove', handleTouchMove, { passive: false });
+    modal.addEventListener('touchend', handleTouchEnd, { passive: false });
+
+    // Pull to refresh
+    document.addEventListener('touchstart', handlePullStart, { passive: false });
+    document.addEventListener('touchmove', handlePullMove, { passive: false });
+    document.addEventListener('touchend', handlePullEnd, { passive: false });
+  }
 }
 
 // Initialize
