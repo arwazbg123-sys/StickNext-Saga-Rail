@@ -5,555 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Anggota - StickNext Saga Rail</title>
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
-
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Orbitron', sans-serif;
-      background: #111;
-      color: #fff;
-    }
-
-    /* Loader */
-    .loader {
-      position: fixed;
-      inset: 0;
-      background: #000;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      z-index: 9999;
-    }
-
-    .human-container {
-      position: relative;
-      width: 200px;
-      height: 200px;
-    }
-
-    .human {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      font-size: 3rem;
-      color: #e63946;
-      text-shadow: 0 0 15px #ff0000;
-      transform: translate(-50%, -50%);
-      animation: scatter 2s ease forwards, unite 2s ease 2s forwards;
-    }
-
-    .human:nth-child(1) { animation-delay: 0s; }
-    .human:nth-child(2) { animation-delay: 0.2s; }
-    .human:nth-child(3) { animation-delay: 0.4s; }
-    .human:nth-child(4) { animation-delay: 0.6s; }
-    .human:nth-child(5) { animation-delay: 0.8s; }
-
-    @keyframes scatter {
-      to { transform: translate(-200%, -200%) rotate(360deg); }
-    }
-    @keyframes unite {
-      to { transform: translate(-50%, -50%) scale(1.3); }
-    }
-
-    #loading-text {
-      margin-top: 1.5rem;
-      font-size: 1.2rem;
-      opacity: 0;
-      transition: opacity 1s ease;
-      color: #e63946;
-      text-shadow: 0 0 10px #ff0000;
-    }
-
-    header, main, footer {
-      padding: 1rem;
-    }
-
-    .hamburger {
-      cursor: pointer;
-    }
-
-    .member-grid {
-      display: grid;
-      gap: 1rem;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      margin-top: 1.25rem;
-    }
-    .member-card {
-      background: linear-gradient(145deg, rgba(10, 23, 42, .85), rgba(26, 41, 64, .92));
-      border: 1px solid rgba(255,255,255,0.15);
-      border-radius: 14px;
-      overflow: hidden;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.38);
-      transition: transform 250ms ease, box-shadow 250ms ease;
-    }
-    .member-card:hover {
-      transform: translateY(-4px) scale(1.01);
-      box-shadow: 0 14px 32px rgba(0,0,0,0.45);
-    }
-    .member-card img {
-      width: 100%;
-      object-fit: cover;
-      height: 175px;
-      display: block;
-    }
-    .member-card-content {
-      padding: 0.95rem 1rem 1rem;
-    }
-    .member-card h3 {
-      margin: 0 0 0.35rem;
-      font-size: 1.15rem;
-      color: #ade8f4;
-    }
-    .member-card p {
-      margin: 0.15rem 0 0.75rem;
-      color: #cfd8e6;
-      line-height: 1.45;
-    }
-    .member-card .works {
-      list-style: none;
-      margin: 0;
-      padding: 0;
-      display: grid;
-      gap: 0.3rem;
-    }
-    .member-card .works li {
-      color: #f8f9fa;
-      font-size: 0.875rem;
-      background: rgba(255,255,255,0.05);
-      border-radius: 6px;
-      padding: 0.25rem 0.45rem;
-    }
-
-    /* Badge Styles */
-    .member-badge {
-      position: absolute;
-      top: 10px;
-      right: 10px;
-      padding: 0.4rem 0.8rem;
-      border-radius: 20px;
-      font-size: 0.75rem;
-      font-weight: bold;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      z-index: 10;
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(255,255,255,0.2);
-      animation: badgeGlow 2s ease-in-out infinite alternate;
-    }
-
-    .special-badge {
-      font-size: 0.8rem;
-      padding: 0.5rem 1rem;
-      border-radius: 25px;
-      border: 2px solid rgba(255,255,255,0.4);
-      background: linear-gradient(45deg, #FFD700, #FFA500) !important;
-      box-shadow: 0 0 30px rgba(255, 215, 0, 1), 0 0 60px rgba(255, 215, 0, 0.5) !important;
-      animation: epicGlow 3s ease-in-out infinite alternate;
-    }
-
-    @keyframes badgeGlow {
-      from { transform: scale(1); }
-      to { transform: scale(1.05); }
-    }
-
-    @keyframes epicGlow {
-      0% {
-        transform: scale(1) rotate(-2deg);
-        box-shadow: 0 0 30px rgba(255, 215, 0, 1), 0 0 60px rgba(255, 215, 0, 0.5);
-      }
-      50% {
-        transform: scale(1.1) rotate(2deg);
-        box-shadow: 0 0 40px rgba(255, 215, 0, 1.2), 0 0 80px rgba(255, 215, 0, 0.7);
-      }
-      100% {
-        transform: scale(1) rotate(-2deg);
-        box-shadow: 0 0 30px rgba(255, 215, 0, 1), 0 0 60px rgba(255, 215, 0, 0.5);
-      }
-    }
-
-    /* Special founder card styling */
-    .member-card:has(.special-badge):hover {
-      transform: translateY(-8px) scale(1.03);
-      box-shadow: 0 20px 40px rgba(255, 215, 0, 0.4), 0 0 60px rgba(255, 215, 0, 0.2);
-      border-color: #FFA500;
-    }
-
-    .member-card:has(.special-badge):hover .founder-particles .particle {
-      animation-duration: 3s;
-      background: #FFA500;
-    }
-
-    .member-card:has(.special-badge):hover::after {
-      animation: sparkle 1s ease-in-out infinite;
-    }
-
-    /* Special Founder Effects */
-    .member-card:has(.special-badge)::before {
-      content: '';
-      position: absolute;
-      top: -2px;
-      left: -2px;
-      right: -2px;
-      bottom: -2px;
-      background: linear-gradient(45deg, #FFD700, #FFA500, #FFD700);
-      border-radius: 16px;
-      z-index: -1;
-      animation: borderGlow 3s ease-in-out infinite;
-    }
-
-    .member-card:has(.special-badge)::after {
-      content: '✨';
-      position: absolute;
-      top: 5px;
-      left: 5px;
-      font-size: 1.2rem;
-      animation: sparkle 2s ease-in-out infinite;
-      z-index: 11;
-    }
-
-    @keyframes borderGlow {
-      0%, 100% { opacity: 0.8; }
-      50% { opacity: 1; }
-    }
-
-    @keyframes sparkle {
-      0%, 100% { transform: rotate(0deg) scale(1); opacity: 1; }
-      25% { transform: rotate(90deg) scale(1.1); opacity: 0.8; }
-      50% { transform: rotate(180deg) scale(1.2); opacity: 0.6; }
-      75% { transform: rotate(270deg) scale(0.9); opacity: 0.8; }
-    }
-
-    /* Particle effect for founder */
-    .founder-particles {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
-      overflow: hidden;
-      border-radius: 14px;
-    }
-
-    .particle {
-      position: absolute;
-      width: 4px;
-      height: 4px;
-      background: #FFD700;
-      border-radius: 50%;
-      animation: float 6s linear infinite;
-    }
-
-    .particle:nth-child(1) { animation-delay: 0s; left: 10%; }
-    .particle:nth-child(2) { animation-delay: 1s; left: 20%; }
-    .particle:nth-child(3) { animation-delay: 2s; left: 30%; }
-    .particle:nth-child(4) { animation-delay: 3s; left: 40%; }
-    .particle:nth-child(5) { animation-delay: 4s; left: 50%; }
-    .particle:nth-child(6) { animation-delay: 5s; left: 60%; }
-
-    @keyframes float {
-      0% { transform: translateY(100%) rotate(0deg); opacity: 0; }
-      10% { opacity: 1; }
-      90% { opacity: 1; }
-      100% { transform: translateY(-100%) rotate(360deg); opacity: 0; }
-    }
-
-    /* Modal Styles */
-    .modal {
-      display: none;
-      position: fixed;
-      z-index: 10000;
-      left: 0;
-      top: 0;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(0,0,0,0.85);
-      backdrop-filter: blur(8px);
-      animation: fadeIn 0.3s ease;
-    }
-
-    .modal-content {
-      background: linear-gradient(145deg, rgba(10, 23, 42, 0.95), rgba(26, 41, 64, 0.98));
-      margin: 5% auto;
-      padding: 0;
-      border: 1px solid rgba(255,255,255,0.2);
-      border-radius: 16px;
-      width: 90%;
-      max-width: 600px;
-      box-shadow: 0 20px 40px rgba(0,0,0,0.5);
-      animation: slideIn 0.4s ease;
-      overflow: hidden;
-    }
-
-    .modal-header {
-      position: relative;
-      padding: 0;
-    }
-
-    .modal-header img {
-      width: 100%;
-      height: 250px;
-      object-fit: cover;
-    }
-
-    .modal-close {
-      position: absolute;
-      top: 15px;
-      right: 15px;
-      color: #fff;
-      font-size: 2rem;
-      cursor: pointer;
-      background: rgba(0,0,0,0.5);
-      border-radius: 50%;
-      width: 40px;
-      height: 40px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: background 0.3s ease;
-    }
-
-    .modal-close:hover {
-      background: rgba(230, 57, 70, 0.8);
-    }
-
-    .modal-body {
-      padding: 1.5rem;
-    }
-
-    .modal-body h3 {
-      margin: 0 0 0.5rem;
-      color: #ade8f4;
-      font-size: 1.5rem;
-    }
-
-    .modal-body .title {
-      color: #e63946;
-      font-weight: bold;
-      margin-bottom: 1rem;
-    }
-
-    .modal-body p {
-      color: #cfd8e6;
-      line-height: 1.6;
-      margin-bottom: 1rem;
-    }
-
-    .modal-works {
-      margin-top: 1rem;
-    }
-
-    .modal-works h4 {
-      color: #f8f9fa;
-      margin-bottom: 0.5rem;
-    }
-
-    .modal-works ul {
-      list-style: none;
-      padding: 0;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-    }
-
-    .modal-works li {
-      background: rgba(230, 57, 70, 0.2);
-      color: #f8f9fa;
-      padding: 0.3rem 0.6rem;
-      border-radius: 20px;
-      font-size: 0.85rem;
-    }
-
-    /* Modal Badge */
-    .modal-badge {
-      animation: modalBadgeGlow 2s ease-in-out infinite alternate;
-    }
-
-    .special-modal-badge {
-      animation: epicModalGlow 3s ease-in-out infinite alternate !important;
-      border: 2px solid rgba(255,255,255,0.4) !important;
-      background: linear-gradient(45deg, #FFD700, #FFA500) !important;
-    }
-
-    @keyframes modalBadgeGlow {
-      from { transform: scale(1); }
-      to { transform: scale(1.05); }
-    }
-
-    @keyframes epicModalGlow {
-      0% {
-        transform: scale(1) rotate(-1deg);
-        box-shadow: 0 0 30px rgba(255, 215, 0, 1), 0 0 60px rgba(255, 215, 0, 0.5);
-      }
-      50% {
-        transform: scale(1.1) rotate(1deg);
-        box-shadow: 0 0 40px rgba(255, 215, 0, 1.2), 0 0 80px rgba(255, 215, 0, 0.7);
-      }
-      100% {
-        transform: scale(1) rotate(-1deg);
-        box-shadow: 0 0 30px rgba(255, 215, 0, 1), 0 0 60px rgba(255, 215, 0, 0.5);
-      }
-    }
-
-    /* Search Bar */
-    .search-container {
-      margin-bottom: 1.5rem;
-      text-align: center;
-    }
-
-    .search-input {
-      width: 100%;
-      max-width: 400px;
-      padding: 0.75rem;
-      border: 1px solid rgba(255,255,255,0.2);
-      border-radius: 25px;
-      background: rgba(255,255,255,0.1);
-      color: #fff;
-      font-size: 1rem;
-      outline: none;
-      transition: border-color 0.3s ease, box-shadow 0.3s ease;
-    }
-
-    .search-input:focus {
-      border-color: #e63946;
-      box-shadow: 0 0 10px rgba(230, 57, 70, 0.3);
-    }
-
-    .search-input::placeholder {
-      color: #aaa;
-    }
-
-    /* Animations */
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
-
-    @keyframes slideIn {
-      from { transform: translateY(-50px); opacity: 0; }
-      to { transform: translateY(0); opacity: 1; }
-    }
-
-    .member-card {
-      animation: fadeInUp 0.6s ease forwards;
-      opacity: 0;
-      cursor: pointer;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .member-card::before {
-      content: '';
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      width: 0;
-      height: 0;
-      background: rgba(255, 255, 255, 0.1);
-      border-radius: 50%;
-      transform: translate(-50%, -50%);
-      transition: width 0.6s, height 0.6s;
-    }
-
-    .member-card:active::before {
-      width: 300px;
-      height: 300px;
-    }
-
-    /* Mobile ripple effect */
-    .mobile-ripple {
-      position: absolute;
-      border-radius: 50%;
-      background: rgba(255, 255, 255, 0.6);
-      transform: scale(0);
-      animation: mobileRipple 0.4s linear;
-      pointer-events: none;
-    }
-
-    @keyframes mobileRipple {
-      to {
-        transform: scale(4);
-        opacity: 0;
-      }
-    }
-
-    /* Mobile optimizations */
-    @media (max-width: 768px) {
-      .member-card {
-        margin-bottom: 1rem;
-      }
-
-      .modal-content {
-        margin: 10% auto;
-        width: 95%;
-        max-width: 500px;
-      }
-
-      .modal-body {
-        padding: 1rem;
-      }
-
-      .modal-body h3 {
-        font-size: 1.3rem;
-      }
-
-      .search-input {
-        font-size: 16px; /* Prevent zoom on iOS */
-      }
-
-      .stats {
-        gap: 1rem;
-      }
-
-      .stat-item {
-        padding: 0.75rem;
-      }
-
-      .stat-number {
-        font-size: 1.8rem;
-      }
-    }
-
-    @keyframes fadeInUp {
-      from {
-        opacity: 0;
-        transform: translateY(30px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    /* Stats */
-    .stats {
-      display: flex;
-      justify-content: center;
-      gap: 2rem;
-      margin-bottom: 2rem;
-      flex-wrap: wrap;
-    }
-
-    .stat-item {
-      text-align: center;
-      background: rgba(255,255,255,0.05);
-      padding: 1rem;
-      border-radius: 10px;
-      border: 1px solid rgba(255,255,255,0.1);
-    }
-
-    .stat-number {
-      font-size: 2rem;
-      color: #e63946;
-      font-weight: bold;
-    }
-
-    .stat-label {
-      color: #ade8f4;
-      font-size: 0.9rem;
-    }
-  </style>
+  <link rel="stylesheet" href="anggota.css">
 </head>
 <body>
   <!-- Loading Screen -->
@@ -568,46 +20,31 @@
     <p id="loading-text">Mengumpulkan Anggota...</p>
   </div>
 
-  <!-- Header -->
+  <!-- Navigation -->
   <header>
-    <div class="header-left">
-      <h1>Anggota StickNext Saga Rail</h1>
-      <p>Kumpulan profil anggota komunitas</p>
-    </div>
-
-    <!-- Tombol hamburger (HP) -->
-    <div class="hamburger" id="hamburger-btn">
-      <span></span><span></span><span></span>
-    </div>
-
-    <!-- Nav normal (PC) -->
-    <nav class="main-nav">
-      <ul>
-        <li><a href="beranda.html">Beranda</a></li>
-        <li><a href="galeri.html">Galeri</a></li>
-        <li><a href="anggota.html">Anggota</a></li>
-        <li><a href="tentang.html">Tentang</a></li>
-        <li><a href="kontak.html">Kontak</a></li>
-        <li><a href="disclaimer.html">Disclaimer</a></li>
-        <li><a href="HTML audio.html">Audio</a></li>\n        <li><a href="kebebasan.html">Kebebasan</a></li>
-      </ul>
-      <div id="clock"></div>
+    <nav class="navbar">
+      <div class="nav-container">
+        <div class="nav-logo">
+          <h1>StickNext Saga Rail</h1>
+        </div>
+        <div class="hamburger" onclick="toggleMenu()">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+        <ul class="nav-menu" id="nav-menu">
+          <li><a href="beranda.html">Beranda</a></li>
+          <li><a href="galeri.html">Galeri</a></li>
+          <li><a href="anggota.html">Anggota</a></li>
+          <li><a href="tentang.html">Tentang</a></li>
+          <li><a href="kontak.html">Kontak</a></li>
+          <li><a href="disclaimer.html">Disclaimer</a></li>
+          <li><a href="HTML audio.html">Audio</a></li>
+          <li><a href="kebebasan.html">Kebebasan</a></li>
+        </ul>
+        <div id="clock-mobile" class="clock-mobile"></div>
+      </div>
     </nav>
-
-    <!-- Sidebar (HP) -->
-    <div class="sidebar" id="sidebar">
-      <span class="close-sidebar" id="close-sidebar">&times;</span>
-      <ul>
-        <li><a href="beranda.html">Beranda</a></li>
-        <li><a href="galeri.html">Galeri</a></li>
-        <li><a href="anggota.html">Anggota</a></li>
-        <li><a href="tentang.html">Tentang</a></li>
-        <li><a href="kontak.html">Kontak</a></li>
-        <li><a href="disclaimer.html">Disclaimer</a></li>
-        <li><a href="HTML audio.html">Audio</a></li>\n        <li><a href="kebebasan.html">Kebebasan</a></li>
-      </ul>
-      <div id="clock-mobile" class="clock-mobile"></div>
-    </div>
   </header>
 
   <!-- Konten Anggota -->
@@ -627,37 +64,36 @@
           <div class="stat-label">Anggota Aktif</div>
         </div>
         <div class="stat-item">
-          <div class="stat-number" id="total-works">0</div>
-          <div class="stat-label">Total Karya</div>
+          <div class="stat-number" id="founder-count">0</div>
+          <div class="stat-label">Founder</div>
         </div>
+      <div class="stat-item">
+        <div class="stat-number" id="total-works">0</div>
+        <div class="stat-label">Total Karya</div>
       </div>
-
-      <!-- Search Bar -->
-      <div class="search-container">
-        <input type="text" id="search-input" class="search-input" placeholder="Cari anggota berdasarkan nama atau jabatan..." />
-      </div>
-
-      <!-- Grid profil anggota yang akan di-render via JS -->
-      <div id="member-grid" class="member-grid" aria-live="polite">
-        <p class="placeholder">Memuat data anggota...</p>
+      <div id="member-grid" class="member-grid">
+        <!-- Member cards will be inserted here by JavaScript -->
       </div>
     </section>
   </main>
 
-  <!-- Modal untuk detail anggota -->
+  <!-- Modal -->
   <div id="member-modal" class="modal">
     <div class="modal-content">
       <div class="modal-header">
-        <img id="modal-img" src="" alt="Foto Anggota" />
-        <span class="modal-close" id="modal-close">&times;</span>
+        <img id="modal-image" src="" alt="Member Photo">
+        <span class="modal-close" onclick="closeModal()">&times;</span>
+        <div id="modal-badge" class="modal-badge"></div>
       </div>
       <div class="modal-body">
         <h3 id="modal-name"></h3>
         <p class="title" id="modal-title"></p>
         <p id="modal-description"></p>
         <div class="modal-works">
-          <h4>Karya & Kontribusi:</h4>
-          <ul id="modal-works"></ul>
+          <h4>Karya/Kontribusi:</h4>
+          <ul id="modal-works-list">
+            <!-- Works will be inserted here -->
+          </ul>
         </div>
       </div>
     </div>
@@ -665,43 +101,32 @@
 
   <!-- Footer -->
   <footer>
-    <p>&copy; 2026 StickNext Saga Rail • Dibuat oleh Screet</p>
+    <p>&copy; 2024 StickNext Saga Rail. All rights reserved.</p>
   </footer>
 
-  <!-- JS -->
-  <script src="anggota.js"></script>
+  <script src="data.js" onerror="console.error('data.js gagal dimuat')"></script>
+  <script src="badge.js" onerror="console.error('badge.js gagal dimuat')"></script>
+  <script src="utils.js" onerror="console.error('utils.js gagal dimuat')"></script>
+  <script src="modal.js" onerror="console.error('modal.js gagal dimuat')"></script>
+  <script src="main.js" onerror="console.error('main.js gagal dimuat'); document.dispatchEvent(new Event('main-error'))"></script>
   <script>
-    // Clock
-    function updateClock() {
-      const now = new Date();
-      const time = now.toLocaleTimeString('id-ID', { hour12: false, timeZone: 'Asia/Jakarta' });
-      document.getElementById('clock').innerText = time;
-      const clockMobile = document.getElementById('clock-mobile');
-      if (clockMobile) clockMobile.innerText = time;
+    function forceHeal() {
+      const loaderElem = document.getElementById('loader');
+      if (loaderElem) {
+        loaderElem.style.display = 'none';
+      }
+      if (!document.querySelector('.error-banner')) {
+        const b = document.createElement('div');
+        b.className = 'error-banner';
+        b.textContent = 'Beberapa skrip gagal dimuat. Perbarui/refresh halaman.';
+        b.style = 'position:fixed;top:0;left:0;width:100%;padding:10px;background:#c30;color:#fff;z-index:10001;text-align:center;font-weight:bold;';
+        document.body.appendChild(b);
+      }
     }
-    setInterval(updateClock, 1000);
-    updateClock();
 
-    // Loading
-    window.addEventListener('load', () => {
-      const loader = document.getElementById('loader');
-      const text = document.getElementById('loading-text');
-
-      setTimeout(() => {
-        text.style.opacity = "1";
-      }, 2000);
-
-      setTimeout(() => {
-        loader.style.transition = "opacity 1.5s ease";
-        loader.style.opacity = "0";
-        setTimeout(() => {
-          loader.style.display = "none";
-        }, 1500);
-      }, 4000);
-    });
-
+    window.addEventListener('main-error', forceHeal);
+    window.addEventListener('load', () => setTimeout(forceHeal, 8000));
+    setTimeout(forceHeal, 12000);
   </script>
-  <script src="nav.js"></script>
 </body>
 </html>
-
