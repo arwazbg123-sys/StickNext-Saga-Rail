@@ -9,7 +9,39 @@
   // ==========================================
 
   // Import data from anggotaData.js
-  const { MEMBERS, MEMBER_CATEGORIES, MEMBER_STATUS } = window.AnggotaData;
+  let MEMBERS = {};
+  let MEMBER_CATEGORIES = {};
+  let MEMBER_STATUS = {};
+
+  // Try to load data, with fallback
+  if (typeof window.AnggotaData !== 'undefined') {
+    ({ MEMBERS, MEMBER_CATEGORIES, MEMBER_STATUS } = window.AnggotaData);
+  } else {
+    // Fallback data
+    MEMBER_CATEGORIES = {
+      FOUNDER: 'founder',
+      GUARDIAN: 'guardian',
+      DEVELOPER: 'developer',
+      ELITE: 'elite',
+      COMMANDER: 'commander'
+    };
+    MEMBER_STATUS = {
+      ACTIVE: 'active',
+      INACTIVE: 'inactive',
+      SUSPENDED: 'suspended'
+    };
+    MEMBERS = {
+      fallback: {
+        name: 'Data Loading...',
+        title: 'Please wait',
+        description: 'Member data is being loaded. If this persists, please refresh the page.',
+        img: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgdmlld0JveD0iMCAwIDEwMCAxMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIiBmaWxsPSIjRjNGNEY2Ii8+Cjx0ZXh0IHg9IjUwIiB5PSI1NSIgZm9udC1mYW1pbHk9IkFyaWFsLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjEyIiBmaWxsPSIjOUI5QkE0IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkeT0iMC4zZW0iPkxvYWRpbmcuLi48L3RleHQ+Cjwvc3ZnPg==',
+        works: ['Loading...'],
+        status: 'active',
+        badge: 'developer'  // Use existing badge instead of 'default'
+      }
+    };
+  }
 
   // Data management functions
   function getAllMembers() {
@@ -412,8 +444,7 @@
   function safeInitError(err) {
     console.error('Anggota page script error:', err);
     hideLoader();
-    // Use minimal recovery instead of showing error banner
-    minimalRecovery();
+    // Silent error handling - don't show intrusive recovery message
   }
 
   window.onerror = function (message, source, lineno, colno, error) {
@@ -435,7 +466,7 @@
     img.src = member.img;
     img.alt = `${member.name}'s photo`;
     img.onerror = function() {
-      this.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgdmlld0JveD0iMCAwIDEwMCAxMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIiBmaWxsPSIjRjNGNEY2Ii8+Cjx0ZXh0IHg9IjUwIiB5PSI1NSIgZm9udC1mYW1pbHk9IkFyaWFsLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjEyIiBmaWxsPSIjOUI5QkE0IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkeT0iMC4zZW0iPk5vSBJbWFnZTwvdGV4dD4KPC9zdmc+'; // Placeholder SVG
+      this.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgdmlld0JveD0iMCAwIDEwMCAxMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIiBmaWxsPSIjRjNGNEY2Ii8+Cjx0ZXh0IHg9IjUwIiB5PSI1NSIgZm9udC1mYW1pbHk9IkFyaWFsLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjEyIiBmaWxsPSIjOUI5QkE0IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkeT0iMC4zZW0iPk5vIEF2YXRhcjwvdGV4dD4KPC9zdmc+';
       this.alt = 'Image not available';
     };
 
@@ -481,9 +512,26 @@
 
   function renderAnggota(filter = '') {
     if (!memberGrid) {
+      console.error('Member grid not found');
       return;
     }
     memberGrid.innerHTML = '';
+
+    // Ensure data is available
+    if (!anggotaData || anggotaData.length === 0) {
+      memberGrid.innerHTML = `
+        <div class="member-card" style="text-align: center; padding: 2rem; background: rgba(255,255,255,0.05); border-radius: 10px;">
+          <div style="font-size: 3rem; margin-bottom: 1rem;">👥</div>
+          <h3>Data Anggota Tidak Ditemukan</h3>
+          <p>Sistem sedang memuat data anggota. Silakan refresh halaman jika masalah berlanjut.</p>
+          <button onclick="location.reload()" style="margin-top: 1rem; padding: 0.5rem 1rem; background: #e63946; color: white; border: none; border-radius: 5px; cursor: pointer;">
+            Muat Ulang Halaman
+          </button>
+        </div>
+      `;
+      updateStats();
+      return;
+    }
 
     const filteredData = anggotaData.filter(member => {
       const searchTerm = filter.toLowerCase();
@@ -495,11 +543,21 @@
       );
     });
 
-    filteredData.forEach((member, index) => {
-      const card = createMemberCard(member);
-      card.style.animationDelay = `${index * 0.06}s`;
-      memberGrid.appendChild(card);
-    });
+    if (filteredData.length === 0) {
+      memberGrid.innerHTML = `
+        <div class="member-card" style="text-align: center; padding: 2rem; background: rgba(255,255,255,0.05); border-radius: 10px;">
+          <div style="font-size: 3rem; margin-bottom: 1rem;">🔍</div>
+          <h3>Tidak Ada Anggota Ditemukan</h3>
+          <p>Coba ubah kata kunci pencarian atau hapus filter untuk melihat semua anggota.</p>
+        </div>
+      `;
+    } else {
+      filteredData.forEach((member, index) => {
+        const card = createMemberCard(member);
+        card.style.animationDelay = `${index * 0.06}s`;
+        memberGrid.appendChild(card);
+      });
+    }
 
     updateStats();
   }
@@ -590,8 +648,8 @@
         setUpLoader();
       } catch (error) {
         console.error('Main.js init error:', error);
-        // Try to continue with minimal functionality
-        minimalRecovery();
+        // Continue with basic functionality without intrusive recovery message
+        hideLoader();
       }
     }
 
@@ -599,36 +657,9 @@
   }
 
   function minimalRecovery() {
-    // Minimal recovery when main functions fail
-    console.log('Running minimal recovery mode');
-
-    const memberGrid = document.getElementById('member-grid');
-    const loader = document.getElementById('loader');
-    const searchInput = document.getElementById('search-input');
-
-    if (memberGrid) {
-      memberGrid.innerHTML = `
-        <div class="member-card" style="text-align: center; padding: 2rem; background: rgba(255,255,255,0.05); border-radius: 10px;">
-          <div style="font-size: 3rem; margin-bottom: 1rem;">🔄</div>
-          <h3>Sistem Sedang Dipulihkan</h3>
-          <p>Fitur lengkap akan segera kembali. Halaman tetap dapat digunakan.</p>
-          <button onclick="location.reload()" style="margin-top: 1rem; padding: 0.5rem 1rem; background: #e63946; color: white; border: none; border-radius: 5px; cursor: pointer;">
-            Muat Ulang Halaman
-          </button>
-        </div>
-      `;
-    }
-
-    // Hide loader if it exists
-    if (loader) {
-      loader.style.display = 'none';
-    }
-
-    // Disable search input if it exists
-    if (searchInput) {
-      searchInput.placeholder = 'Pencarian akan aktif setelah pemulihan';
-      searchInput.disabled = true;
-    }
+    // Silent recovery - just hide loader and log
+    console.log('Minimal recovery mode activated');
+    hideLoader();
   }
 
   // ==========================================
