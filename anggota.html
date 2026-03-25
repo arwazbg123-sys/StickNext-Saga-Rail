@@ -124,6 +124,216 @@
       border-radius: 6px;
       padding: 0.25rem 0.45rem;
     }
+
+    /* Modal Styles */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 10000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0,0,0,0.85);
+      backdrop-filter: blur(8px);
+      animation: fadeIn 0.3s ease;
+    }
+
+    .modal-content {
+      background: linear-gradient(145deg, rgba(10, 23, 42, 0.95), rgba(26, 41, 64, 0.98));
+      margin: 5% auto;
+      padding: 0;
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 16px;
+      width: 90%;
+      max-width: 600px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+      animation: slideIn 0.4s ease;
+      overflow: hidden;
+    }
+
+    .modal-header {
+      position: relative;
+      padding: 0;
+    }
+
+    .modal-header img {
+      width: 100%;
+      height: 250px;
+      object-fit: cover;
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      color: #fff;
+      font-size: 2rem;
+      cursor: pointer;
+      background: rgba(0,0,0,0.5);
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.3s ease;
+    }
+
+    .modal-close:hover {
+      background: rgba(230, 57, 70, 0.8);
+    }
+
+    .modal-body {
+      padding: 1.5rem;
+    }
+
+    .modal-body h3 {
+      margin: 0 0 0.5rem;
+      color: #ade8f4;
+      font-size: 1.5rem;
+    }
+
+    .modal-body .title {
+      color: #e63946;
+      font-weight: bold;
+      margin-bottom: 1rem;
+    }
+
+    .modal-body p {
+      color: #cfd8e6;
+      line-height: 1.6;
+      margin-bottom: 1rem;
+    }
+
+    .modal-works {
+      margin-top: 1rem;
+    }
+
+    .modal-works h4 {
+      color: #f8f9fa;
+      margin-bottom: 0.5rem;
+    }
+
+    .modal-works ul {
+      list-style: none;
+      padding: 0;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .modal-works li {
+      background: rgba(230, 57, 70, 0.2);
+      color: #f8f9fa;
+      padding: 0.3rem 0.6rem;
+      border-radius: 20px;
+      font-size: 0.85rem;
+    }
+
+    /* Search Bar */
+    .search-container {
+      margin-bottom: 1.5rem;
+      text-align: center;
+    }
+
+    .search-input {
+      width: 100%;
+      max-width: 400px;
+      padding: 0.75rem;
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 25px;
+      background: rgba(255,255,255,0.1);
+      color: #fff;
+      font-size: 1rem;
+      outline: none;
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .search-input:focus {
+      border-color: #e63946;
+      box-shadow: 0 0 10px rgba(230, 57, 70, 0.3);
+    }
+
+    .search-input::placeholder {
+      color: #aaa;
+    }
+
+    /* Animations */
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes slideIn {
+      from { transform: translateY(-50px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    .member-card {
+      animation: fadeInUp 0.6s ease forwards;
+      opacity: 0;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .member-card::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 0;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      transition: width 0.6s, height 0.6s;
+    }
+
+    .member-card:active::before {
+      width: 300px;
+      height: 300px;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Stats */
+    .stats {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .stat-item {
+      text-align: center;
+      background: rgba(255,255,255,0.05);
+      padding: 1rem;
+      border-radius: 10px;
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .stat-number {
+      font-size: 2rem;
+      color: #e63946;
+      font-weight: bold;
+    }
+
+    .stat-label {
+      color: #ade8f4;
+      font-size: 0.9rem;
+    }
   </style>
 </head>
 <body>
@@ -187,12 +397,52 @@
       <h2>Daftar Anggota</h2>
       <p>Halaman ini menampilkan profil anggota komunitas StickNext Saga Rail.</p>
 
+      <!-- Stats -->
+      <div class="stats">
+        <div class="stat-item">
+          <div class="stat-number" id="total-members">0</div>
+          <div class="stat-label">Total Anggota</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number" id="active-members">0</div>
+          <div class="stat-label">Anggota Aktif</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number" id="total-works">0</div>
+          <div class="stat-label">Total Karya</div>
+        </div>
+      </div>
+
+      <!-- Search Bar -->
+      <div class="search-container">
+        <input type="text" id="search-input" class="search-input" placeholder="Cari anggota berdasarkan nama atau jabatan..." />
+      </div>
+
       <!-- Grid profil anggota yang akan di-render via JS -->
       <div id="member-grid" class="member-grid" aria-live="polite">
         <p class="placeholder">Memuat data anggota...</p>
       </div>
     </section>
   </main>
+
+  <!-- Modal untuk detail anggota -->
+  <div id="member-modal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <img id="modal-img" src="" alt="Foto Anggota" />
+        <span class="modal-close" id="modal-close">&times;</span>
+      </div>
+      <div class="modal-body">
+        <h3 id="modal-name"></h3>
+        <p class="title" id="modal-title"></p>
+        <p id="modal-description"></p>
+        <div class="modal-works">
+          <h4>Karya & Kontribusi:</h4>
+          <ul id="modal-works"></ul>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <!-- Footer -->
   <footer>
