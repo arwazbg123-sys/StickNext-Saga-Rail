@@ -5,17 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Anggota - StickNext Saga Rail</title>
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="CSS.css">
   <link rel="stylesheet" href="anggota.css">
 </head>
 <body>
-  <script>
-    function toggleSidebar() {
-      const navMenu = document.getElementById('nav-menu');
-      if (navMenu) {
-        navMenu.classList.toggle('active');
-      }
-    }
-  </script>
+
   <!-- Loading Screen -->
   <div id="loader" class="loader">
     <div class="human-container">
@@ -40,7 +34,7 @@
           <span></span>
           <span></span>
         </div>
-        <ul class="nav-menu" id="nav-menu">
+        <ul class="main-nav" id="nav-menu">
           <li><a href="beranda.html">Beranda</a></li>
           <li><a href="galeri.html">Galeri</a></li>
           <li><a href="anggota.html">Anggota</a></li>
@@ -55,11 +49,30 @@
     </nav>
   </header>
 
+  <!-- Sidebar for mobile -->
+  <div class="sidebar" id="sidebar">
+    <span class="close-sidebar" id="close-sidebar">&times;</span>
+    <ul>
+      <li><a href="beranda.html">Beranda</a></li>
+      <li><a href="galeri.html">Galeri</a></li>
+      <li><a href="anggota.html">Anggota</a></li>
+      <li><a href="tentang.html">Tentang</a></li>
+      <li><a href="kontak.html">Kontak</a></li>
+      <li><a href="disclaimer.html">Disclaimer</a></li>
+      <li><a href="HTML audio.html">Audio</a></li>
+      <li><a href="kebebasan.html">Kebebasan</a></li>
+    </ul>
+  </div>
+
   <!-- Konten Anggota -->
   <main>
     <section id="anggota">
       <h2>Daftar Anggota</h2>
       <p>Halaman ini menampilkan profil anggota komunitas StickNext Saga Rail.</p>
+
+      <div class="search-container">
+        <input id="search-input" class="search-input" type="search" placeholder="Cari anggota, judul, atau karya..." aria-label="Cari anggota">
+      </div>
 
       <!-- Stats -->
       <div class="stats">
@@ -75,10 +88,12 @@
           <div class="stat-number" id="founder-count">0</div>
           <div class="stat-label">Founder</div>
         </div>
-      <div class="stat-item">
-        <div class="stat-number" id="total-works">0</div>
-        <div class="stat-label">Total Karya</div>
+        <div class="stat-item">
+          <div class="stat-number" id="total-works">0</div>
+          <div class="stat-label">Total Karya</div>
+        </div>
       </div>
+
       <div id="member-grid" class="member-grid">
         <!-- Member cards will be inserted here by JavaScript -->
       </div>
@@ -112,11 +127,9 @@
     <p>&copy; 2024 StickNext Saga Rail. All rights reserved.</p>
   </footer>
 
-  <script src="data.js" onerror="console.error('data.js gagal dimuat'); document.dispatchEvent(new CustomEvent('script-error', {detail: 'data.js'}))"></script>
-  <script src="badge.js" onerror="console.error('badge.js gagal dimuat'); document.dispatchEvent(new CustomEvent('script-error', {detail: 'badge.js'}))"></script>
-  <script src="utils.js" onerror="console.error('utils.js gagal dimuat'); document.dispatchEvent(new CustomEvent('script-error', {detail: 'utils.js'}))"></script>
-  <script src="modal.js" onerror="console.error('modal.js gagal dimuat'); document.dispatchEvent(new CustomEvent('script-error', {detail: 'modal.js'}))"></script>
-  <script src="main.js" onerror="console.error('main.js gagal dimuat'); document.dispatchEvent(new CustomEvent('main-error', {detail: 'main.js'}))"></script>
+  <script src="anggotaData.js" onerror="console.error('anggotaData.js gagal dimuat'); document.dispatchEvent(new CustomEvent('script-error', {detail: 'anggotaData.js'}))"></script>
+  <script src="anggota.js" onerror="console.error('anggota.js gagal dimuat'); document.dispatchEvent(new CustomEvent('script-error', {detail: 'anggota.js'}))"></script>
+  <script src="nav.js"></script>
   <script>
     // Auto-recovery system for script loading failures
     let failedScripts = [];
