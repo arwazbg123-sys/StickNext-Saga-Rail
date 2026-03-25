@@ -215,8 +215,10 @@
 
   function animateNumber(element, target) {
     const start = parseInt(element.textContent) || 0;
-    const duration = 1000;
-    const step = (target - start) / (duration / 16);
+    // Use longer duration on mobile for better performance (reduce CPU usage)
+    const duration = isMobile ? 1500 : 1000;
+    const frameRate = isMobile ? 50 : 16; // 20fps on mobile, 60fps on desktop
+    const step = (target - start) / (duration / frameRate);
     let current = start;
 
     const timer = setInterval(() => {
@@ -227,7 +229,7 @@
       } else {
         element.textContent = Math.floor(current);
       }
-    }, 16);
+    }, frameRate);
   }
 
   function debounce(func, wait) {
@@ -243,7 +245,8 @@
   }
 
   function addRippleEffect(element, event) {
-    if (!isMobile) return;
+    // Skip ripple on mobile to reduce CPU usage
+    if (isMobile) return;
 
     const ripple = document.createElement('div');
     ripple.className = 'mobile-ripple';
@@ -577,7 +580,9 @@
     if (member.badge === 'founder') {
       card.classList.add('founder-card');
 
-      for (let i = 0; i < 5; i++) {
+      // Reduce sparkles on mobile for better performance (2 instead of 5)
+      const sparkleCount = isMobile ? 2 : 5;
+      for (let i = 0; i < sparkleCount; i++) {
         const sparkle = document.createElement('span');
         sparkle.className = 'star-sparkle';
         card.appendChild(sparkle);
@@ -588,8 +593,9 @@
     if (member.status === MEMBER_STATUS.SUSPENDED) {
       card.classList.add('suspended-card');
 
-      // Add frost particles for dramatic frozen effect
-      for (let i = 1; i <= 3; i++) {
+      // Reduce frost particles on mobile for better performance (1 instead of 3)
+      const particleCount = isMobile ? 1 : 3;
+      for (let i = 1; i <= particleCount; i++) {
         const particle = document.createElement('div');
         particle.className = `frost-particle-${i}`;
         card.appendChild(particle);
