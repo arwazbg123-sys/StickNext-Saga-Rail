@@ -1,177 +1,364 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Syarat dan Ketentuan | StickNext Saga Rail</title>
-  <link rel="stylesheet" href="CSS.css">
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Syarat & Ketentuan Futuristik | StickNext Saga Rail</title>
+  <link rel="stylesheet" href="CSS.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet" />
   <style>
-    /* Animasi loading khusus untuk halaman Syarat dan Ketentuan */
+    :root {
+      --bg: #02020a;
+      --card: rgba(10, 15, 35, 0.78);
+      --border: rgba(95, 190, 255, 0.5);
+      --glow: #00f6ff;
+      --accent: #e63946;
+      --text: #e0e8ff;
+      --soft: #a6b8ff;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Orbitron', sans-serif;
+      background: radial-gradient(circle at 20% 20%, #09102a 0%, #02020a 60%, #000 100%);
+      color: var(--text);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .invisible {
+      position: absolute;
+      left: -9999px;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+    }
+
     .terms-loader {
       position: fixed;
       inset: 0;
-      background: linear-gradient(45deg, #000, #1a1a2e, #000);
-      background-size: 400% 400%;
-      animation: backgroundShift 3s ease-in-out infinite;
+      background: linear-gradient(-45deg, #03030e 0%, #070f2b 45%, #0f1d48 100%);
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       z-index: 9999;
-      transition: opacity 1.5s ease;
-      color: #e63946;
-      font-family: 'Orbitron', monospace;
-      font-size: 1.8rem;
-      text-shadow: 0 0 20px rgba(230, 57, 70, 0.8), 0 0 40px rgba(230, 57, 70, 0.5);
+      backdrop-filter: blur(5px);
+      animation: ambient 4s infinite ease-in-out;
     }
 
-    @keyframes backgroundShift {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
+    .terms-loader::after {
+      content: 'Memuat Perspektif Galaksi...';
+      color: var(--accent);
+      margin-top: 1.2rem;
+      letter-spacing: 0.18rem;
+      font-size: 1.05rem;
+      text-shadow: 0 0 17px rgba(230, 57, 70, 0.65);
     }
 
-    .terms-loader .complex-spinner {
-      position: relative;
-      width: 100px;
-      height: 100px;
-      margin-bottom: 2rem;
-    }
-
-    .terms-loader .complex-spinner::before,
-    .terms-loader .complex-spinner::after {
-      content: '';
-      position: absolute;
-      border: 6px solid transparent;
+    .terms-loader .spinner {
+      width: 90px;
+      height: 90px;
+      border: 6px solid rgba(0, 246, 255, 0.3);
+      border-top: 6px solid var(--glow);
       border-radius: 50%;
-      animation: complexSpin 2s linear infinite;
+      animation: spin 1.1s linear infinite;
+      box-shadow: 0 0 20px rgba(0, 246, 255, 0.55), 0 0 40px rgba(230, 57, 70, 0.45);
     }
 
-    .terms-loader .complex-spinner::before {
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      border-top: 6px solid #e63946;
-      border-right: 6px solid rgba(230, 57, 70, 0.3);
-      animation-delay: 0s;
-    }
-
-    .terms-loader .complex-spinner::after {
-      top: 10px;
-      left: 10px;
-      right: 10px;
-      bottom: 10px;
-      border-bottom: 6px solid #e63946;
-      border-left: 6px solid rgba(230, 57, 70, 0.3);
-      animation-delay: 1s;
-      animation-direction: reverse;
-    }
-
-    @keyframes complexSpin {
+    @keyframes spin {
       to { transform: rotate(360deg); }
     }
 
-    .terms-loader .typing-text {
+    @keyframes ambient {
+      0%,100% { background-position: 0% 0%; }
+      50% { background-position: 100% 100%; }
+    }
+
+    main {
+      max-width: 1040px;
+      margin: 115px auto 50px;
+      padding: 1rem 1.2rem 2rem;
+      border-radius: 18px;
+      border: 1px solid rgba(94, 215, 255, 0.4);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 0 40px rgba(0, 173, 255, 0.2);
+      background: linear-gradient(135deg, rgba(2,8,33,0.65), rgba(2,8,33,0.88));
+    }
+
+    h1 {
+      font-size: clamp(1.7rem, 5vw, 2.6rem);
+      color: #80d3ff;
+      margin-bottom: 10px;
+      text-align: center;
+      text-shadow: 0 0 16px rgba(0, 246, 255, 0.85);
+    }
+
+    .subtitle {
+      display: block;
+      text-align: center;
+      color: var(--soft);
+      margin-bottom: 1.6rem;
+      letter-spacing: 0.07rem;
+    }
+
+    #filter-search {
+      width: 100%;
+      height: 42px;
+      padding: 0.5rem 0.7rem;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text);
+      background: rgba(8, 14, 37, 0.75);
+      margin-bottom: 1.2rem;
+      outline: none;
+    }
+
+    .terms-grid {
+      display: grid;
+      gap: 1rem;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    }
+
+    details {
+      background: rgba(11, 18, 42, 0.78);
+      border-radius: 12px;
+      border: 1px solid rgba(12, 112, 255, 0.3);
+      padding: 14px;
+      color: #d6e5ff;
+      box-shadow: 0 0 20px rgba(20, 136, 237, 0.14);
+      position: relative;
+    }
+
+    summary {
+      list-style: none;
+      cursor: pointer;
+      font-weight: 700;
+      font-size: 1.05rem;
+      letter-spacing: 0.04rem;
+      color: #a4d3ff;
+      outline: none;
+    }
+
+    summary:hover,
+    details[open] summary {
+      color: #ecf8ff;
+      text-shadow: 0 0 12px rgba(0, 235, 255, 0.65);
+    }
+
+    details p {
+      margin-top: 0.65rem;
+      line-height: 1.6;
+      color: #cfe6ff;
+      font-size: 0.98rem;
+    }
+
+    .action-panel {
+      margin-top: 1.4rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.7rem;
+    }
+
+    .agree-btn,
+    .opt-out-btn {
+      border: 1px solid transparent;
+      border-radius: 8px;
+      min-width: 160px;
+      padding: 0.55rem 0.95rem;
+      cursor: pointer;
+      font-weight: 700;
+      letter-spacing: 0.04rem;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .agree-btn {
+      color: #0b082e;
+      background: linear-gradient(120deg, #7de1a0, #0bf2ff);
+      box-shadow: 0 0 12px rgba(7, 244, 255, 0.6);
+    }
+
+    .opt-out-btn {
+      color: #ffdae2;
+      background: rgba(227, 57, 70, 0.16);
+      border-color: rgba(227, 57, 70, 0.45);
+      box-shadow: 0 0 12px rgba(255, 95, 109, 0.5);
+    }
+
+    .agree-btn:hover,
+    .opt-out-btn:hover {
+      transform: translateY(-1px);
+    }
+
+    .status-chip {
+      color: #fff;
+      background: rgba(20, 20, 35, 0.8);
+      padding: 0.45rem 0.75rem;
+      border-radius: 999px;
+      border: 1px solid rgba(0, 220, 255, 0.45);
+      font-size: 0.91rem;
+      letter-spacing: 0.04rem;
+    }
+
+    .progress-wrap {
+      width: 100%;
+      height: 10px;
+      border-radius: 999px;
       overflow: hidden;
-      border-right: 2px solid #e63946;
-      white-space: nowrap;
-      animation: typing 3s steps(30, end), blink-caret 0.75s step-end infinite;
+      background: rgba(8, 12, 25, 0.85);
+      border: 1px solid rgba(9, 173, 255, 0.2);
+      margin-top: 0.9rem;
+    }
+
+    .progress-bar {
       width: 0;
-      max-width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, #00f6ff, #53c6ff, #1eaef4);
+      transition: width 0.3s ease;
     }
 
-    @keyframes typing {
-      from { width: 0; }
-      to { width: 100%; }
-    }
+    @media (max-width: 760px) {
+      main {
+        margin: 90px 0 30px;
+        border-radius: 0;
+        padding: 0.88rem;
+      }
 
-    @keyframes blink-caret {
-      from, to { border-color: transparent; }
-      50% { border-color: #e63946; }
-    }
+      h1 { font-size: 1.9rem; }
 
-    .terms-loader p {
-      margin-top: 1rem;
-      font-size: 1.2rem;
-      opacity: 0;
-      animation: fadeIn 2s ease-in-out 1.5s forwards;
-    }
-
-    @keyframes fadeIn {
-      to { opacity: 1; }
+      .action-panel { justify-content: center; }
     }
   </style>
 </head>
 <body>
-  <div id="loader" class="loader"><div class="spinner"></div><p>Memuat syarat dan ketentuan...</p></div>
-  <header>
-    <div class="header-left">
-      <h1>Syarat dan Ketentuan</h1>
-      <p>Aturan penggunaan situs StickNext Saga Rail.</p>
-    </div>
-    <div class="hamburger" id="hamburger-btn"><span></span><span></span><span></span></div>
-    <nav class="main-nav">
-      <ul>
-        <li><a href="beranda.html">Beranda</a></li>
-        <li><a href="galeri.html">Galeri</a></li>
-        <li><a href="anggota.html">Anggota</a></li>
-        <li><a href="tentang.html">Tentang</a></li>
-        <li><a href="kontak.html">Kontak</a></li>
-        <li><a href="disclaimer.html">Disclaimer</a></li>
-        <li><a href="HTML audio.html">Audio</a></li>
-        <li><a href="kebebasan.html">Kebebasan</a></li>
-        <li><a href="syarat-ketentuan.html" class="active-link">Syarat & Ketentuan</a></li>
-      </ul>
-      <div id="clock"></div>
-    </nav>
-    <div class="sidebar" id="sidebar" aria-hidden="true" aria-label="menu seluler">
-      <span class="close-sidebar" id="close-sidebar">×</span>
-      <ul>
-        <li><a href="beranda.html">Beranda</a></li>
-        <li><a href="galeri.html">Galeri</a></li>
-        <li><a href="anggota.html">Anggota</a></li>
-        <li><a href="tentang.html">Tentang</a></li>
-        <li><a href="kontak.html">Kontak</a></li>
-        <li><a href="disclaimer.html">Disclaimer</a></li>
-        <li><a href="HTML audio.html">Audio</a></li>
-        <li><a href="kebebasan.html">Kebebasan</a></li>
-        <li><a href="syarat-ketentuan.html">Syarat & Ketentuan</a></li>
-      </ul>
-      <div id="clock-mobile" class="clock-mobile"></div>
-    </div>
-  </header>
+  <div class="terms-loader" id="terms-loader">
+    <div class="spinner"></div>
+  </div>
+
   <main>
-    <section class="content-section">
-      <h2>Syarat dan Ketentuan Penggunaan Situs</h2>
-      <p>Selamat datang di situs StickNext Saga Rail. Dengan mengakses dan menggunakan situs ini, Anda setuju untuk terikat oleh syarat dan ketentuan berikut. Jika Anda tidak setuju dengan ketentuan ini, harap jangan gunakan situs ini.</p>
+    <h1>Syarat & Ketentuan</h1>
+    <span class="subtitle">Interaktif · Transparan · Aman</span>
 
-      <h3>1. Penggunaan Situs</h3>
-      <p>Situs ini disediakan untuk tujuan informasi, komunikasi, dan hiburan komunitas. Anda setuju untuk menggunakan situs ini hanya untuk tujuan yang sah dan tidak melanggar hukum yang berlaku di Indonesia.</p>
+    <input id="filter-search" type="search" placeholder="Cari istilah di syarat..." autocomplete="off" aria-label="Cari istilah" />
 
-      <h3>2. Hak Cipta dan Kekayaan Intelektual</h3>
-      <p>Semua konten di situs ini, termasuk teks, gambar, audio, video, dan kode, dilindungi oleh hak cipta. Anda tidak diperbolehkan menyalin, mendistribusikan, atau menggunakan konten ini tanpa izin tertulis dari pemilik situs.</p>
+    <div class="terms-grid" id="terms-grid">
+      <details open data-index="1">
+        <summary>1. Penggunaan Situs</summary>
+        <p>Platform ini didesain sebagai ruang informasi, edukasi, dan hiburan. Pengguna wajib bertindak sesuai hukum Indonesia dan larangan penyalahgunaan fitur.</p>
+      </details>
+      <details data-index="2">
+        <summary>2. Hak Cipta dan IP</summary>
+        <p>Semua data, desain, audio, dan bentuk digital lain adalah milik StickNext Saga Rail. Reproduksi tanpa izin eksplisit dilarang.</p>
+      </details>
+      <details data-index="3">
+        <summary>3. Tanggung Jawab Pengguna</summary>
+        <p>Anda bertanggung jawab atas interaksi akun dan konten. Tindakan berbahaya/konten negatif bisa berakibat blokir permanen.</p>
+      </details>
+      <details data-index="4">
+        <summary>4. Privasi & Data</summary>
+        <p>Data pengguna diproses untuk fungsionalitas platform. Hak akses, koreksi, dan penghapusan data dapat diajukan sesuai kebijakan privasi.</p>
+      </details>
+      <details data-index="5">
+        <summary>5. Batasan Tanggung Jawab</summary>
+        <p>Situs disediakan apa adanya; pengelola tidak bertanggung jawab atas kerugian tak langsung, downtime jaringan, atau konten pihak ketiga.</p>
+      </details>
+      <details data-index="6">
+        <summary>6. Pembaruan Ketentuan</summary>
+        <p>Syarat dapat diperbarui setiap saat. Pengguna dianggap menyetujui perubahan setelah notifikasi ditayangkan di halaman utama.</p>
+      </details>
+      <details data-index="7">
+        <summary>7. Kontak</summary>
+        <p>Keluhan dan pertanyaan bisa dikirim melalui <a href="kontak.html" style="color:#88ebff;">halaman Kontak</a>.</p>
+      </details>
+    </div>
 
-      <h3>3. Tanggung Jawab Pengguna</h3>
-      <p>Anda bertanggung jawab atas semua aktivitas yang dilakukan melalui akun Anda. Jangan posting konten yang melanggar hukum, menghina, atau merugikan pihak lain. Kami berhak menghapus konten yang tidak sesuai.</p>
+    <div class="progress-wrap" aria-hidden="true">
+      <div class="progress-bar" id="progress-bar"></div>
+    </div>
 
-      <h3>4. Kebijakan Privasi</h3>
-      <p>Kami menghormati privasi Anda. Data pribadi yang dikumpulkan digunakan hanya untuk tujuan situs ini. Lihat halaman Privasi untuk detail lebih lanjut.</p>
-
-      <h3>5. Pembatasan Tanggung Jawab</h3>
-      <p>Situs ini disediakan "sebagaimana adanya". Kami tidak bertanggung jawab atas kerugian langsung atau tidak langsung yang timbul dari penggunaan situs ini.</p>
-
-      <h3>6. Perubahan Ketentuan</h3>
-      <p>Kami berhak mengubah syarat dan ketentuan ini kapan saja. Perubahan akan diberitahukan melalui situs ini.</p>
-
-      <h3>7. Kontak</h3>
-      <p>Jika Anda memiliki pertanyaan tentang syarat dan ketentuan ini, hubungi kami melalui halaman Kontak.</p>
-
-      <p>Terakhir diperbarui: Maret 2026</p>
-    </section>
+    <div class="action-panel">
+      <button class="agree-btn" id="agree-btn">Setuju & Lanjut</button>
+      <button class="opt-out-btn" id="opt-out-btn">Keluar</button>
+      <span class="status-chip" id="status-chip">Status: Belum Disetujui</span>
+    </div>
   </main>
+
   <script src="nav.js"></script>
   <script src="script.js"></script>
+  <script>
+    const loader = document.getElementById('terms-loader');
+    const progress = document.getElementById('progress-bar');
+    const statusChip = document.getElementById('status-chip');
+    const agreeBtn = document.getElementById('agree-btn');
+    const optOutBtn = document.getElementById('opt-out-btn');
+    const searchInput = document.getElementById('filter-search');
+    const termsGrid = document.getElementById('terms-grid');
+
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        loader.style.opacity = '0';
+        loader.style.pointerEvents = 'none';
+        setTimeout(() => loader.style.display = 'none', 500);
+      }, 500);
+    });
+
+    function updateProgress() {
+      const details = Array.from(termsGrid.querySelectorAll('details'));
+      const openCount = details.filter(d => d.open).length;
+      const percent = Math.round((openCount / details.length) * 100);
+      progress.style.width = `${percent}%`;
+      statusChip.textContent = `Status: ${percent}% Dibaca`; 
+    }
+
+    termsGrid.querySelectorAll('details').forEach(detail => {
+      detail.addEventListener('toggle', updateProgress);
+    });
+
+    updateProgress();
+
+    agreeBtn.addEventListener('click', () => {
+      statusChip.textContent = 'Status: Disetujui';
+      statusChip.style.background = 'rgba(50, 230, 150, 0.85)';
+      alert('Makasih ya. Anda telah menyetujui Syarat dan Ketentuan.');
+    });
+
+    optOutBtn.addEventListener('click', () => {
+      if (confirm('Anda akan keluar dari halaman Syarat & Ketentuan. Lanjut?')) {
+        window.location.href = 'beranda.html';
+      }
+    });
+
+    searchInput.addEventListener('input', (event) => {
+      const term = event.target.value.toLowerCase();
+      termsGrid.querySelectorAll('details').forEach(detail => {
+        const title = detail.querySelector('summary').innerText.toLowerCase();
+        const text = detail.querySelector('p').innerText.toLowerCase();
+        const match = title.includes(term) || text.includes(term);
+        detail.style.display = match ? '' : 'none';
+      });
+    });
+
+    const mouseTrail = document.createElement('div');
+    mouseTrail.style.position = 'fixed';
+    mouseTrail.style.pointerEvents = 'none';
+    mouseTrail.style.width = '14px';
+    mouseTrail.style.height = '14px';
+    mouseTrail.style.borderRadius = '50%';
+    mouseTrail.style.background = 'radial-gradient(circle, #00f6ff, transparent 65%)';
+    mouseTrail.style.mixBlendMode = 'screen';
+    mouseTrail.style.opacity = '0.8';
+    document.body.appendChild(mouseTrail);
+
+    document.addEventListener('mousemove', (evt) => {
+      mouseTrail.style.left = `${evt.clientX - 7}px`;
+      mouseTrail.style.top = `${evt.clientY - 7}px`;
+    });
+  </script>
 </body>
 </html>
