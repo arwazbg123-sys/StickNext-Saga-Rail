@@ -5,98 +5,205 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Tentang - StickNext Saga Rail</title>
   <link rel="stylesheet" href="CSS.css">
-
-  <!-- Google Fonts: Orbitron -->
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    .about-hero {
+      background: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.9)), url('KAI In StarWars.jpg') center/cover no-repeat;
+      height: 75vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: white;
+      position: relative;
+    }
+
+    .about-hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at center, transparent 40%, rgba(0,0,0,0.95));
+    }
+
+    .about-hero h1 {
+      font-size: clamp(2.8rem, 8vw, 5.5rem);
+      text-shadow: 0 0 40px rgba(0, 240, 255, 0.9);
+      letter-spacing: 4px;
+      margin: 0;
+    }
+
+    .about-hero p {
+      font-size: 1.35rem;
+      max-width: 780px;
+      margin: 1.2rem auto 0;
+      opacity: 0.95;
+      line-height: 1.6;
+    }
+
+    .section {
+      padding: 5rem 1.5rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .cosmic-text {
+      font-size: 1.15rem;
+      line-height: 1.85;
+      color: #b0d4ff;
+    }
+
+    .highlight {
+      color: #00f0ff;
+      text-shadow: 0 0 20px rgba(0, 240, 255, 0.7);
+      font-weight: 600;
+    }
+
+    .rail-line {
+      height: 5px;
+      background: linear-gradient(90deg, transparent, #00f0ff, #ff006e, transparent);
+      margin: 4rem 0;
+      border-radius: 3px;
+      box-shadow: 0 0 25px rgba(0, 240, 255, 0.6);
+    }
+  </style>
 </head>
 <body>
+
   <!-- Loading Screen -->
   <div id="loader" class="loader">
     <div class="spinner"></div>
-    <p>Melaju ke multiverse...</p>
+    <p>Melaju melintasi garis takdir...</p>
   </div>
 
   <!-- Header -->
   <header>
     <div class="header-left">
       <h1>Tentang StickNext Saga Rail</h1>
-      <p>Sejarah, visi, dan identitas komunitas</p>
+      <p>Sejarah • Visi • Api yang Tak Pernah Padam</p>
     </div>
 
-    <!-- Tombol hamburger (HP) -->
     <div class="hamburger" id="hamburger-btn">
-      <span></span>
-      <span></span>
-      <span></span>
+      <span></span><span></span><span></span>
     </div>
 
-    <!-- Nav normal (PC) -->
     <nav class="main-nav">
       <ul>
         <li><a href="beranda.html">Beranda</a></li>
         <li><a href="galeri.html">Galeri</a></li>
         <li><a href="anggota.html">Anggota</a></li>
-        <li><a href="tentang.html">Tentang</a></li>
+        <li><a href="tentang.html" class="active-link">Tentang</a></li>
         <li><a href="kontak.html">Kontak</a></li>
         <li><a href="disclaimer.html">Disclaimer</a></li>
-        <li><a href="HTML audio.html">Audio</a></li>\n        <li><a href="kebebasan.html">Kebebasan</a></li>
+        <li><a href="HTML audio.html">Audio</a></li>
+        <li><a href="kebebasan.html">Kebebasan</a></li>
       </ul>
       <div id="clock"></div>
     </nav>
 
-    <!-- Sidebar (HP) -->
     <div class="sidebar" id="sidebar">
       <span class="close-sidebar" id="close-sidebar">&times;</span>
       <ul>
         <li><a href="beranda.html">Beranda</a></li>
         <li><a href="galeri.html">Galeri</a></li>
         <li><a href="anggota.html">Anggota</a></li>
-        <li><a href="tentang.html">Tentang</a></li>
+        <li><a href="tentang.html" class="active-link">Tentang</a></li>
         <li><a href="kontak.html">Kontak</a></li>
         <li><a href="disclaimer.html">Disclaimer</a></li>
-        <li><a href="HTML audio.html">Audio</a></li>\n        <li><a href="kebebasan.html">Kebebasan</a></li>
+        <li><a href="HTML audio.html">Audio</a></li>
+        <li><a href="kebebasan.html">Kebebasan</a></li>
       </ul>
       <div id="clock-mobile" class="clock-mobile"></div>
     </div>
   </header>
 
-  <!-- Konten Tentang -->
+  <!-- Hero -->
+  <section class="about-hero">
+    <div>
+      <h1>REL BUKAN HANYA JALUR</h1>
+      <p>Rel adalah takdir.<br>Kereta adalah naga api yang melahap kegelapan.</p>
+    </div>
+  </section>
+
   <main>
-    <section id="tentang">
-      <h2>Sejarah Komunitas</h2>
-      <p>
-        Rel adalah takdir → setiap jalur adalah perjalanan menuju dimensi baru.<br>
-        Kereta adalah naga api → simbol kekuatan, disiplin, dan keberanian.<br>
-        Kosmik adalah panggung → semesta jadi arena, dari Mars hingga nebula, dari delay tiga galaksi hingga singularitas.
-      </p>
+    <section class="section">
+      <h2>Sejarah Kami</h2>
+      <div class="cosmic-text">
+        <p>
+          Semuanya dimulai dari suara roda besi yang menggema di malam yang sunyi. 
+          Dari asap lokomotif yang naik ke langit hitam, dari lampu sorot yang menembus kabut tebal stasiun-stasiun kecil di pelosok negeri. 
+          Kami, sekelompok anak muda yang jatuh cinta pada kereta api, mulai melihat sesuatu yang lebih besar dari sekadar transportasi.
+        </p>
+        <p>
+          Kami melihat <span class="highlight">jiwa</span> di setiap gerbong. 
+          Kami mendengar bisikan takdir di setiap deru mesin. 
+          Dari situlah lahir StickNext Saga Rail — bukan sekadar komunitas railfans, melainkan sebuah saga kosmik yang lahir dari tanah Indonesia.
+        </p>
+        <p>
+          Kami percaya bahwa setiap jalur rel adalah pintu menuju dunia lain. 
+          Setiap lokomotif adalah makhluk hidup yang memiliki napas dan mimpi. 
+          Dari delay yang panjang di stasiun kecil, hingga perjalanan yang melintasi galaksi dan singularitas — semua adalah bagian dari cerita yang sama.
+        </p>
+      </div>
+    </section>
 
-      <h2>Visi & Misi</h2>
-      <p>
-        Menciptakan karya visual, musik, dan narasi yang mengangkat kereta api Indonesia ke level kosmik.<br>
-        Menyatukan railfans, kreator, dan komunitas dalam satu saga monumental.<br>
-        Menjadi wadah ekspresi absurd yang tetap aman, inklusif, dan penuh energi.
-      </p>
+    <div class="rail-line"></div>
 
-      <h2>Identitas</h2>
-      <p>
-        StickNext Rail Saga adalah gerakan kreatif kosmik yang lahir dari semangat railfans Indonesia. Kami bukan sekadar komunitas, kami adalah franchise semesta yang menggabungkan kereta api dengan imajinasi absurd, monumental, dan futuristik.
-      </p>
+    <section class="section">
+      <h2>Visi Kami</h2>
+      <div class="cosmic-text">
+        <p>
+          Kami ingin mengubah persepsi dunia terhadap kereta api Indonesia. 
+          Bukan lagi hanya alat angkut penumpang dan barang, melainkan simbol kekuatan, mimpi, disiplin, dan keberanian yang membara.
+        </p>
+        <p>
+          Kami ingin membawa kereta api Indonesia ke level yang lebih tinggi — 
+          menjadi legenda kosmik yang bisa berdiri sejajar dengan saga-saga besar dunia. 
+          Dari stasiun kecil di kampung halaman hingga pertempuran di nebula yang jauh, 
+          dari deru CC201 yang mengguncang rel hingga ledakan singularitas yang menghancurkan realitas.
+        </p>
+        <p>
+          Visi kami sederhana tapi membara: <br>
+          <span class="highlight">Menyatukan railfans, kreator, dan mimpi anak muda Indonesia menjadi satu saga monumental yang tak akan pernah terlupakan.</span>
+        </p>
+      </div>
+    </section>
+
+    <div class="rail-line"></div>
+
+    <section class="section">
+      <h2>Identitas StickNext Saga Rail</h2>
+      <div class="cosmic-text">
+        <p>
+          StickNext Saga Rail bukan sekadar komunitas. 
+          Kami adalah gerakan kreatif yang lahir dari api semangat anak muda Indonesia. 
+          Kami menggabungkan realitas kereta api dengan imajinasi tanpa batas — absurd, gelap, epik, lucu, tragis, dan kosmik sekaligus.
+        </p>
+        <p>
+          Di sini, stickman hidup di atas rel. 
+          Lokomotif memiliki jiwa. 
+          Delay bukan masalah — yang penting adalah perjalanan tetap berlanjut, 
+          melintasi waktu, ruang, dan batas-batas realitas yang ada.
+        </p>
+        <p>
+          Kami adalah suara roda besi yang tak pernah berhenti. 
+          Kami adalah asap yang naik ke langit malam. 
+          Kami adalah api yang terus menyala di rel-rel takdir. 
+          <strong>Kami adalah StickNext.</strong>
+        </p>
+      </div>
     </section>
   </main>
 
   <!-- Footer -->
   <footer>
-    <p>&copy; 2026 StickNext Saga Rail • Dibuat oleh Screet</p>
+    <p>&copy; 2026 StickNext Saga Rail • Api yang Tak Pernah Padam</p>
   </footer>
 
-  <!-- Clock JS -->
+  <!-- Clock -->
   <script>
     function updateClock() {
       const now = new Date();
-      const time = now.toLocaleTimeString('id-ID', { 
-        hour12: false, 
-        timeZone: 'Asia/Jakarta' 
-      });
+      const time = now.toLocaleTimeString('id-ID', { hour12: false, timeZone: 'Asia/Jakarta' });
       document.getElementById('clock').innerText = time;
       const clockMobile = document.getElementById('clock-mobile');
       if (clockMobile) clockMobile.innerText = time;
@@ -105,19 +212,15 @@
     updateClock();
   </script>
 
-  <!-- Loading Screen JS -->
+  <!-- Loading -->
   <script>
     window.addEventListener('load', () => {
       const loader = document.getElementById('loader');
       loader.style.opacity = '0';
-      setTimeout(() => {
-        loader.style.display = 'none';
-      }, 800);
+      setTimeout(() => loader.style.display = 'none', 800);
     });
   </script>
 
-  <!-- Script Hamburger + Sidebar -->
   <script src="nav.js"></script>
 </body>
 </html>
-
