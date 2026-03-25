@@ -5,7 +5,8 @@ const anggotaData = [
     description: 'Pembuat StickNext Saga Rail, ahli desain stiker dan pengembang proyek komunitas.',
     img: 'Naufal Mrsov.images.jpg',
     works: ['StickMazz', 'StickNext', 'StickBot'],
-    status: 'active'
+    status: 'active',
+    badge: 'founder' // Badge khusus untuk founder
   },
   {
     name: 'Sherifal Vornefal Desertfall.',
@@ -13,7 +14,8 @@ const anggotaData = [
     description: 'Bertanggung jawab atas keamanan dan perlindungan wilayah gurun komunitas.',
     img: 'sherifal vornefal desertfall.jpg',
     works: ['Keamanan Gurun', 'Perlindungan Wilayah', 'menegakkan Hukum'],
-    status: 'active'
+    status: 'active',
+    badge: 'guardian' // Badge untuk penjaga
   },
   {
     name: 'Grandarma Vermansyah.',
@@ -21,7 +23,8 @@ const anggotaData = [
     description: 'Menjaga keamanan dan keseimbangan di wilayah nebula kosmik komunitas.',
     img: 'Grandarma anggota.jpg',
     works: ['Keamanan Nebula', 'Keseimbangan Kosmik', 'Pengawasan Wilayah'],
-    status: 'active'
+    status: 'active',
+    badge: 'guardian' // Badge untuk penjaga
   },
   {
     name: 'Paratugas Idol Devas.',
@@ -29,7 +32,8 @@ const anggotaData = [
     description: 'Membangun fitur interaktif dan fungsionalitas situs dengan JavaScript.',
     img: 'images/anggota-adit.jpg',
     works: ['Fitur Anggota', 'Sistem Rating', 'Animasi Loader'],
-    status: 'active'
+    status: 'active',
+    badge: 'developer' // Badge untuk developer
   },
   {
     name: 'NovaZess Veldrass.',
@@ -37,7 +41,8 @@ const anggotaData = [
     description: 'Bertanggung jawab atas operasi rahasia dan misi khusus komunitas.',
     img: 'NovaZess Veldrass.jpg',
     works: ['Perdamaian Anggota', 'Keamanan', 'Intelijen Rahasia'],
-    status: 'active'
+    status: 'active',
+    badge: 'elite' // Badge untuk agent elite
   },
   {
     name: 'Novarizwan Kurniawan.',
@@ -45,7 +50,8 @@ const anggotaData = [
     description: 'Bertanggung jawab atas operasi pengamanan komunitas.',
     img: 'Novarizwan kurniawan.jpg',
     works: ['Perdamaian Anggota', 'Keamanan', 'Komando Operasi'],
-    status: 'active'
+    status: 'active',
+    badge: 'commander' // Badge untuk komandan
   },
 ];
 
@@ -79,6 +85,45 @@ let isPulling = false;
 
 // Search debouncing
 let searchTimeout;
+
+// Badge configuration
+const badgeConfig = {
+  founder: {
+    name: '🏆 Founder',
+    color: '#FFD700',
+    glow: '0 0 20px rgba(255, 215, 0, 0.8)',
+    special: true
+  },
+  guardian: {
+    name: '🛡️ Guardian',
+    color: '#FF6B35',
+    glow: '0 0 15px rgba(255, 107, 53, 0.6)',
+    special: false
+  },
+  developer: {
+    name: '💻 Developer',
+    color: '#00D4FF',
+    glow: '0 0 15px rgba(0, 212, 255, 0.6)',
+    special: false
+  },
+  elite: {
+    name: '⚡ Elite Agent',
+    color: '#9D4EDD',
+    glow: '0 0 15px rgba(157, 78, 221, 0.6)',
+    special: false
+  },
+  commander: {
+    name: '🎖️ Commander',
+    color: '#FF006E',
+    glow: '0 0 15px rgba(255, 0, 110, 0.6)',
+    special: false
+  }
+};
+
+// Get badge info
+function getBadgeInfo(badge) {
+  return badgeConfig[badge] || null;
+}
 
 // Update Stats
 function updateStats() {
@@ -144,7 +189,32 @@ function renderAnggota() {
     card.className = 'member-card';
     card.style.animationDelay = `${index * 0.1}s`;
 
+    const badgeInfo = getBadgeInfo(anggota.badge);
+    const badgeHTML = badgeInfo ? `
+      <div class="member-badge ${badgeInfo.special ? 'special-badge' : ''}" style="
+        background: ${badgeInfo.color};
+        box-shadow: ${badgeInfo.glow};
+        color: white;
+      ">
+        ${badgeInfo.name}
+      </div>
+    ` : '';
+
+    // Special particle effect for founder
+    const particleHTML = badgeInfo && badgeInfo.special ? `
+      <div class="founder-particles">
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+      </div>
+    ` : '';
+
     card.innerHTML = `
+      ${badgeHTML}
+      ${particleHTML}
       <img src="${anggota.img}" alt="Foto ${anggota.name}" loading="lazy" />
       <div class="member-card-content">
         <h3>${anggota.name}</h3>
@@ -173,6 +243,44 @@ function openModal(member) {
   modalDescription.textContent = member.description;
   modalWorks.innerHTML = member.works.map(work => `<li>${work}</li>`).join('');
 
+  // Add badge to modal if exists
+  const badgeInfo = getBadgeInfo(member.badge);
+  const existingBadge = modal.querySelector('.modal-badge');
+  if (existingBadge) existingBadge.remove();
+
+  if (badgeInfo) {
+    const modalBadge = document.createElement('div');
+    modalBadge.className = `modal-badge ${badgeInfo.special ? 'special-modal-badge' : ''}`;
+    modalBadge.style.cssText = `
+      background: ${badgeInfo.color};
+      box-shadow: ${badgeInfo.glow};
+      color: white;
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      padding: 0.6rem 1.2rem;
+      border-radius: 25px;
+      font-size: 0.9rem;
+      font-weight: bold;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      z-index: 1001;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,0.2);
+    `;
+    modalBadge.textContent = badgeInfo.name;
+    modal.appendChild(modalBadge);
+  }
+
+  // Special founder modal effect
+  if (member.badge === 'founder') {
+    modal.style.border = '3px solid #FFD700';
+    modal.style.boxShadow = '0 0 50px rgba(255, 215, 0, 0.5), 0 20px 40px rgba(0,0,0,0.5)';
+  } else {
+    modal.style.border = '';
+    modal.style.boxShadow = '';
+  }
+
   modal.style.display = 'block';
   document.body.style.overflow = 'hidden';
 
@@ -187,6 +295,10 @@ function openModal(member) {
 function closeModal() {
   modal.style.display = 'none';
   document.body.style.overflow = '';
+
+  // Remove modal badge
+  const modalBadge = modal.querySelector('.modal-badge');
+  if (modalBadge) modalBadge.remove();
 
   hapticFeedback();
 }
