@@ -404,6 +404,12 @@ header, main, footer {
   animation: founderGlow 2s ease-in-out infinite;
 }
 
+.badge-founder-special {
+  /* Additional highlight for founder badge if needed */
+  border-width: 3px !important;
+  box-shadow: 0 0 40px rgba(255, 215, 0, 1), 0 0 80px rgba(255, 165, 0, 0.65) !important;
+}
+
 .badge-guardian {
   background: linear-gradient(135deg, #FF6B35, #FF8C42) !important;
   box-shadow: 0 0 25px rgba(255, 107, 53, 0.8), 0 0 50px rgba(255, 107, 53, 0.4) !important;
@@ -510,15 +516,109 @@ header, main, footer {
 }
 
 /* Founder Special Effects - Crown of Glory */
-.founder-card {
+.member-card.founder-card {
   border: 3px solid #FFD700 !important;
-  box-shadow: 0 0 50px rgba(255, 215, 0, 0.5),
-              0 0 100px rgba(255, 165, 0, 0.3),
-              inset 0 0 40px rgba(255, 215, 0, 0.2) !important;
-  background: linear-gradient(135deg, rgba(30, 25, 10, 0.95), rgba(50, 45, 20, 0.95)) !important;
+  box-shadow: 0 0 48px rgba(255, 215, 0, 0.8),
+              0 0 90px rgba(255, 165, 0, 0.42),
+              inset 0 0 32px rgba(255, 215, 0, 0.2) !important;
+  background: linear-gradient(135deg, rgba(40, 36, 20, 0.92), rgba(64, 54, 28, 0.92)) !important;
   position: relative;
   animation: founderShine 4s ease-in-out infinite;
+  border-radius: 25px;
+  overflow: hidden;
+  opacity: 1 !important;
+  visibility: visible !important;
+  z-index: 2;
 }
+
+
+.member-card.founder-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at top left, rgba(255, 246, 157, 0.14), transparent 50%),
+              radial-gradient(circle at bottom right, rgba(255, 196, 0, 0.12), transparent 45%);
+  pointer-events: none;
+  opacity: 0.45;
+  transition: opacity 0.4s ease;
+}
+
+.member-card.founder-card:hover::before {
+  opacity: 0.6;
+}
+
+.member-card.founder-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border: 2px solid rgba(255, 215, 0, 0.95);
+  box-shadow: 0 0 35px rgba(255, 235, 150, 0.9);
+  pointer-events: none;
+  border-radius: 25px;
+}
+
+.member-card.founder-card::before {
+  box-shadow: 0 0 60px rgba(246, 219, 79, 0.45),
+              0 0 100px rgba(255, 203, 78, 0.30),
+              0 0 140px rgba(255, 243, 140, 0.15);
+}
+
+.member-card.founder-card .member-card-content::after {
+  content: '';
+  position: absolute;
+  inset: -8px;
+  border: 2px dashed rgba(255, 215, 0, 0.35);
+  border-radius: 28px;
+  pointer-events: none;
+  animation: vipPulse 2.4s ease-in-out infinite;
+}
+
+.member-card.founder-card::before, 
+.member-card.founder-card::after,
+.member-card.founder-card .member-card-content::after {
+  transition: all 0.4s ease;
+}
+
+@keyframes vipPulse {
+  0%, 100% { transform: scale(1); opacity: 0.37; }
+  50% { transform: scale(1.03); opacity: 0.65; }
+}
+
+@keyframes cosmicSparkle {
+  0%, 100% { opacity: 0.55; transform: translateY(0) scale(1); }
+  25% { opacity: 1; transform: translateY(-2px) scale(1.05); }
+  50% { opacity: 0.1; transform: translateY(2px) scale(0.98); }
+  75% { opacity: 0.8; transform: translateY(-1px) scale(1.02); }
+}
+
+.member-card.founder-card .star-sparkle {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255,255,255,1) 0%, rgba(255,255,255,0) 65%);
+  box-shadow: 0 0 12px rgba(255, 255, 255, 0.8), 0 0 20px rgba(255, 200, 100, 0.6);
+  animation: cosmicSparkle 3.2s infinite;
+}
+
+.member-card.founder-card .star-sparkle:nth-child(1) { top: 8%; left: 10%; animation-delay: 0.1s; }
+.member-card.founder-card .star-sparkle:nth-child(2) { top: 25%; right: 12%; animation-delay: 0.4s; }
+.member-card.founder-card .star-sparkle:nth-child(3) { bottom: 16%; left: 14%; animation-delay: 0.7s; }
+.member-card.founder-card .star-sparkle:nth-child(4) { top: 15%; left: 80%; animation-delay: 1.0s; }
+.member-card.founder-card .star-sparkle:nth-child(5) { bottom: 18%; right: 15%; animation-delay: 1.3s; }
+
+.founder-card::after {
+  content: '👑';
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 2rem;
+  z-index: 11;
+  animation: crownBounce 3s ease-in-out infinite;
+  filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.8));
+}
+
 
 @keyframes founderShine {
   0%, 100% {
@@ -562,6 +662,7 @@ header, main, footer {
 
 .founder-card .member-card-content h3 {
   background: linear-gradient(135deg, #FFD700, #FFA500);
+  color: #FFD700;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;

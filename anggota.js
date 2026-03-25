@@ -189,8 +189,9 @@
     badge.className = `member-badge badge-${badgeType}`;
     badge.textContent = badgeInfo.name;
 
+    // Apply only badge-specific styling and avoid card-specific founder class on badge
     if (badgeInfo.special) {
-      badge.classList.add('founder-card');
+      badge.classList.add('badge-founder-special');
     }
 
     return badge;
@@ -458,8 +459,15 @@
   function createMemberCard(member) {
     const card = document.createElement('div');
     card.className = 'member-card';
+    // Founder card gets VIP frame + effects while keeping member-card base.
     if (member.badge === 'founder') {
       card.classList.add('founder-card');
+
+      for (let i = 0; i < 5; i++) {
+        const sparkle = document.createElement('span');
+        sparkle.className = 'star-sparkle';
+        card.appendChild(sparkle);
+      }
     }
 
     const img = document.createElement('img');
