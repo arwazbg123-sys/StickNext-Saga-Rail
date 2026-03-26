@@ -100,6 +100,31 @@
   transform: translateY(0);
 }
 
+/* Button states untuk auto-repair feedback */
+#form-kontak button:disabled {
+  opacity: 0.8;
+  cursor: not-allowed;
+  transform: none !important;
+}
+
+/* Success state */
+#form-kontak button.success-state {
+  background: linear-gradient(135deg, #10b981, #059669) !important;
+  color: white !important;
+}
+
+/* Error state */
+#form-kontak button.error-state {
+  background: linear-gradient(135deg, #ef4444, #dc2626) !important;
+  color: white !important;
+}
+
+/* Loading state */
+#form-kontak button.loading-state {
+  background: linear-gradient(135deg, #fbbf24, #f59e0b) !important;
+  color: white !important;
+}
+
 /* Contact Info Section */
 #kontak {
   text-align: center;

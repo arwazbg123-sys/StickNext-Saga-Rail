@@ -166,26 +166,6 @@
 
   <!-- Script Hamburger + Sidebar -->
   <script src="nav.js" onerror="console.error('nav.js gagal dimuat')"></script>
-
-  <!-- Fallback script untuk memastikan loader hilang -->
-  <script>
-    function forceHeal() {
-      const loaderElem = document.getElementById('loader');
-      if (loaderElem) {
-        loaderElem.style.display = 'none';
-      }
-      if (!document.querySelector('.error-banner')) {
-        const b = document.createElement('div');
-        b.className = 'error-banner';
-        b.textContent = 'Beberapa skrip gagal dimuat. Perbarui/refresh halaman.';
-        b.style = 'position:fixed;top:0;left:0;width:100%;padding:10px;background:#c30;color:#fff;z-index:10001;text-align:center;font-weight:bold;';
-        document.body.appendChild(b);
-      }
-    }
-
-    window.addEventListener('load', () => setTimeout(forceHeal, 8000));
-    setTimeout(forceHeal, 12000);
-  </script>
 </body>
 </html>
 
