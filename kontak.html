@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Kontak - StickNext Saga Rail</title>
   <link rel="stylesheet" href="CSS.css">
+  <link rel="stylesheet" href="kontak.css">
 
   <!-- Google Fonts: Orbitron -->
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
@@ -117,40 +118,74 @@
   <!-- Loading Screen JS Unik (Glitch Text) -->
   <script>
     window.addEventListener('load', () => {
-      const loader = document.getElementById('loader');
-      const text = document.getElementById('loading-text');
+      try {
+        const loader = document.getElementById('loader');
+        const text = document.getElementById('loading-text');
 
-      // Step 1: glitch effect pada teks
-      let glitchInterval = setInterval(() => {
-        text.style.textShadow = 
-          Math.random() > 0.5 
-            ? "2px 0 red, -2px 0 cyan" 
-            : "0 2px lime, 0 -2px magenta";
-      }, 100);
+        if (!loader || !text) {
+          console.warn('Loader elements not found');
+          return;
+        }
 
-      // Step 2: setelah 1 detik, stop glitch dan fade out
-      setTimeout(() => {
-        clearInterval(glitchInterval);
-        text.style.transition = "opacity 0.8s ease";
-        text.style.opacity = "0";
-      }, 1000);
+        // Step 1: glitch effect pada teks
+        let glitchInterval = setInterval(() => {
+          text.style.textShadow = 
+            Math.random() > 0.5 
+              ? "2px 0 red, -2px 0 cyan" 
+              : "0 2px lime, 0 -2px magenta";
+        }, 100);
 
-      // Step 3: hilangkan loader
-      setTimeout(() => {
-        loader.style.transition = "opacity 1s ease";
-        loader.style.opacity = "0";
+        // Step 2: setelah 1 detik, stop glitch dan fade out
         setTimeout(() => {
-          loader.style.display = "none";
+          clearInterval(glitchInterval);
+          text.style.transition = "opacity 0.8s ease";
+          text.style.opacity = "0";
         }, 1000);
-      }, 1800);
+
+        // Step 3: hilangkan loader
+        setTimeout(() => {
+          loader.style.transition = "opacity 1s ease";
+          loader.style.opacity = "0";
+          setTimeout(() => {
+            loader.style.display = "none";
+          }, 1000);
+        }, 1800);
+      } catch (error) {
+        console.error('Loader script error:', error);
+        // Fallback: hide loader immediately
+        const loader = document.getElementById('loader');
+        if (loader) {
+          loader.style.display = 'none';
+        }
+      }
     });
   </script>
 
   <!-- Script Kontak (modular complex) -->
-  <script src="kontak.js"></script>
+  <script src="kontak.js" onerror="console.error('kontak.js gagal dimuat')"></script>
 
   <!-- Script Hamburger + Sidebar -->
-  <script src="nav.js"></script>
+  <script src="nav.js" onerror="console.error('nav.js gagal dimuat')"></script>
+
+  <!-- Fallback script untuk memastikan loader hilang -->
+  <script>
+    function forceHeal() {
+      const loaderElem = document.getElementById('loader');
+      if (loaderElem) {
+        loaderElem.style.display = 'none';
+      }
+      if (!document.querySelector('.error-banner')) {
+        const b = document.createElement('div');
+        b.className = 'error-banner';
+        b.textContent = 'Beberapa skrip gagal dimuat. Perbarui/refresh halaman.';
+        b.style = 'position:fixed;top:0;left:0;width:100%;padding:10px;background:#c30;color:#fff;z-index:10001;text-align:center;font-weight:bold;';
+        document.body.appendChild(b);
+      }
+    }
+
+    window.addEventListener('load', () => setTimeout(forceHeal, 8000));
+    setTimeout(forceHeal, 12000);
+  </script>
 </body>
 </html>
 

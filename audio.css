@@ -398,11 +398,13 @@ footer {
   background: rgba(255, 255, 255, 0.2);
   outline: none;
   -webkit-appearance: none;
+  appearance: none;
   transition: all 0.3s ease;
 }
 
 .control-range input[type="range"]::-webkit-slider-thumb {
   -webkit-appearance: none;
+  appearance: none;
   width: 20px;
   height: 20px;
   border-radius: 50%;
@@ -603,4 +605,377 @@ footer {
 
 .track:hover audio {
   filter: drop-shadow(0 0 20px #ff004c);
+}
+
+/* Mobile Optimizations & Responsive Design */
+@media (max-width: 1024px) {
+  header, main, footer {
+    padding: 1rem 0.75rem;
+  }
+
+  main {
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
+  header {
+    padding: 1.5rem 0.75rem;
+  }
+
+  header h1 {
+    font-size: 2rem;
+  }
+
+  header p {
+    font-size: 1rem;
+  }
+
+  .track {
+    max-width: 100%;
+    margin: 1.5rem 0;
+    padding: 1.2rem;
+  }
+
+  #audio-control {
+    padding: 1.5rem;
+    border-radius: 12px;
+  }
+
+  #audio-control h2 {
+    font-size: 1.8rem;
+  }
+
+  .controls {
+    gap: 0.8rem;
+  }
+
+  .controls button {
+    padding: 0.8rem 1.2rem;
+    font-size: 0.9rem;
+  }
+
+  .control-range {
+    margin-bottom: 1.2rem;
+  }
+
+  .control-range label {
+    font-size: 0.9rem;
+  }
+
+  .control-range input {
+    width: 100%;
+    max-width: 300px;
+  }
+
+  #visualizer {
+    width: 100%;
+    max-width: 600px;
+    height: 100px;
+  }
+
+  #audio-room h2 {
+    font-size: 1.8rem;
+  }
+}
+
+@media (max-width: 768px) {
+  body {
+    padding-top: 80px;
+  }
+
+  header, main, footer {
+    padding: 0.75rem 0.5rem;
+  }
+
+  main {
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
+  header {
+    padding: 1rem 0.5rem;
+  }
+
+  header h1 {
+    font-size: 1.5rem;
+  }
+
+  header p {
+    font-size: 0.9rem;
+  }
+
+  #audio-control {
+    padding: 1rem;
+    border-radius: 10px;
+  }
+
+  #audio-control h2 {
+    font-size: 1.5rem;
+  }
+
+  #status-text {
+    font-size: 0.9rem;
+  }
+
+  .controls {
+    flex-direction: column;
+    align-items: center;
+    gap: 0.6rem;
+  }
+
+  .controls button {
+    width: 100%;
+    max-width: 250px;
+    padding: 0.7rem 1rem;
+    font-size: 0.85rem;
+    border-radius: 20px;
+  }
+
+  .control-range {
+    margin-bottom: 1rem;
+    width: 100%;
+  }
+
+  .control-range label {
+    font-size: 0.85rem;
+    display: block;
+    margin-bottom: 0.3rem;
+  }
+
+  .control-range input[type="range"] {
+    width: 100%;
+    max-width: none;
+  }
+
+  .control-range input[type="text"] {
+    width: 100%;
+    max-width: none;
+    padding: 0.6rem;
+    font-size: 0.85rem;
+  }
+
+  #eq-controls h3,
+  #ai-assistant h3 {
+    font-size: 1rem;
+    margin-bottom: 0.8rem;
+  }
+
+  #visualizer-mode {
+    width: 100%;
+    padding: 0.6rem;
+    font-size: 0.85rem;
+  }
+
+  #ai-message {
+    font-size: 0.85rem;
+  }
+
+  #ai-assistant button {
+    width: 100%;
+    max-width: 200px;
+    padding: 0.6rem 1rem;
+    font-size: 0.8rem;
+    margin: 0.3rem 0;
+  }
+
+  #visualizer {
+    width: 100%;
+    max-width: none;
+    height: 80px;
+  }
+
+  .track {
+    max-width: 100%;
+    margin: 1.2rem 0;
+    padding: 1rem;
+    border-radius: 10px;
+  }
+
+  .track p {
+    font-size: 1.1rem;
+    margin-bottom: 0.6rem;
+  }
+
+  #audio-room h2 {
+    font-size: 1.5rem;
+  }
+
+  #audio-room p {
+    font-size: 0.9rem;
+  }
+
+  /* Reduce animation intensity on mobile for performance */
+  .nebula-pulse {
+    animation: nebulaPulse 20s infinite alternate ease-in-out !important;
+  }
+
+  .planet {
+    animation: spinPlanet 18s linear infinite !important;
+  }
+
+  .comet {
+    animation: fall 8s linear infinite !important;
+  }
+}
+
+@media (max-width: 480px) {
+  body {
+    font-size: 13px;
+    padding-top: 60px;
+  }
+
+  header, main, footer {
+    padding: 0.5rem;
+  }
+
+  main {
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
+  header {
+    padding: 0.75rem 0.5rem;
+  }
+
+  header h1 {
+    font-size: 1.2rem;
+  }
+
+  header p {
+    font-size: 0.8rem;
+  }
+
+  #audio-control {
+    padding: 0.75rem;
+    border-radius: 8px;
+  }
+
+  #audio-control h2 {
+    font-size: 1.2rem;
+  }
+
+  #status-text {
+    font-size: 13px;
+  }
+
+  .controls {
+    gap: 0.4rem;
+  }
+
+  .controls button {
+    max-width: none;
+    padding: 0.6rem 0.8rem;
+    font-size: 13px;
+    border-radius: 16px;
+  }
+
+  .control-range {
+    margin-bottom: 0.8rem;
+  }
+
+  .control-range label {
+    font-size: 13px;
+  }
+
+  .control-range input[type="range"] {
+    width: 100%;
+  }
+
+  .control-range input[type="text"] {
+    padding: 0.5rem;
+    font-size: 13px;
+    border-radius: 6px;
+  }
+
+  #eq-controls h3,
+  #ai-assistant h3 {
+    font-size: 0.9rem;
+    margin-bottom: 0.6rem;
+  }
+
+  #visualizer-mode {
+    padding: 0.5rem;
+    font-size: 13px;
+    border-radius: 6px;
+  }
+
+  #ai-message {
+    font-size: 13px;
+  }
+
+  #ai-assistant button {
+    max-width: none;
+    padding: 0.5rem 0.8rem;
+    font-size: 13px;
+    border-radius: 12px;
+  }
+
+  #visualizer {
+    height: 60px;
+    border-radius: 6px;
+  }
+
+  .track {
+    margin: 1rem 0;
+    padding: 0.8rem;
+    border-radius: 8px;
+  }
+
+  .track p {
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+  }
+
+  #audio-room h2 {
+    font-size: 1.2rem;
+  }
+
+  #audio-room p {
+    font-size: 13px;
+  }
+
+  footer {
+    font-size: 13px;
+    padding: 0.75rem 0.5rem;
+  }
+
+  /* Further reduce animations for very small devices */
+  .nebula-pulse {
+    animation: nebulaPulse 25s infinite alternate ease-in-out !important;
+  }
+
+  .planet {
+    animation: spinPlanet 25s linear infinite !important;
+  }
+
+  .comet {
+    animation: none !important; /* Disable comet on very small screens */
+  }
+
+  /* Ensure no overflow on any element */
+  * {
+    max-width: 100vw;
+  }
+
+  body {
+    overflow-x: hidden;
+  }
+}
+
+/* Accessibility: Reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
+    transition: none !important;
+  }
+
+  .nebula-pulse,
+  .planet,
+  .comet,
+  .track,
+  .controls button,
+  .control-range input,
+  #ai-assistant button {
+    animation: none !important;
+  }
 }
