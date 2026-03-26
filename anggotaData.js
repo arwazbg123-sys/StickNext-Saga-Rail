@@ -15,7 +15,13 @@
     DEVELOPER: 'developer',
     ELITE: 'elite',
     COMMANDER: 'commander',
-    VISIONARY: 'visionary' // kategori baru khusus untuk kreator kosmik
+    VISIONARY: 'visionary', // kategori baru khusus untuk kreator kosmik
+    MODERATOR: 'moderator', // kategori untuk moderator komunitas
+    ARTIST: 'artist', // kategori untuk seniman dan desainer
+    SUPPORTER: 'supporter', // kategori untuk pendukung aktif
+    AMBASSADOR: 'ambassador', // kategori untuk duta komunitas
+    CONTRIBUTOR: 'contributor', // kategori untuk kontributor konten
+    MEMBER: 'member' // kategori untuk anggota biasa tanpa badge khusus
   };
 
   // Status types
@@ -112,6 +118,79 @@
       badge: MEMBER_CATEGORIES.VISIONARY,
       joinDate: '2024-07-01',
       level: 10
+    },
+
+    // Anggota dengan kategori baru
+    moderator1: {
+      name: 'Alex Moderator',
+      title: 'Community Moderator',
+      description: 'Bertanggung jawab atas moderasi diskusi dan menjaga harmoni komunitas.',
+      img: 'YmM1NDIwOWYtNjE3OC00NGY0LTg3NGMtMDZkNmZhMmRmZmY4.jpeg',
+      works: ['Moderasi Diskusi', 'Penegakan Aturan', 'Dukungan Anggota'],
+      status: MEMBER_STATUS.ACTIVE,
+      badge: MEMBER_CATEGORIES.MODERATOR,
+      joinDate: '2024-08-01',
+      level: 5
+    },
+
+    artist1: {
+      name: 'Luna Artist',
+      title: 'Digital Artist',
+      description: 'Pencipta seni digital dan desain visual untuk proyek StickNext.',
+      img: 'OGVhZmRlNzItOGY1Ni00YzBlLTk2MjktNGFkOWU5OTlmYmY4.jpeg',
+      works: ['Desain Stiker', 'Ilustrasi Digital', 'Konten Visual'],
+      status: MEMBER_STATUS.ACTIVE,
+      badge: MEMBER_CATEGORIES.ARTIST,
+      joinDate: '2024-09-01',
+      level: 6
+    },
+
+    supporter1: {
+      name: 'Sam Supporter',
+      title: 'Community Supporter',
+      description: 'Mendukung komunitas dengan kontribusi aktif dan partisipasi.',
+      img: 'NzM1MTYwOTItYWRhNS00MmEwLTk1ZjItZjE3NTk5ZWRhYTVj.jpeg',
+      works: ['Dukungan Komunitas', 'Partisipasi Acara', 'Bantuan Anggota'],
+      status: MEMBER_STATUS.ACTIVE,
+      badge: MEMBER_CATEGORIES.SUPPORTER,
+      joinDate: '2024-10-01',
+      level: 4
+    },
+
+    ambassador1: {
+      name: 'Jordan Ambassador',
+      title: 'Community Ambassador',
+      description: 'Mewakili komunitas StickNext di platform eksternal dan membangun jaringan.',
+      img: 'lv_0_20260107161053.jpg',
+      works: ['Promosi Komunitas', 'Jaringan Eksternal', 'Representasi'],
+      status: MEMBER_STATUS.ACTIVE,
+      badge: MEMBER_CATEGORIES.AMBASSADOR,
+      joinDate: '2024-11-01',
+      level: 7
+    },
+
+    contributor1: {
+      name: 'Taylor Contributor',
+      title: 'Content Contributor',
+      description: 'Berkontribusi dengan konten berkualitas untuk pengembangan komunitas.',
+      img: 'image-5.jpg',
+      works: ['Konten Edukasi', 'Tutorial', 'Artikel Komunitas'],
+      status: MEMBER_STATUS.ACTIVE,
+      badge: MEMBER_CATEGORIES.CONTRIBUTOR,
+      joinDate: '2024-12-01',
+      level: 5
+    },
+
+    member1: {
+      name: 'Regular Member',
+      title: 'Anggota Biasa',
+      description: 'Anggota aktif komunitas StickNext tanpa peran khusus.',
+      img: 'lv_0_20260109160632.jpg',
+      works: ['Partisipasi Komunitas', 'Dukungan Umum'],
+      status: MEMBER_STATUS.ACTIVE,
+      badge: MEMBER_CATEGORIES.MEMBER, // anggota biasa tanpa badge khusus
+      joinDate: '2025-01-01',
+      level: 3
     },
 
     dummySuspended: {

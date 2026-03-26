@@ -496,6 +496,30 @@ header, main, footer {
   background: linear-gradient(90deg, transparent, rgba(0, 212, 255, 0.6), transparent);
 }
 
+.group-divider.badge-moderator {
+  background: linear-gradient(90deg, transparent, rgba(76, 175, 80, 0.6), transparent);
+}
+
+.group-divider.badge-artist {
+  background: linear-gradient(90deg, transparent, rgba(255, 152, 0, 0.6), transparent);
+}
+
+.group-divider.badge-supporter {
+  background: linear-gradient(90deg, transparent, rgba(33, 150, 243, 0.6), transparent);
+}
+
+.group-divider.badge-ambassador {
+  background: linear-gradient(90deg, transparent, rgba(156, 39, 176, 0.6), transparent);
+}
+
+.group-divider.badge-contributor {
+  background: linear-gradient(90deg, transparent, rgba(96, 125, 139, 0.6), transparent);
+}
+
+.group-divider.badge-member {
+  background: linear-gradient(90deg, transparent, rgba(158, 158, 158, 0.6), transparent);
+}
+
 /* Status-specific dividers */
 .group-divider.status-active {
   background: linear-gradient(90deg, transparent, rgba(34, 197, 94, 0.6), transparent);
@@ -775,6 +799,48 @@ header, main, footer {
   animation: visionaryGlow 2.5s ease-in-out infinite;
 }
 
+.badge-moderator {
+  background: linear-gradient(135deg, #4CAF50, #66BB6A) !important;
+  box-shadow: 0 0 25px rgba(76, 175, 80, 0.8), 0 0 50px rgba(76, 175, 80, 0.4) !important;
+  border: 2px solid rgba(76, 175, 80, 0.6) !important;
+  animation: moderatorGlow 2s ease-in-out infinite;
+}
+
+.badge-artist {
+  background: linear-gradient(135deg, #FF9800, #FFB74D) !important;
+  box-shadow: 0 0 25px rgba(255, 152, 0, 0.8), 0 0 50px rgba(255, 152, 0, 0.4) !important;
+  border: 2px solid rgba(255, 152, 0, 0.6) !important;
+  animation: artistGlow 2s ease-in-out infinite;
+}
+
+.badge-supporter {
+  background: linear-gradient(135deg, #2196F3, #42A5F5) !important;
+  box-shadow: 0 0 25px rgba(33, 150, 243, 0.8), 0 0 50px rgba(33, 150, 243, 0.4) !important;
+  border: 2px solid rgba(33, 150, 243, 0.6) !important;
+  animation: supporterGlow 2s ease-in-out infinite;
+}
+
+.badge-ambassador {
+  background: linear-gradient(135deg, #9C27B0, #BA68C8) !important;
+  box-shadow: 0 0 25px rgba(156, 39, 176, 0.8), 0 0 50px rgba(156, 39, 176, 0.4) !important;
+  border: 2px solid rgba(156, 39, 176, 0.6) !important;
+  animation: ambassadorGlow 2s ease-in-out infinite;
+}
+
+.badge-contributor {
+  background: linear-gradient(135deg, #607D8B, #78909C) !important;
+  box-shadow: 0 0 25px rgba(96, 125, 139, 0.8), 0 0 50px rgba(96, 125, 139, 0.4) !important;
+  border: 2px solid rgba(96, 125, 139, 0.6) !important;
+  animation: contributorGlow 2s ease-in-out infinite;
+}
+
+.badge-member {
+  background: linear-gradient(135deg, #9E9E9E, #BDBDBD) !important;
+  box-shadow: 0 0 15px rgba(158, 158, 158, 0.6), 0 0 30px rgba(158, 158, 158, 0.3) !important;
+  border: 2px solid rgba(158, 158, 158, 0.5) !important;
+  animation: memberGlow 3s ease-in-out infinite;
+}
+
 @keyframes founderGlow {
   0%, 100% { 
     box-shadow: 0 0 30px rgba(255, 215, 0, 1), 0 0 60px rgba(255, 165, 0, 0.6);
@@ -847,6 +913,72 @@ header, main, footer {
   50% { 
     box-shadow: 0 0 40px rgba(255, 0, 110, 0.9), 0 0 80px rgba(255, 0, 110, 0.6);
     transform: scale(1.05);
+  }
+}
+
+@keyframes moderatorGlow {
+  0%, 100% { 
+    box-shadow: 0 0 25px rgba(76, 175, 80, 0.8), 0 0 50px rgba(76, 175, 80, 0.4);
+    transform: scale(1);
+  }
+  50% { 
+    box-shadow: 0 0 40px rgba(76, 175, 80, 0.9), 0 0 80px rgba(76, 175, 80, 0.6);
+    transform: scale(1.05);
+  }
+}
+
+@keyframes artistGlow {
+  0%, 100% { 
+    box-shadow: 0 0 25px rgba(255, 152, 0, 0.8), 0 0 50px rgba(255, 152, 0, 0.4);
+    transform: scale(1);
+  }
+  50% { 
+    box-shadow: 0 0 40px rgba(255, 152, 0, 0.9), 0 0 80px rgba(255, 152, 0, 0.6);
+    transform: scale(1.05);
+  }
+}
+
+@keyframes supporterGlow {
+  0%, 100% { 
+    box-shadow: 0 0 25px rgba(33, 150, 243, 0.8), 0 0 50px rgba(33, 150, 243, 0.4);
+    transform: scale(1);
+  }
+  50% { 
+    box-shadow: 0 0 40px rgba(33, 150, 243, 0.9), 0 0 80px rgba(33, 150, 243, 0.6);
+    transform: scale(1.05);
+  }
+}
+
+@keyframes ambassadorGlow {
+  0%, 100% { 
+    box-shadow: 0 0 25px rgba(156, 39, 176, 0.8), 0 0 50px rgba(156, 39, 176, 0.4);
+    transform: scale(1);
+  }
+  50% { 
+    box-shadow: 0 0 40px rgba(156, 39, 176, 0.9), 0 0 80px rgba(156, 39, 176, 0.6);
+    transform: scale(1.05);
+  }
+}
+
+@keyframes contributorGlow {
+  0%, 100% { 
+    box-shadow: 0 0 25px rgba(96, 125, 139, 0.8), 0 0 50px rgba(96, 125, 139, 0.4);
+    transform: scale(1);
+  }
+  50% { 
+    box-shadow: 0 0 40px rgba(96, 125, 139, 0.9), 0 0 80px rgba(96, 125, 139, 0.6);
+    transform: scale(1.05);
+  }
+}
+
+@keyframes memberGlow {
+  0%, 100% { 
+    box-shadow: 0 0 15px rgba(158, 158, 158, 0.6), 0 0 30px rgba(158, 158, 158, 0.3);
+    transform: scale(1);
+  }
+  50% { 
+    box-shadow: 0 0 25px rgba(158, 158, 158, 0.8), 0 0 50px rgba(158, 158, 158, 0.5);
+    transform: scale(1.02);
   }
 }
 
@@ -2100,6 +2232,30 @@ header, main, footer {
     animation: visionaryGlow 5s ease-in-out infinite !important;
   }
 
+  .badge-moderator {
+    animation: moderatorGlow 4s ease-in-out infinite !important;
+  }
+
+  .badge-artist {
+    animation: artistGlow 4s ease-in-out infinite !important;
+  }
+
+  .badge-supporter {
+    animation: supporterGlow 4s ease-in-out infinite !important;
+  }
+
+  .badge-ambassador {
+    animation: ambassadorGlow 4s ease-in-out infinite !important;
+  }
+
+  .badge-contributor {
+    animation: contributorGlow 4s ease-in-out infinite !important;
+  }
+
+  .badge-member {
+    animation: memberGlow 6s ease-in-out infinite !important;
+  }
+
   /* Optimize imperial founder card animations for mobile performance */
   .member-card.founder-card {
     animation: imperialMajesty 7s ease-in-out infinite !important;
@@ -2400,6 +2556,18 @@ header, main, footer {
 
   .badge-visionary {
     animation-duration: 6s !important;
+  }
+
+  .badge-moderator,
+  .badge-artist,
+  .badge-supporter,
+  .badge-ambassador,
+  .badge-contributor {
+    animation-duration: 5s !important;
+  }
+
+  .badge-member {
+    animation-duration: 7s !important;
   }
 
   .member-card.founder-card {
