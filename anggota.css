@@ -247,6 +247,270 @@ header, main, footer {
   transform: scale(1.02);
 }
 
+/* Filter Container & Buttons */
+.filter-container {
+  margin-bottom: 2rem;
+  padding: 1.5rem;
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.05), rgba(139, 92, 246, 0.05));
+  border-radius: 20px;
+  border: 1px solid rgba(59, 130, 246, 0.2);
+  backdrop-filter: blur(10px);
+  animation: filterContainerFadeIn 0.6s ease;
+}
+
+@keyframes filterContainerFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.filter-section {
+  margin-bottom: 1.5rem;
+}
+
+.filter-section:last-child {
+  margin-bottom: 0;
+}
+
+.filter-section h4 {
+  margin: 0 0 1rem 0;
+  font-size: 0.95rem;
+  color: #c7d2e0;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  display: flex;
+  align-items: center;
+}
+
+.filter-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  justify-content: center;
+}
+
+.filter-btn {
+  padding: 0.7rem 1.2rem;
+  border: 2px solid rgba(59, 130, 246, 0.4);
+  border-radius: 25px;
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(139, 92, 246, 0.05));
+  color: #a0aec0;
+  font-size: 0.85rem;
+  font-weight: bold;
+  font-family: 'Orbitron', sans-serif;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  outline: none;
+  position: relative;
+  overflow: hidden;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.filter-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: rgba(139, 92, 246, 0.3);
+  transition: left 0.3s ease;
+  z-index: -1;
+}
+
+.filter-btn:hover {
+  border-color: rgba(139, 92, 246, 0.6);
+  color: #e0e7ff;
+  box-shadow: 0 0 20px rgba(139, 92, 246, 0.4);
+  transform: translateY(-2px);
+}
+
+.filter-btn:hover::before {
+  left: 0;
+}
+
+.filter-btn.active {
+  border-color: #fff;
+  background: linear-gradient(135deg, rgba(139, 92, 246, 0.4), rgba(59, 130, 246, 0.3));
+  color: #fff;
+  box-shadow: 0 0 30px rgba(139, 92, 246, 0.6), 0 0 60px rgba(59, 130, 246, 0.3);
+  font-weight: bold;
+}
+
+.filter-btn.active::before {
+  left: 0;
+}
+
+/* Group Header */
+.group-header {
+  grid-column: 1 / -1;
+  font-size: 1.3rem;
+  font-weight: bold;
+  color: #e0e7ff;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  position: relative;
+  animation: groupHeaderSlideIn 0.5s ease;
+}
+
+.group-header:first-child {
+  margin-top: 0;
+}
+
+@keyframes groupHeaderSlideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Group Divider - Keren dan Eksklusif */
+.group-divider {
+  grid-column: 1 / -1;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(139, 92, 246, 0.5), transparent);
+  margin-bottom: 2rem;
+  border-radius: 1px;
+  position: relative;
+  animation: dividerSlideIn 0.6s ease;
+}
+
+.group-divider::before {
+  content: '';
+  position: absolute;
+  top: -4px;
+  left: 0;
+  right: 0;
+  height: 10px;
+  background: radial-gradient(ellipse at center, rgba(139, 92, 246, 0.4), transparent);
+  animation: dividerGlow 3s ease-in-out infinite;
+}
+
+@keyframes dividerSlideIn {
+  from {
+    width: 0;
+    opacity: 0;
+  }
+  to {
+    width: 100%;
+    opacity: 1;
+  }
+}
+
+@keyframes dividerGlow {
+  0%, 100% {
+    opacity: 0.3;
+    box-shadow: 0 0 10px rgba(139, 92, 246, 0.2);
+  }
+  50% {
+    opacity: 0.8;
+    box-shadow: 0 0 20px rgba(139, 92, 246, 0.6);
+  }
+}
+
+/* Badge-specific dividers */
+.group-divider.badge-founder {
+  background: linear-gradient(90deg, transparent, rgba(255, 215, 0, 0.6), transparent);
+}
+
+.group-divider.badge-founder::before {
+  background: radial-gradient(ellipse at center, rgba(255, 215, 0, 0.5), transparent);
+  animation: dividerGlowGold 3s ease-in-out infinite;
+}
+
+.group-divider.badge-visionary {
+  background: linear-gradient(90deg, transparent, rgba(138, 43, 226, 0.6), transparent);
+}
+
+.group-divider.badge-visionary::before {
+  background: radial-gradient(ellipse at center, rgba(138, 43, 226, 0.5), transparent);
+  animation: dividerGlowPurple 3s ease-in-out infinite;
+}
+
+.group-divider.badge-elite {
+  background: linear-gradient(90deg, transparent, rgba(157, 78, 221, 0.6), transparent);
+}
+
+.group-divider.badge-elite::before {
+  background: radial-gradient(ellipse at center, rgba(157, 78, 221, 0.5), transparent);
+}
+
+.group-divider.badge-guardian {
+  background: linear-gradient(90deg, transparent, rgba(255, 107, 53, 0.6), transparent);
+}
+
+.group-divider.badge-commander {
+  background: linear-gradient(90deg, transparent, rgba(255, 0, 110, 0.6), transparent);
+}
+
+.group-divider.badge-developer {
+  background: linear-gradient(90deg, transparent, rgba(0, 212, 255, 0.6), transparent);
+}
+
+/* Status-specific dividers */
+.group-divider.status-active {
+  background: linear-gradient(90deg, transparent, rgba(34, 197, 94, 0.6), transparent);
+}
+
+.group-divider.status-active::before {
+  background: radial-gradient(ellipse at center, rgba(34, 197, 94, 0.5), transparent);
+  animation: dividerGlowGreen 3s ease-in-out infinite;
+}
+
+.group-divider.status-inactive {
+  background: linear-gradient(90deg, transparent, rgba(147, 112, 219, 0.6), transparent);
+}
+
+.group-divider.status-suspended {
+  background: linear-gradient(90deg, transparent, rgba(0, 191, 255, 0.6), transparent);
+}
+
+@keyframes dividerGlowGold {
+  0%, 100% {
+    opacity: 0.3;
+    box-shadow: 0 0 10px rgba(255, 215, 0, 0.2);
+  }
+  50% {
+    opacity: 0.8;
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.6);
+  }
+}
+
+@keyframes dividerGlowPurple {
+  0%, 100% {
+    opacity: 0.3;
+    box-shadow: 0 0 10px rgba(138, 43, 226, 0.2);
+  }
+  50% {
+    opacity: 0.8;
+    box-shadow: 0 0 20px rgba(138, 43, 226, 0.6);
+  }
+}
+
+@keyframes dividerGlowGreen {
+  0%, 100% {
+    opacity: 0.3;
+    box-shadow: 0 0 10px rgba(34, 197, 94, 0.2);
+  }
+  50% {
+    opacity: 0.8;
+    box-shadow: 0 0 20px rgba(34, 197, 94, 0.6);
+  }
+}
+
 /* Member Grid - Enhanced */
 .member-grid {
   display: grid;
@@ -707,6 +971,196 @@ header, main, footer {
   }
 }
 
+/* Inactive Card Mystical Ghost Effects - Creative Haunted Look */
+.inactive-card {
+  position: relative;
+  opacity: 0.6;
+  filter: sepia(0.4) hue-rotate(45deg) saturate(0.3) brightness(0.7) contrast(1.2);
+  border: 2px solid rgba(147, 112, 219, 0.6) !important;
+  box-shadow: 0 0 20px rgba(147, 112, 219, 0.4), 0 0 40px rgba(75, 0, 130, 0.2) !important;
+  background: linear-gradient(135deg, rgba(25, 25, 112, 0.3), rgba(72, 61, 139, 0.2));
+  animation: ghostFloat 6s ease-in-out infinite;
+  will-change: filter, transform;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.inactive-card::before {
+  content: '👻 TIDAK AKTIF 👻';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(-5deg);
+  background: linear-gradient(135deg, rgba(147, 112, 219, 0.8), rgba(75, 0, 130, 0.7));
+  color: rgba(255, 255, 255, 0.9);
+  padding: 8px 20px;
+  border-radius: 20px;
+  font-weight: bold;
+  font-size: 0.9em;
+  text-align: center;
+  z-index: 10;
+  box-shadow: 0 0 15px rgba(147, 112, 219, 0.6), inset 0 0 8px rgba(255, 255, 255, 0.2);
+  animation: ghostPulse 4s ease-in-out infinite alternate;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.inactive-card::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background:
+    radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.1) 2px, transparent 2px),
+    radial-gradient(circle at 70% 70%, rgba(255, 255, 255, 0.08) 1px, transparent 1px),
+    radial-gradient(circle at 50% 20%, rgba(147, 112, 219, 0.1) 1.5px, transparent 1.5px),
+    linear-gradient(45deg, transparent 30%, rgba(72, 61, 139, 0.05) 50%, transparent 70%);
+  pointer-events: none;
+  animation: dustParticles 8s linear infinite;
+}
+
+/* Ghost particles - mystical floating elements */
+.inactive-card .ghost-particle-1,
+.inactive-card .ghost-particle-2,
+.inactive-card .ghost-particle-3,
+.inactive-card .ghost-particle-4,
+.inactive-card .ghost-particle-5 {
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.6), rgba(147, 112, 219, 0.4));
+  border-radius: 50%;
+  animation: ghostDrift 5s linear infinite;
+}
+
+.inactive-card .ghost-particle-1 {
+  top: 15%;
+  left: 20%;
+  animation-delay: 0s;
+  width: 4px;
+  height: 4px;
+}
+
+.inactive-card .ghost-particle-2 {
+  top: 25%;
+  right: 25%;
+  animation-delay: 1.2s;
+  width: 2px;
+  height: 2px;
+}
+
+.inactive-card .ghost-particle-3 {
+  bottom: 20%;
+  left: 30%;
+  animation-delay: 2.4s;
+  width: 3px;
+  height: 3px;
+}
+
+.inactive-card .ghost-particle-4 {
+  top: 40%;
+  right: 15%;
+  animation-delay: 3.6s;
+  width: 2px;
+  height: 2px;
+}
+
+.inactive-card .ghost-particle-5 {
+  bottom: 30%;
+  left: 60%;
+  animation-delay: 4.8s;
+  width: 4px;
+  height: 4px;
+}
+
+/* Ethereal orb - floating mystical energy */
+.inactive-card .ethereal-orb {
+  position: absolute;
+  top: 70%;
+  right: 10%;
+  width: 20px;
+  height: 20px;
+  background: radial-gradient(circle, rgba(147, 112, 219, 0.4), rgba(75, 0, 130, 0.2));
+  border-radius: 50%;
+  animation: etherealGlow 3s ease-in-out infinite alternate;
+  box-shadow: 0 0 10px rgba(147, 112, 219, 0.5);
+}
+
+@keyframes ghostFloat {
+  0%, 100% {
+    filter: sepia(0.4) hue-rotate(45deg) saturate(0.3) brightness(0.7) contrast(1.2);
+    transform: translateY(0px) rotate(0deg) scale(1);
+  }
+  25% {
+    filter: sepia(0.4) hue-rotate(45deg) saturate(0.35) brightness(0.75) contrast(1.1);
+    transform: translateY(-2px) rotate(0.5deg) scale(1.01);
+  }
+  50% {
+    filter: sepia(0.4) hue-rotate(45deg) saturate(0.25) brightness(0.65) contrast(1.3);
+    transform: translateY(2px) rotate(-0.5deg) scale(0.99);
+  }
+  75% {
+    filter: sepia(0.4) hue-rotate(45deg) saturate(0.35) brightness(0.75) contrast(1.1);
+    transform: translateY(-1px) rotate(0.3deg) scale(1.005);
+  }
+}
+
+@keyframes ghostPulse {
+  0% {
+    opacity: 0.7;
+    transform: translate(-50%, -50%) rotate(-5deg) scale(1);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(-50%, -50%) rotate(-5deg) scale(1.05);
+  }
+}
+
+@keyframes dustParticles {
+  0% { background-position: 0% 0%, 0% 0%, 0% 0%, 0% 0%; }
+  25% { background-position: 25% 25%, 50% 50%, 75% 25%, 100% 0%; }
+  50% { background-position: 50% 50%, 100% 100%, 50% 50%, 0% 100%; }
+  75% { background-position: 75% 75%, 50% 50%, 25% 75%, 100% 0%; }
+  100% { background-position: 100% 100%, 0% 0%, 0% 0%, 0% 0%; }
+}
+
+@keyframes ghostDrift {
+  0% {
+    transform: translateY(0px) translateX(0px) rotate(0deg);
+    opacity: 0.3;
+  }
+  25% {
+    transform: translateY(-5px) translateX(3px) rotate(90deg);
+    opacity: 0.7;
+  }
+  50% {
+    transform: translateY(-10px) translateX(-2px) rotate(180deg);
+    opacity: 1;
+  }
+  75% {
+    transform: translateY(-5px) translateX(1px) rotate(270deg);
+    opacity: 0.7;
+  }
+  100% {
+    transform: translateY(0px) translateX(0px) rotate(360deg);
+    opacity: 0.3;
+  }
+}
+
+@keyframes etherealGlow {
+  0% {
+    opacity: 0.4;
+    transform: scale(1) rotate(0deg);
+    box-shadow: 0 0 10px rgba(147, 112, 219, 0.5);
+  }
+  100% {
+    opacity: 0.8;
+    transform: scale(1.2) rotate(180deg);
+    box-shadow: 0 0 20px rgba(147, 112, 219, 0.8), 0 0 30px rgba(75, 0, 130, 0.4);
+  }
+}
+
 .member-badge {
   position: absolute;
   top: 12px;
@@ -729,86 +1183,87 @@ header, main, footer {
   transform: scale(1.1) rotate(5deg);
 }
 
-/* Founder Special Effects - Crown of Glory */
+/* Founder Ultra-VIP Exclusive Effects - Imperial Majesty */
 .member-card.founder-card {
-  border: 3px solid #FFD700 !important;
-  box-shadow: 0 0 48px rgba(255, 215, 0, 0.8),
-              0 0 90px rgba(255, 165, 0, 0.42),
-              inset 0 0 32px rgba(255, 215, 0, 0.2) !important;
-  background: linear-gradient(135deg, rgba(40, 36, 20, 0.92), rgba(64, 54, 28, 0.92)) !important;
+  border: 4px solid linear-gradient(45deg, #FFD700, #FF8C00, #FFD700) !important;
+  border-image: linear-gradient(45deg, #FFD700, #FF8C00, #FFD700) 1 !important;
+  box-shadow:
+    0 0 60px rgba(255, 215, 0, 0.9),
+    0 0 120px rgba(255, 140, 0, 0.6),
+    0 0 180px rgba(255, 215, 0, 0.3),
+    inset 0 0 40px rgba(255, 215, 0, 0.15),
+    inset 0 0 80px rgba(255, 140, 0, 0.1) !important;
+  background:
+    radial-gradient(circle at 30% 20%, rgba(255, 215, 0, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 70% 80%, rgba(255, 140, 0, 0.08) 0%, transparent 50%),
+    linear-gradient(135deg, rgba(20, 15, 5, 0.95), rgba(45, 35, 15, 0.95), rgba(20, 15, 5, 0.95)) !important;
   position: relative;
-  animation: founderShine 4s ease-in-out infinite;
-  border-radius: 25px;
+  animation: imperialMajesty 5s ease-in-out infinite;
+  border-radius: 30px;
   overflow: hidden;
   opacity: 1 !important;
   visibility: visible !important;
-  z-index: 2;
+  z-index: 3;
+  transform: scale(1.02);
+  transition: all 0.5s ease;
 }
 
+.member-card.founder-card:hover {
+  transform: scale(1.05) translateY(-5px);
+  box-shadow:
+    0 0 80px rgba(255, 215, 0, 1),
+    0 0 160px rgba(255, 140, 0, 0.8),
+    0 0 240px rgba(255, 215, 0, 0.5),
+    inset 0 0 60px rgba(255, 215, 0, 0.2),
+    inset 0 0 120px rgba(255, 140, 0, 0.15) !important;
+}
 
 .member-card.founder-card::before {
   content: '';
   position: absolute;
-  inset: 0;
-  background: radial-gradient(circle at top left, rgba(255, 246, 157, 0.14), transparent 50%),
-              radial-gradient(circle at bottom right, rgba(255, 196, 0, 0.12), transparent 45%);
+  inset: -10px;
+  background:
+    conic-gradient(from 0deg at 50% 50%, rgba(255, 215, 0, 0.1) 0deg, rgba(255, 140, 0, 0.05) 90deg, rgba(255, 215, 0, 0.1) 180deg, rgba(255, 140, 0, 0.05) 270deg, rgba(255, 215, 0, 0.1) 360deg),
+    radial-gradient(circle at 20% 20%, rgba(255, 215, 0, 0.15) 0%, transparent 40%),
+    radial-gradient(circle at 80% 80%, rgba(255, 140, 0, 0.12) 0%, transparent 40%);
   pointer-events: none;
-  opacity: 0.45;
-  transition: opacity 0.4s ease;
-}
-
-.member-card.founder-card:hover::before {
   opacity: 0.6;
+  animation: royalAura 4s ease-in-out infinite;
+  border-radius: 35px;
 }
 
 .member-card.founder-card::after {
-  content: '';
+  content: '👑 FOUNDER 👑';
   position: absolute;
-  inset: 0;
-  border: 2px solid rgba(255, 215, 0, 0.95);
-  box-shadow: 0 0 35px rgba(255, 235, 150, 0.9);
+  top: 20px;
+  right: 15px;
+  transform: translateY(0) rotate(-3deg);
+  background: linear-gradient(135deg, rgba(255, 215, 0, 0.3), rgba(255, 140, 0, 0.25), rgba(255, 215, 0, 0.3));
+  color: rgba(255, 255, 255, 0.9);
+  padding: 6px 15px;
+  border-radius: 15px;
+  font-weight: bold;
+  font-size: 0.8em;
+  text-align: center;
+  z-index: 13;
+  box-shadow:
+    0 0 15px rgba(255, 215, 0, 0.4),
+    0 0 25px rgba(255, 140, 0, 0.3);
+  animation: founderLabelFloat 6s ease-in-out infinite;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(5px);
   pointer-events: none;
-  border-radius: 25px;
 }
 
-.member-card.founder-card::before {
-  box-shadow: 0 0 60px rgba(246, 219, 79, 0.45),
-              0 0 100px rgba(255, 203, 78, 0.30),
-              0 0 140px rgba(255, 243, 140, 0.15);
-}
-
-.member-card.founder-card .member-card-content::after {
-  content: '';
-  position: absolute;
-  inset: -8px;
-  border: 2px dashed rgba(255, 215, 0, 0.35);
-  border-radius: 28px;
-  pointer-events: none;
-  animation: vipPulse 2.4s ease-in-out infinite;
-}
-
-.member-card.founder-card::before, 
-.member-card.founder-card::after,
-.member-card.founder-card .member-card-content::after {
-  transition: all 0.4s ease;
-}
-
-@keyframes vipPulse {
-  0%, 100% { transform: scale(1); opacity: 0.37; }
-  50% { transform: scale(1.03); opacity: 0.65; }
-}
-
-/* Suspended Modal Dramatic Effects */
-.suspended-modal {
-  background: rgba(0, 0, 0, 0.95) !important;
-  backdrop-filter: blur(10px);
-}
-
-.suspended-modal .modal-content {
-  background: linear-gradient(135deg, rgba(0, 191, 255, 0.1), rgba(30, 144, 255, 0.05));
-  border: 2px solid rgba(0, 191, 255, 0.5);
-  box-shadow: 0 0 50px rgba(0, 191, 255, 0.8), 0 0 100px rgba(0, 191, 255, 0.4);
-  animation: modalCondemnation 1s ease-out;
+.founder-card .member-card-content h3 {
+  background: linear-gradient(135deg, #FFD700, #FF8C00, #FFD700, #FF8C00);
+  color: #FFD700;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  filter: drop-shadow(0 2px 8px rgba(255, 215, 0, 0.6));
+  font-weight: bold;
+  text-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
 }
 
 .suspended-drama {
@@ -921,79 +1376,203 @@ header, main, footer {
   50% { box-shadow: 0 0 30px rgba(255, 69, 0, 0.9); }
 }
 
-@keyframes cosmicSparkle {
-  0%, 100% { opacity: 0.55; transform: translateY(0) scale(1); }
-  25% { opacity: 1; transform: translateY(-2px) scale(1.05); }
-  50% { opacity: 0.1; transform: translateY(2px) scale(0.98); }
-  75% { opacity: 0.8; transform: translateY(-1px) scale(1.02); }
-}
-
+/* Imperial Diamond Particles - Ultra VIP */
 .member-card.founder-card .star-sparkle {
   position: absolute;
+  width: 8px;
+  height: 8px;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 1), rgba(255, 215, 0, 0.8));
+  clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+  box-shadow:
+    0 0 15px rgba(255, 255, 255, 0.9),
+    0 0 30px rgba(255, 215, 0, 0.7),
+    0 0 45px rgba(255, 140, 0, 0.5);
+  animation: imperialDiamond 4s ease-in-out infinite;
+  transform-origin: center;
+}
+
+.member-card.founder-card .star-sparkle:nth-child(1) {
+  top: 5%;
+  left: 8%;
+  animation-delay: 0s;
+  width: 10px;
+  height: 10px;
+}
+
+.member-card.founder-card .star-sparkle:nth-child(2) {
+  top: 20%;
+  right: 10%;
+  animation-delay: 0.8s;
   width: 6px;
   height: 6px;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(255,255,255,1) 0%, rgba(255,255,255,0) 65%);
-  box-shadow: 0 0 12px rgba(255, 255, 255, 0.8), 0 0 20px rgba(255, 200, 100, 0.6);
-  animation: cosmicSparkle 3.2s infinite;
 }
 
-.member-card.founder-card .star-sparkle:nth-child(1) { top: 8%; left: 10%; animation-delay: 0.1s; }
-.member-card.founder-card .star-sparkle:nth-child(2) { top: 25%; right: 12%; animation-delay: 0.4s; }
-.member-card.founder-card .star-sparkle:nth-child(3) { bottom: 16%; left: 14%; animation-delay: 0.7s; }
-.member-card.founder-card .star-sparkle:nth-child(4) { top: 15%; left: 80%; animation-delay: 1.0s; }
-.member-card.founder-card .star-sparkle:nth-child(5) { bottom: 18%; right: 15%; animation-delay: 1.3s; }
+.member-card.founder-card .star-sparkle:nth-child(3) {
+  bottom: 15%;
+  left: 12%;
+  animation-delay: 1.6s;
+  width: 8px;
+  height: 8px;
+}
 
-.founder-card::after {
-  content: '👑';
+.member-card.founder-card .star-sparkle:nth-child(4) {
+  top: 12%;
+  left: 85%;
+  animation-delay: 2.4s;
+  width: 7px;
+  height: 7px;
+}
+
+.member-card.founder-card .star-sparkle:nth-child(5) {
+  bottom: 20%;
+  right: 12%;
+  animation-delay: 3.2s;
+  width: 9px;
+  height: 9px;
+}
+
+/* Imperial Crown Ornaments */
+.founder-card .imperial-ornament {
   position: absolute;
-  top: -10px;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 2rem;
+  font-size: 1.5rem;
   z-index: 11;
-  animation: crownBounce 3s ease-in-out infinite;
-  filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.8));
+  animation: imperialFloat 4s ease-in-out infinite;
+  filter: drop-shadow(0 0 15px rgba(255, 215, 0, 0.8));
+}
+
+.founder-card .imperial-ornament.top-left {
+  top: -5px;
+  left: -5px;
+  animation-delay: 0.5s;
+}
+
+.founder-card .imperial-ornament.top-right {
+  top: -5px;
+  right: -5px;
+  animation-delay: 1.5s;
+}
+
+.founder-card .imperial-ornament.bottom-left {
+  bottom: -5px;
+  left: -5px;
+  animation-delay: 2.5s;
+}
+
+.founder-card .imperial-ornament.bottom-right {
+  bottom: -5px;
+  right: -5px;
+  animation-delay: 3.5s;
 }
 
 
-@keyframes founderShine {
+@keyframes imperialMajesty {
   0%, 100% {
-    box-shadow: 0 0 50px rgba(255, 215, 0, 0.5),
-                0 0 100px rgba(255, 165, 0, 0.3),
-                inset 0 0 40px rgba(255, 215, 0, 0.2);
-  }
-  50% {
-    box-shadow: 0 0 80px rgba(255, 215, 0, 0.8),
-                0 0 150px rgba(255, 165, 0, 0.5),
-                inset 0 0 60px rgba(255, 215, 0, 0.3);
-  }
-}
-
-.founder-card::after {
-  content: '👑';
-  position: absolute;
-  top: -10px;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 2rem;
-  z-index: 11;
-  animation: crownBounce 3s ease-in-out infinite;
-  filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.8));
-}
-
-@keyframes crownBounce {
-  0%, 100% { 
-    transform: translateX(-50%) translateY(0) rotate(-5deg);
+    box-shadow:
+      0 0 60px rgba(255, 215, 0, 0.9),
+      0 0 120px rgba(255, 140, 0, 0.6),
+      0 0 180px rgba(255, 215, 0, 0.3),
+      inset 0 0 40px rgba(255, 215, 0, 0.15);
+    filter: brightness(1) contrast(1);
   }
   25% {
-    transform: translateX(-50%) translateY(-8px) rotate(0deg);
+    box-shadow:
+      0 0 80px rgba(255, 215, 0, 1),
+      0 0 160px rgba(255, 140, 0, 0.8),
+      0 0 240px rgba(255, 215, 0, 0.5),
+      inset 0 0 60px rgba(255, 215, 0, 0.2);
+    filter: brightness(1.1) contrast(1.05);
   }
   50% {
-    transform: translateX(-50%) translateY(0) rotate(5deg);
+    box-shadow:
+      0 0 100px rgba(255, 215, 0, 1.2),
+      0 0 200px rgba(255, 140, 0, 1),
+      0 0 300px rgba(255, 215, 0, 0.7),
+      inset 0 0 80px rgba(255, 215, 0, 0.25);
+    filter: brightness(1.2) contrast(1.1);
   }
   75% {
-    transform: translateX(-50%) translateY(-6px) rotate(0deg);
+    box-shadow:
+      0 0 80px rgba(255, 215, 0, 1),
+      0 0 160px rgba(255, 140, 0, 0.8),
+      0 0 240px rgba(255, 215, 0, 0.5),
+      inset 0 0 60px rgba(255, 215, 0, 0.2);
+    filter: brightness(1.1) contrast(1.05);
+  }
+}
+
+@keyframes royalAura {
+  0%, 100% {
+    opacity: 0.6;
+    transform: rotate(0deg) scale(1);
+  }
+  33% {
+    opacity: 0.8;
+    transform: rotate(120deg) scale(1.02);
+  }
+  66% {
+    opacity: 0.7;
+    transform: rotate(240deg) scale(0.98);
+  }
+}
+
+@keyframes founderLabelFloat {
+  0%, 100% {
+    transform: translateY(0) rotate(-3deg);
+    opacity: 0.7;
+  }
+  25% {
+    transform: translateY(-2px) rotate(-2deg);
+    opacity: 0.85;
+  }
+  50% {
+    transform: translateY(1px) rotate(-4deg);
+    opacity: 0.9;
+  }
+  75% {
+    transform: translateY(-1px) rotate(-2.5deg);
+    opacity: 0.8;
+  }
+}
+
+@keyframes imperialDiamond {
+  0%, 100% {
+    opacity: 0.7;
+    transform: rotate(0deg) scale(1) translateY(0px);
+    filter: brightness(1);
+  }
+  25% {
+    opacity: 1;
+    transform: rotate(90deg) scale(1.1) translateY(-3px);
+    filter: brightness(1.3);
+  }
+  50% {
+    opacity: 0.9;
+    transform: rotate(180deg) scale(1.2) translateY(2px);
+    filter: brightness(1.5);
+  }
+  75% {
+    opacity: 0.8;
+    transform: rotate(270deg) scale(1.1) translateY(-2px);
+    filter: brightness(1.2);
+  }
+}
+
+@keyframes imperialFloat {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg) scale(1);
+    opacity: 0.8;
+  }
+  25% {
+    transform: translateY(-5px) rotate(5deg) scale(1.1);
+    opacity: 1;
+  }
+  50% {
+    transform: translateY(0px) rotate(0deg) scale(1.2);
+    opacity: 0.9;
+  }
+  75% {
+    transform: translateY(-3px) rotate(-5deg) scale(1.1);
+    opacity: 0.95;
   }
 }
 
@@ -1288,6 +1867,59 @@ header, main, footer {
     transform: translateY(-8px) scale(1.02);
   }
 
+  /* Filter Container Mobile Optimization */
+  .filter-container {
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .filter-section {
+    margin-bottom: 1rem;
+  }
+
+  .filter-section h4 {
+    font-size: 0.85rem;
+  }
+
+  .filter-buttons {
+    gap: 0.5rem;
+    justify-content: flex-start;
+    overflow-x: auto;
+    padding: 0.5rem 0;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(139, 92, 246, 0.3) transparent;
+  }
+
+  .filter-buttons::-webkit-scrollbar {
+    height: 4px;
+  }
+
+  .filter-buttons::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .filter-buttons::-webkit-scrollbar-thumb {
+    background: rgba(139, 92, 246, 0.3);
+    border-radius: 2px;
+  }
+
+  .filter-btn {
+    padding: 0.6rem 1rem;
+    font-size: 0.75rem;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .group-header {
+    font-size: 1.1rem;
+    margin-top: 1.5rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .group-divider {
+    margin-bottom: 1.5rem;
+  }
+
   .modal-content {
     margin: 15% auto;
     width: 95%;
@@ -1366,17 +1998,31 @@ header, main, footer {
     animation: visionaryGlow 5s ease-in-out infinite !important;
   }
 
-  /* Reduce founder card animation intensity on mobile */
+  /* Optimize imperial founder card animations for mobile performance */
   .member-card.founder-card {
-    animation: founderShine 6s ease-in-out infinite !important;
+    animation: imperialMajesty 7s ease-in-out infinite !important;
+    transform: scale(1.01); /* Reduce scale for mobile */
   }
 
-  .founder-card::before {
-    animation: crownFloat 3s ease-in-out infinite !important;
+  .member-card.founder-card:hover {
+    transform: scale(1.02) translateY(-3px); /* Reduce hover effect for mobile */
   }
 
-  .founder-card::after {
-    animation: goldShimmer 2.5s ease-in-out infinite alternate !important;
+  .member-card.founder-card::before {
+    animation: royalAura 6s ease-in-out infinite !important;
+  }
+
+  .member-card.founder-card::after {
+    animation: founderLabelFloat 8s ease-in-out infinite !important;
+    font-size: 0.75em;
+    padding: 5px 12px;
+    top: 15px;
+    right: 10px;
+  }
+
+  .founder-card .imperial-ornament {
+    font-size: 1.2rem;
+    animation: imperialFloat 5s ease-in-out infinite !important;
   }
 
   /* Disable some suspended card animations on mobile for performance */
@@ -1386,6 +2032,23 @@ header, main, footer {
 
   .suspended-card::before {
     animation: suspendedFrost 4s ease-in-out infinite alternate !important;
+  }
+
+  /* Optimize inactive card animations for mobile performance */
+  .inactive-card {
+    animation: ghostFloat 8s ease-in-out infinite !important;
+  }
+
+  .inactive-card::before {
+    animation: ghostPulse 5s ease-in-out infinite alternate !important;
+    font-size: 0.8em;
+    padding: 6px 15px;
+  }
+
+  .inactive-card .ethereal-orb {
+    width: 15px;
+    height: 15px;
+    animation: etherealGlow 4s ease-in-out infinite alternate !important;
   }
 
   .suspended-card::after {

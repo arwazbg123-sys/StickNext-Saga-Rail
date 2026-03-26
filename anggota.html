@@ -99,6 +99,30 @@
         <input id="search-input" class="search-input" type="search" placeholder="Cari anggota, judul, atau karya..." aria-label="Cari anggota">
       </div>
 
+      <!-- Filter & Sort Buttons -->
+      <div class="filter-container">
+        <div class="filter-section">
+          <h4>Urutkan Berdasarkan Badge:</h4>
+          <div class="filter-buttons">
+            <button class="filter-btn active" data-sort-type="none" data-sort-value="none">✨ Semua</button>
+            <button class="filter-btn" data-sort-type="badge" data-sort-value="founder">🏆 Founder</button>
+            <button class="filter-btn" data-sort-type="badge" data-sort-value="guardian">🛡️ Guardian</button>
+            <button class="filter-btn" data-sort-type="badge" data-sort-value="developer">💻 Developer</button>
+            <button class="filter-btn" data-sort-type="badge" data-sort-value="elite">⚡ Elite</button>
+            <button class="filter-btn" data-sort-type="badge" data-sort-value="commander">🎖️ Commander</button>
+            <button class="filter-btn" data-sort-type="badge" data-sort-value="visionary">🌌 Visionary</button>
+          </div>
+        </div>
+        <div class="filter-section">
+          <h4>Urutkan Berdasarkan Status:</h4>
+          <div class="filter-buttons">
+            <button class="filter-btn" data-sort-type="status" data-sort-value="active">🟢 Aktif</button>
+            <button class="filter-btn" data-sort-type="status" data-sort-value="inactive">👻 Tidak Aktif</button>
+            <button class="filter-btn" data-sort-type="status" data-sort-value="suspended">❄️ Suspended</button>
+          </div>
+        </div>
+      </div>
+
       <!-- Stats -->
       <div class="stats">
         <div class="stat-item">

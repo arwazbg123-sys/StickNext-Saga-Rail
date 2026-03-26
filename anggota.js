@@ -576,16 +576,26 @@
   function createMemberCard(member) {
     const card = document.createElement('div');
     card.className = 'member-card';
-    // Founder card gets VIP frame + effects while keeping member-card base.
+    // Founder card gets Ultra-VIP Imperial effects while keeping member-card base.
     if (member.badge === 'founder') {
       card.classList.add('founder-card');
 
-      // Reduce sparkles on mobile for better performance (2 instead of 5)
-      const sparkleCount = isMobile ? 2 : 5;
-      for (let i = 0; i < sparkleCount; i++) {
-        const sparkle = document.createElement('span');
+      // Add imperial diamond particles (reduced on mobile for performance)
+      const particleCount = isMobile ? 3 : 5;
+      for (let i = 0; i < particleCount; i++) {
+        const sparkle = document.createElement('div');
         sparkle.className = 'star-sparkle';
         card.appendChild(sparkle);
+      }
+
+      // Add imperial crown ornaments (reduced on mobile)
+      const ornamentCount = isMobile ? 2 : 4;
+      const ornamentPositions = ['top-left', 'top-right', 'bottom-left', 'bottom-right'];
+      for (let i = 0; i < ornamentCount; i++) {
+        const ornament = document.createElement('div');
+        ornament.className = `imperial-ornament ${ornamentPositions[i]}`;
+        ornament.textContent = '💎';
+        card.appendChild(ornament);
       }
     }
 
@@ -600,6 +610,24 @@
         particle.className = `frost-particle-${i}`;
         card.appendChild(particle);
       }
+    }
+
+    // Inactive card gets mysterious ghost/haunted visual effects
+    if (member.status === MEMBER_STATUS.INACTIVE) {
+      card.classList.add('inactive-card');
+
+      // Add mystical particles for inactive effect
+      const particleCount = isMobile ? 2 : 5;
+      for (let i = 1; i <= particleCount; i++) {
+        const particle = document.createElement('div');
+        particle.className = `ghost-particle-${i}`;
+        card.appendChild(particle);
+      }
+
+      // Add floating ethereal elements
+      const etherealOrb = document.createElement('div');
+      etherealOrb.className = 'ethereal-orb';
+      card.appendChild(etherealOrb);
     }
 
     const img = document.createElement('img');
@@ -654,12 +682,20 @@
     return card;
   }
 
-  function renderAnggota(filter = '') {
+  let currentSortType = 'none';
+  let currentSortValue = 'none';
+  let currentSearchTerm = '';
+
+  function renderAnggota(filter = '', sortType = 'none', sortValue = 'none') {
     if (!memberGrid) {
       console.error('Member grid not found');
       return;
     }
     memberGrid.innerHTML = '';
+
+    currentSearchTerm = filter;
+    currentSortType = sortType;
+    currentSortValue = sortValue;
 
     // Ensure data is available (use dynamic function to refresh data)
     const anggotaData = getAnggotaData();
@@ -697,14 +733,116 @@
         </div>
       `;
     } else {
-      filteredData.forEach((member, index) => {
-        const card = createMemberCard(member);
-        card.style.animationDelay = `${index * 0.06}s`;
-        memberGrid.appendChild(card);
-      });
+      // Apply sorting/grouping if active
+      if (sortType === 'badge') {
+        renderGroupedByBadge(filteredData, sortValue);
+      } else if (sortType === 'status') {
+        renderGroupedByStatus(filteredData, sortValue);
+      } else {
+        // Render without grouping
+        filteredData.forEach((member, index) => {
+          const card = createMemberCard(member);
+          card.style.animationDelay = `${index * 0.06}s`;
+          memberGrid.appendChild(card);
+        });
+      }
     }
 
     updateStats();
+  }
+
+  function renderGroupedByBadge(members, specificBadge = 'none') {
+    let badgeOrder = ['founder', 'visionary', 'elite', 'guardian', 'commander', 'developer'];
+    const grouped = {};
+
+    // If specific badge selected, filter and show only that badge
+    let membersToDisplay = members;
+    if (specificBadge && specificBadge !== 'none') {
+      membersToDisplay = members.filter(m => m.badge === specificBadge);
+      badgeOrder = [specificBadge]; // Only show selected badge
+    }
+
+    // Group members by badge
+    membersToDisplay.forEach(member => {
+      if (!grouped[member.badge]) {
+        grouped[member.badge] = [];
+      }
+      grouped[member.badge].push(member);
+    });
+
+    let cardIndex = 0;
+    // Render in order
+    badgeOrder.forEach(badge => {
+      if (grouped[badge]) {
+        // Add group header
+        const groupHeader = document.createElement('div');
+        groupHeader.className = 'group-header';
+        const badgeInfo = { 'founder': '🏆 Founder', 'visionary': '🌌 Visionary', 'elite': '⚡ Elite', 'guardian': '🛡️ Guardian', 'commander': '🎖️ Commander', 'developer': '💻 Developer' };
+        groupHeader.textContent = badgeInfo[badge] || badge;
+        memberGrid.appendChild(groupHeader);
+
+        // Add divider line
+        const divider = document.createElement('div');
+        divider.className = `group-divider badge-${badge}`;
+        memberGrid.appendChild(divider);
+
+        // Add members in group
+        grouped[badge].forEach(member => {
+          const card = createMemberCard(member);
+          card.classList.add(`group-member-${badge}`);
+          card.style.animationDelay = `${cardIndex * 0.06}s`;
+          memberGrid.appendChild(card);
+          cardIndex++;
+        });
+      }
+    });
+  }
+
+  function renderGroupedByStatus(members, specificStatus = 'none') {
+    let statusOrder = ['active', 'inactive', 'suspended'];
+    const grouped = {};
+
+    // If specific status selected, filter and show only that status
+    let membersToDisplay = members;
+    if (specificStatus && specificStatus !== 'none') {
+      membersToDisplay = members.filter(m => m.status === specificStatus);
+      statusOrder = [specificStatus]; // Only show selected status
+    }
+
+    // Group members by status
+    membersToDisplay.forEach(member => {
+      if (!grouped[member.status]) {
+        grouped[member.status] = [];
+      }
+      grouped[member.status].push(member);
+    });
+
+    let cardIndex = 0;
+    // Render in order
+    statusOrder.forEach(status => {
+      if (grouped[status]) {
+        // Add group header
+        const groupHeader = document.createElement('div');
+        groupHeader.className = 'group-header';
+        const statusInfo = { 'active': '🟢 Anggota Aktif', 'inactive': '👻 Tidak Aktif', 'suspended': '❄️ Suspended' };
+        groupHeader.textContent = statusInfo[status] || status;
+        memberGrid.appendChild(groupHeader);
+
+        // Add divider line
+        const divider = document.createElement('div');
+        divider.className = `group-divider status-${status}`;
+        memberGrid.appendChild(divider);
+
+        // Add members in group
+        grouped[status].forEach(member => {
+          const card = createMemberCard(member);
+          card.classList.add(`group-member-${status}`);
+          card.style.animationDelay = `${cardIndex * 0.06}s`;
+          memberGrid.appendChild(card);
+          cardIndex++;
+        });
+      }
+    });
   }
 
   function updateStats() {
@@ -723,10 +861,32 @@
 
     const debouncedSearch = debounce((event) => {
       const term = event.target.value;
-      renderAnggota(term);
+      renderAnggota(term, currentSortType, currentSortValue);
     }, 240);
 
     searchInput.addEventListener('input', debouncedSearch);
+  }
+
+  function setupFilterButtons() {
+    const filterButtons = document.querySelectorAll('.filter-btn');
+    
+    filterButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const sortType = btn.dataset.sortType;
+        const sortValue = btn.dataset.sortValue;
+
+        // Update active button styling
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+
+        // Render with new sort
+        if (sortType === 'none') {
+          renderAnggota(currentSearchTerm, 'none', 'none');
+        } else {
+          renderAnggota(currentSearchTerm, sortType, sortValue);
+        }
+      });
+    });
   }
 
   function adjustForMobile() {
@@ -788,6 +948,7 @@
 
         renderAnggota();
         setupSearch();
+        setupFilterButtons();
         initModalInteractions();
         adjustForMobile();
         setUpLoader();

@@ -124,7 +124,19 @@
   badge: MEMBER_CATEGORIES.DEVELOPER,
   joinDate: '2026-03-25',
   level: 1
-}
+},
+
+    dummyInactive: {
+      name: 'Dummy Inactive',
+      title: 'Anggota Tidak Aktif',
+      description: 'Anggota ini sedang tidak aktif sementara waktu. Mereka mungkin kembali suatu saat nanti.',
+      img: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgdmlld0JveD0iMCAwIDEwMCAxMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIiBmaWxsPSIjRjNGNEY2Ii8+Cjx0ZXh0IHg9IjUwIiB5PSI1NSIgZm9udC1mYW1pbHk9IkFyaWFsLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjEyIiBmaWxsPSIjOUI5QkE0IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkeT0iMC4zZW0iPklOQUNUSVZFPC90ZXh0Pgo8L3N2Zz4=',
+      works: ['Tidak Aktif Sementara'],
+      status: MEMBER_STATUS.INACTIVE,
+      badge: MEMBER_CATEGORIES.DEVELOPER,
+      joinDate: '2024-01-01',
+      level: 3
+    }
   };
 
   // ==========================================
