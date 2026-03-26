@@ -1,0 +1,15 @@
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { width: 100%; height: 100%; overflow: hidden; font-family: 'Orbitron', sans-serif; background: #02030a; color: #fff; }
+#trailer-canvas { position: fixed; inset: 0; width: 100vw; height: 100vh; display: block; z-index: 1; }
+.ui-panel { position: fixed; left: 24px; top: 24px; z-index: 5; background: rgba(3, 9, 26, .66); border: 1px solid rgba(255,255,255,.15); border-radius: 12px; padding: 14px 18px; max-width: 300px; backdrop-filter: blur(8px); }
+.ui-panel h1 { font-size: 1.2rem; margin-bottom: .35rem; letter-spacing: 1px; }
+.ui-panel p { font-size: .86rem; color: #b9c7e2; margin-bottom: .6rem; }
+.btn { border: 0; border-radius: 8px; padding: .6rem .9rem; background: linear-gradient(135deg,#7af2ff,#6367ff); color: #04142b; cursor: pointer; font-weight: 700; margin-right: .45rem; transition: transform .2s ease, filter .2s ease; }
+.btn:hover { transform: translateY(-1px); filter: brightness(1.08); }
+.btn-secondary { background: linear-gradient(135deg,#999aee,#6c8fd9); color: #fff; }
+.overlay { position: fixed; top:0; left:0; width:100%; height:100%; z-index: 4; display: grid; place-items:center; background: rgba(1,2,5,0.62); transition: opacity .5s ease; }
+.overlay.hidden { opacity: 0; pointer-events: none; }
+.overlay-content { text-align:center; padding: 28px 32px; border: 1px solid rgba(255,255,255,.18); border-radius: 14px; backdrop-filter: blur(8px); background: rgba(10,11,27,.75); }
+.overlay-content h2 { font-size: 2rem; letter-spacing: 1.2px; margin-bottom: .4rem; }
+.overlay-content p { font-size: 1rem; color:#cfd8ff; }
+@media (max-width: 768px) { .ui-panel { width: calc(100vw - 28px); left: 50%; transform: translateX(-50%); top: 14px; max-width: unset; } .overlay-content h2 { font-size: 1.4rem; } }
