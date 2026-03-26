@@ -137,6 +137,29 @@ header, main, footer {
   padding: 1rem;
 }
 
+/* Section Styling */
+#anggota {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  padding: 0;
+}
+
+#anggota h2 {
+  font-size: 2rem;
+  margin: 1.5rem 0 0.75rem 0;
+  color: #e0e7ff;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+#anggota > p {
+  font-size: 0.95rem;
+  color: #a0aec0;
+  margin-bottom: 2rem;
+  line-height: 1.6;
+}
+
 /* Stats - Enhanced Futuristic */
 .stats {
   display: flex;
@@ -215,6 +238,8 @@ header, main, footer {
   margin-bottom: 2.5rem;
   text-align: center;
   perspective: 1000px;
+  width: 100%;
+  padding: 0 1rem;
 }
 
 .search-input {
@@ -232,6 +257,7 @@ header, main, footer {
   font-family: 'Orbitron', sans-serif;
   letter-spacing: 1px;
   position: relative;
+  box-sizing: border-box;
 }
 
 .search-input::placeholder {
@@ -256,6 +282,9 @@ header, main, footer {
   border: 1px solid rgba(59, 130, 246, 0.2);
   backdrop-filter: blur(10px);
   animation: filterContainerFadeIn 0.6s ease;
+  width: 100%;
+  box-sizing: border-box;
+  overflow: hidden;
 }
 
 @keyframes filterContainerFadeIn {
@@ -271,6 +300,8 @@ header, main, footer {
 
 .filter-section {
   margin-bottom: 1.5rem;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .filter-section:last-child {
@@ -285,6 +316,7 @@ header, main, footer {
   letter-spacing: 1px;
   display: flex;
   align-items: center;
+  word-break: break-word;
 }
 
 .filter-buttons {
@@ -292,6 +324,8 @@ header, main, footer {
   flex-wrap: wrap;
   gap: 0.75rem;
   justify-content: center;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .filter-btn {
@@ -310,6 +344,8 @@ header, main, footer {
   overflow: hidden;
   text-transform: uppercase;
   letter-spacing: 0.5px;
+  flex-shrink: 0;
+  white-space: nowrap;
 }
 
 .filter-btn::before {
@@ -518,6 +554,8 @@ header, main, footer {
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   margin-top: 2rem;
   perspective: 1000px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 /* Member Card - Futuristic Interactive */
@@ -1834,6 +1872,15 @@ header, main, footer {
 
 /* Mobile Optimizations & Responsive Design */
 @media (max-width: 1024px) {
+  header, main, footer {
+    padding: 1rem 0.75rem;
+  }
+
+  main {
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
   .member-grid {
     grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
     gap: 1.5rem;
@@ -1847,6 +1894,17 @@ header, main, footer {
     max-width: 90%;
     font-size: 0.95rem;
   }
+
+  .filter-container {
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  #anggota {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
 }
 
 @media (max-width: 768px) {
@@ -1854,13 +1912,40 @@ header, main, footer {
     padding-top: 80px;
   }
 
+  header, main, footer {
+    padding: 0.75rem 0.5rem;
+  }
+
+  main {
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
+  #anggota {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0 0.5rem;
+  }
+
+  #anggota h2 {
+    font-size: 1.5rem;
+    margin: 0 0 0.5rem 0;
+  }
+
+  #anggota > p {
+    font-size: 0.85rem;
+    margin-bottom: 1rem;
+  }
+
   .member-grid {
     grid-template-columns: 1fr;
     gap: 1.5rem;
+    padding: 0;
   }
 
   .member-card {
     margin-bottom: 0.5rem;
+    width: 100%;
   }
 
   .member-card:hover {
@@ -1869,25 +1954,33 @@ header, main, footer {
 
   /* Filter Container Mobile Optimization */
   .filter-container {
-    padding: 1rem;
-    margin-bottom: 1.5rem;
+    padding: 1rem 0.75rem;
+    margin: 0 0 1.5rem 0;
+    width: 100%;
+    box-sizing: border-box;
   }
 
   .filter-section {
     margin-bottom: 1rem;
+    width: 100%;
   }
 
   .filter-section h4 {
-    font-size: 0.85rem;
+    font-size: 0.75rem;
+    margin-bottom: 0.75rem;
   }
 
   .filter-buttons {
-    gap: 0.5rem;
+    gap: 0.4rem;
     justify-content: flex-start;
     overflow-x: auto;
+    overflow-y: hidden;
     padding: 0.5rem 0;
     scrollbar-width: thin;
     scrollbar-color: rgba(139, 92, 246, 0.3) transparent;
+    -webkit-overflow-scrolling: touch;
+    width: 100%;
+    box-sizing: border-box;
   }
 
   .filter-buttons::-webkit-scrollbar {
@@ -1904,8 +1997,8 @@ header, main, footer {
   }
 
   .filter-btn {
-    padding: 0.6rem 1rem;
-    font-size: 0.75rem;
+    padding: 0.6rem 0.9rem;
+    font-size: 0.7rem;
     white-space: nowrap;
     flex-shrink: 0;
   }
@@ -1939,28 +2032,37 @@ header, main, footer {
     font-size: 1.5rem;
   }
 
+  .search-container {
+    padding: 0 0.5rem;
+    margin-bottom: 1.5rem;
+  }
+
   .search-input {
     font-size: 16px; /* Prevent zoom on iOS */
-    padding: 0.9rem 1.2rem;
-    max-width: 95%;
+    padding: 0.9rem 1rem;
+    max-width: 100%;
+    width: 100%;
   }
 
   .stats {
-    gap: 1rem;
+    gap: 0.75rem;
     flex-wrap: wrap;
+    padding: 0 0.5rem;
   }
 
   .stat-item {
-    padding: 1rem;
-    min-width: 120px;
+    padding: 0.8rem;
+    min-width: 100px;
+    flex: 1;
+    min-width: 80px;
   }
 
   .stat-number {
-    font-size: 2rem;
+    font-size: 1.8rem;
   }
 
   .stat-label {
-    font-size: 0.8rem;
+    font-size: 0.7rem;
   }
 
   /* Optimize animations for mobile */
@@ -2074,77 +2176,213 @@ header, main, footer {
 
 @media (max-width: 480px) {
   body {
-    font-size: 14px;
-    padding-top: 70px;
+    font-size: 13px;
+    padding-top: 60px;
+  }
+
+  header, main, footer {
+    padding: 0.5rem;
+  }
+
+  main {
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
+  #anggota {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0;
+  }
+
+  #anggota h2 {
+    font-size: 1.3rem;
+    margin: 0.5rem 0;
+    word-break: break-word;
+  }
+
+  #anggota > p {
+    font-size: 0.75rem;
+    margin-bottom: 0.75rem;
+    line-height: 1.4;
   }
 
   .member-grid {
     grid-template-columns: 1fr;
     gap: 1rem;
-  }
-
-  .stats {
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .stat-item {
-    width: 90%;
-    max-width: 200px;
+    padding: 0;
+    width: 100%;
+    box-sizing: border-box;
   }
 
   .member-card {
-    border-radius: 16px;
+    border-radius: 12px;
+    width: 100%;
   }
 
   .member-card img {
-    height: 150px;
+    height: 120px;
   }
 
   .member-card-content {
-    padding: 1rem;
+    padding: 0.8rem;
   }
 
   .member-card h3 {
-    font-size: 1.1rem;
+    font-size: 1rem;
+    margin-bottom: 0.3rem;
   }
 
   .member-card p {
-    font-size: 0.9rem;
+    font-size: 0.8rem;
+    margin-bottom: 0.2rem;
+  }
+
+  .search-container {
+    padding: 0;
+    margin-bottom: 1rem;
+    width: 100%;
+    box-sizing: border-box;
   }
 
   .search-input {
     max-width: 100%;
-    padding: 0.8rem 1rem;
-    border-radius: 20px;
+    padding: 0.7rem 0.8rem;
+    border-radius: 16px;
+    font-size: 13px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  /* Filter Container Micro-optimization */
+  .filter-container {
+    padding: 0.75rem 0.5rem;
+    margin-bottom: 1rem;
+    width: 100%;
+    box-sizing: border-box;
+    border-radius: 12px;
+  }
+
+  .filter-section {
+    margin-bottom: 0.75rem;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .filter-section:last-child {
+    margin-bottom: 0;
+  }
+
+  .filter-section h4 {
+    font-size: 0.65rem;
+    margin-bottom: 0.5rem;
+    letter-spacing: 0.3px;
+  }
+
+  .filter-buttons {
+    gap: 0.3rem;
+    justify-content: flex-start;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding: 0.3rem 0;
+    width: 100%;
+    box-sizing: border-box;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .filter-btn {
+    padding: 0.5rem 0.7rem;
+    font-size: 0.6rem;
+    white-space: nowrap;
+    flex-shrink: 0;
+    border-radius: 16px;
+    letter-spacing: 0;
   }
 
   .modal-content {
-    margin: 20% auto;
-    border-radius: 16px;
+    margin: 25% auto;
+    border-radius: 12px;
+    width: 95vw;
+    max-width: none;
+    box-sizing: border-box;
   }
 
   .modal-close {
-    width: 40px;
-    height: 40px;
-    font-size: 2rem;
+    width: 35px;
+    height: 35px;
+    font-size: 1.8rem;
   }
 
   .modal-header {
-    height: 180px;
+    height: 150px;
   }
 
   .modal-body {
-    padding: 1rem;
+    padding: 0.8rem;
   }
 
   .modal-body h3 {
-    font-size: 1.3rem;
+    font-size: 1.1rem;
+    margin-top: 0;
+    margin-bottom: 0.3rem;
+  }
+
+  .modal-body p {
+    font-size: 0.75rem;
+    margin-bottom: 0.3rem;
+  }
+
+  .modal-body h4 {
+    font-size: 0.8rem;
+    margin-top: 0.5rem;
+    margin-bottom: 0.3rem;
   }
 
   .modal-works li {
-    font-size: 0.8rem;
-    padding: 0.3rem 0.7rem;
+    font-size: 0.7rem;
+    padding: 0.2rem 0.4rem;
+    line-height: 1.3;
+  }
+
+  .stats {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.5rem;
+    padding: 0;
+    margin-bottom: 1rem;
+  }
+
+  .stat-item {
+    width: 100%;
+    max-width: none;
+    padding: 0.6rem;
+    border-radius: 10px;
+  }
+
+  .stat-number {
+    font-size: 1.5rem;
+  }
+
+  .stat-label {
+    font-size: 0.65rem;
+    letter-spacing: 0;
+  }
+
+  .group-header {
+    font-size: 0.95rem;
+    margin-top: 1rem;
+    margin-bottom: 0.5rem;
+    letter-spacing: 1px;
+  }
+
+  .group-divider {
+    margin-bottom: 1rem;
+    height: 1px;
+  }
+
+  .member-badge {
+    padding: 0.3rem 0.6rem;
+    font-size: 0.6rem;
   }
 
   /* Ultra-aggressive performance optimization for very small mobile devices */
@@ -2178,6 +2416,15 @@ header, main, footer {
 
   .suspended-card .frost-particle-1 {
     animation: snowFall 6s linear infinite !important;
+  }
+
+  /* Ensure no overflow on any element */
+  * {
+    max-width: 100vw;
+  }
+
+  body {
+    overflow-x: hidden;
   }
 }
 
