@@ -1,7 +1,7 @@
 const initialNotes = [
   { id: 1, type: 'dev', title: 'Deployment staging siap', date: '2026-03-20', desc: 'Backend API baru telah dipasang; endpoint `/api/contact` tersedia. Pastikan test load 1000 request per menit dan cek return code 2xx.', link: '#', tag: 'update' },
   { id: 2, type: 'news', title: 'Fitur Network Stat Resmi Rilis', date: '2026-03-19', desc: 'Tampilan UI baru untuk statistik jaringan dev. Berhasil ditambahkan di `navigasi` dan `statistik-jaringan.html`.', link: 'statistik-jaringan.html', tag: 'berita' },
-  { id: 3, type: 'dev', title: 'Pembaruan FAQ interaktif', date: '2026-03-18', desc: 'Pertanyaan developer dan tips roadmap ditambahkan ke halaman FAQ. Accordion dibuat satu terbuka dan keyboard friendly.', link: 'faq.html', tag: 'catatan' },
+  { id: 3, type: 'dev', title: 'Pembaruan FAQ interaktif', date: '2026-03-18', desc: 'Pertanyaan developer dan tips roadmap ditambahkan ke halaman FAQ. Accordion dibuat satu terbuka dan keyboard friendly.', link: 'faq.html', tag: 'dev' },
   { id: 4, type: 'news', title: 'Kecerdasan Buatan Naufal Mrsov', date: '2026-03-18', desc: 'Kecerdasan buatan Naufal Mrsov Mazzi akan hadir sebagai kecerdasan Buatan Indonesia Pertama.', link: '#', tag: 'berita' },
   { id: 5, type: 'dev', title: 'Pembaruan kata Halaman Kontak', date: '2026-12-18', desc: 'Merubah Kosakata Di Halaman Kontak Menjadi lebih santai dan gaul untuk pengalaman penjelajahan yang unik.', link: 'kontak.html', tag: 'dev' },
   { id: 6, type: 'news', title: 'Fitur Login', date: '2026-12-18', desc: 'Fitur Login akan ditambahkan untuk membuat situs StickNext Saga Rail Menjadi Profesional dan Resmi.', link: '#', tag: 'berita' },

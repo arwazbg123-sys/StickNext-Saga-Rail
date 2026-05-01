@@ -48,6 +48,18 @@
       level: 10
     },
 
+    jasmin: {
+      name: 'Syakira Elmirao Jasmine',
+      title: 'Kreator / Leader',
+      description: 'Pembuat StickManzz, ahli desain Bidadari dan livedtrain.',
+      img: '  ',
+      works: ['StickManzz', 'Bidadari', 'Livedtrain'],
+      status: MEMBER_STATUS.ACTIVE,
+      badge: MEMBER_CATEGORIES.FOUNDER,
+      joinDate: '2024-01-01',
+      level: 10
+    },
+
     sherifal: {
       name: 'Sherifal Vornefal Desertfall',
       title: 'Penjaga Gurun',

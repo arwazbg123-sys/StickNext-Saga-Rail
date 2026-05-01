@@ -123,7 +123,13 @@
         developer: getMembersByCategory(MEMBER_CATEGORIES.DEVELOPER).length,
         elite: getMembersByCategory(MEMBER_CATEGORIES.ELITE).length,
         commander: getMembersByCategory(MEMBER_CATEGORIES.COMMANDER).length,
-        visionary: getMembersByCategory(MEMBER_CATEGORIES.VISIONARY).length
+        visionary: getMembersByCategory(MEMBER_CATEGORIES.VISIONARY).length,
+        moderator: getMembersByCategory(MEMBER_CATEGORIES.MODERATOR).length,
+        artist: getMembersByCategory(MEMBER_CATEGORIES.ARTIST).length,
+        supporter: getMembersByCategory(MEMBER_CATEGORIES.SUPPORTER).length,
+        ambassador: getMembersByCategory(MEMBER_CATEGORIES.AMBASSADOR).length,
+        contributor: getMembersByCategory(MEMBER_CATEGORIES.CONTRIBUTOR).length,
+        member: getMembersByCategory(MEMBER_CATEGORIES.MEMBER).length
       },
       totalWorks: allMembers.reduce((sum, member) => sum + member.works.length, 0),
       averageLevel: Math.round(allMembers.reduce((sum, member) => sum + (member.level || 1), 0) / allMembers.length)
@@ -184,6 +190,42 @@
       color: '#8A2BE2',
       glow: '0 0 20px rgba(138, 43, 226, 0.8)',
       special: true
+    },
+    moderator: {
+      name: '👮 Moderator',
+      color: '#4CAF50',
+      glow: '0 0 15px rgba(76, 175, 80, 0.6)',
+      special: false
+    },
+    artist: {
+      name: '🎨 Artist',
+      color: '#FF9800',
+      glow: '0 0 15px rgba(255, 152, 0, 0.6)',
+      special: false
+    },
+    supporter: {
+      name: '🤝 Supporter',
+      color: '#2196F3',
+      glow: '0 0 15px rgba(33, 150, 243, 0.6)',
+      special: false
+    },
+    ambassador: {
+      name: '🌍 Ambassador',
+      color: '#9C27B0',
+      glow: '0 0 15px rgba(156, 39, 176, 0.6)',
+      special: false
+    },
+    contributor: {
+      name: '📝 Contributor',
+      color: '#607D8B',
+      glow: '0 0 15px rgba(96, 125, 139, 0.6)',
+      special: false
+    },
+    member: {
+      name: '👤 Member',
+      color: '#9E9E9E',
+      glow: '0 0 10px rgba(158, 158, 158, 0.4)',
+      special: false
     }
   };
 
@@ -752,7 +794,7 @@
   }
 
   function renderGroupedByBadge(members, specificBadge = 'none') {
-    let badgeOrder = ['founder', 'visionary', 'elite', 'guardian', 'commander', 'developer'];
+    let badgeOrder = ['founder', 'visionary', 'elite', 'guardian', 'commander', 'moderator', 'artist', 'supporter', 'ambassador', 'contributor', 'developer', 'member'];
     const grouped = {};
 
     // If specific badge selected, filter and show only that badge
@@ -777,7 +819,20 @@
         // Add group header
         const groupHeader = document.createElement('div');
         groupHeader.className = 'group-header';
-        const badgeInfo = { 'founder': '🏆 Founder', 'visionary': '🌌 Visionary', 'elite': '⚡ Elite', 'guardian': '🛡️ Guardian', 'commander': '🎖️ Commander', 'developer': '💻 Developer' };
+        const badgeInfo = {
+          'founder': '🏆 Founder',
+          'visionary': '🌌 Visionary',
+          'elite': '⚡ Elite',
+          'guardian': '🛡️ Guardian',
+          'commander': '🎖️ Commander',
+          'moderator': '👮 Moderator',
+          'artist': '🎨 Artist',
+          'supporter': '🤝 Supporter',
+          'ambassador': '🌍 Ambassador',
+          'contributor': '📝 Contributor',
+          'developer': '💻 Developer',
+          'member': '👤 Member'
+        };
         groupHeader.textContent = badgeInfo[badge] || badge;
         memberGrid.appendChild(groupHeader);
 
